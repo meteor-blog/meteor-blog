@@ -1,0 +1,10 @@
+{
+  "name": "meteor-blog",
+  "description": "A package that provides a blog at /blog",
+  "homepage": "https://github.com/BeDifferential/meteor-blog",
+  "author": "Differential (http://differential.io)",
+  "version": "0.0.1",
+  "git": "https://github.com/BeDifferential/meteor-blog.git",
+  "packages": {
+  }
+}
