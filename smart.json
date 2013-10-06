@@ -1,5 +1,5 @@
 {
-  "name": "meteor-blog",
+  "name": "blog",
   "description": "A package that provides a blog at /blog",
   "homepage": "https://github.com/BeDifferential/meteor-blog",
   "author": "Differential (http://differential.io)",
