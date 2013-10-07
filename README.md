@@ -17,6 +17,9 @@ doesn't require us to run another dyno for a meteor-based blog.
 * Customize how posts are displayed on main blog home
 * Use Google+ attributions for SEO
 * Other SEO best practices
+* Pagination
+* Multiple roles (admin/author/etc)
+* Themes
 
 ## Getting Started
 
