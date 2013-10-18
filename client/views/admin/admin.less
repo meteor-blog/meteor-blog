@@ -1,0 +1,60 @@
+@import '../../stylesheets/variables';
+@import '../../stylesheets/mixins';
+
+.blog-admin {
+
+  h1 {
+    .switch-wrap {
+      float: right;
+      font-size: 14px;
+    }
+  }
+
+  select {
+    float: right;
+  }
+
+  .blog-draft {
+    font-weight: 600;
+    color: #DB2727;
+  }
+
+  ul.blog-admin-sidebar {
+
+    li {
+      list-style: none;
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 10px;
+      padding-left: 10px;
+
+      &:last-child {
+        border-bottom: 0px;
+      }
+
+      a {
+        display: block;
+
+        i {
+          width: 30px;
+          display: inline-block;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  ul.blog-admin-list {
+    padding-left: 0px;
+
+    li {
+      list-style: none;
+      padding: 10px 0;
+      overflow: auto;
+      border-bottom: 1px solid #ddd;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}

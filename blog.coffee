@@ -1,3 +1,0 @@
-@Blog =
-  config:
-    layout: ''

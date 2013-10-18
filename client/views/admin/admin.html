@@ -1,0 +1,51 @@
+<template name="blogAdmin">
+  <div class="blog-admin">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <ul class="blog-admin-sidebar">
+            <li class="{{active '/admin/blog'}}"><a href="/admin/blog"><i class="icon-reorder"></i> Posts</a></li>
+            <li class="{{active '/admin/blog/new'}}"><a href="/admin/blog/new"><i class="icon-plus"></i> New Post</a></li>
+          </ul>
+        </div>
+        <div class="col-md-9">
+          <h1>
+            Blog Admin
+            <select>
+              <option>All Posts</option>
+              <option>My Posts</option>
+            </select>
+          </h1>
+          <div class="row">
+            <ul class="blog-admin-list">
+              <li>
+                <div class="col-md-8"><a href="/admin/blog/edit/1">Blog Post Title Here</a></div>
+                <div class="col-md-2">Author</div>
+                <div class="col-md-2 blog-draft">DRAFT</div>
+              </li>
+              <li>
+                <div class="col-md-8"><a href="/admin/blog/edit/1">Blog Post Title Here</a></div>
+                <div class="col-md-2">Author</div>
+                <div class="col-md-2">10/12/2013</div>
+              </li>
+              <li>
+                <div class="col-md-8"><a href="/admin/blog/edit/1">Blog Post Title Here</a></div>
+                <div class="col-md-2">Author</div>
+                <div class="col-md-2">10/12/2013</div>
+              </li>
+              <li>
+                <div class="col-md-8"><a href="/admin/blog/edit/1">Blog Post Title Here</a></div>
+                <div class="col-md-2">Author</div>
+                <div class="col-md-2">10/12/2013</div>
+              </li>
+              <li>
+                <div class="col-md-8"><a href="/admin/blog/edit/1">Blog Post Title Here</a></div>
+                <div class="col-md-2">Author</div>
+                <div class="col-md-2">10/12/2013</div>
+              </li>
+            </ul>
+          </div>
+      </div>
+    </div>
+  </div>
+</template>

@@ -3,21 +3,32 @@ Package.describe({
 });
 
 Package.on_use(function(api) {
+
+  var both = ['client', 'server'];
+
   api.use([
-    'deps',
-    'underscore',
     'templating',
     'handlebars',
-    'spark',
-    'session',
-    'coffeescript',
-    'iron-router',
     'less'
   ], 'client');
+
   api.add_files([
-    'blog.coffee',
-    'router.coffee',
-    'blog.less',
-    'templates/blog.html'
+    'client/stylesheets/lib/bootstrap.css',
+    'client/stylesheets/lib/bootstrap-switch.css',
+    'client/config.coffee',
+    'client/compatibility/bootstrap-switch.js',
+    'client/views/admin/admin.less',
+    'client/views/admin/admin.html',
+    'client/views/admin/new.html',
+    'client/views/admin/new.coffee'
   ], 'client');
+
+  api.use([
+    'coffeescript',
+    'iron-router'
+  ], both);
+
+  api.add_files([
+    'router.coffee',
+  ], both);
 });
