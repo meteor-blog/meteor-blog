@@ -6,7 +6,7 @@
           {{#each posts}}
             <article class="post">
               <h2>
-                <a href="/blog/{{slug}}">{{title}}</a>
+                <a href="{{pathFor 'blogShow'}}">{{title}}</a>
               </h2>
               <div class="post-meta">
                 By {{author}} on {{formatDate publishedAt}}

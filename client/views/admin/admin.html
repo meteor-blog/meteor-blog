@@ -25,7 +25,7 @@
   <ul class="blog-admin-list">
     {{#each posts}}
       <li>
-        <div class="col-md-6"><a href="/admin/blog/edit/{{slug}}">{{title}}</a></div>
+        <div class="col-md-6"><a href="{{pathFor 'blogAdminEdit'}}">{{title}}</a></div>
         <div class="col-md-3">{{author}}</div>
         {{#if published}}
           <div class="col-md-3">{{formatDate createdAt}}</div>
@@ -34,7 +34,7 @@
         {{/if}}
       </li>
     {{else}}
-      <li><a href="/admin/blog/new">Create the first blog</a></li>
+      <li><a href="{{pathFor 'blogAdminNew'}}">Create the first blog</a></li>
     {{/each}}
   </ul>
 </template>
