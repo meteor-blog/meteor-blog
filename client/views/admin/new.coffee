@@ -6,13 +6,14 @@ Template.blogAdminNew.rendered = ->
     basePath: '/packages/blog/public/epiceditor'
     autogrow: true
     focusOnLoad: true
-    #button: false
+    clientSideStorage: false
+    button:
+      preview: false
     theme:
       editor: '/themes/editor/epic-grey.css'
       preview: '/themes/preview/github.css'
 
   @editor.load()
-  @editor.importFile 'blog-post', ''
   $('[name=title]').val ''
 
   $('.make-switch').bootstrapSwitch().on 'switch-change', (e, data) =>

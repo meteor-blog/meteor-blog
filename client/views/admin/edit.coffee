@@ -6,14 +6,16 @@ Template.blogAdminEdit.rendered = ->
     basePath: '/packages/blog/public/epiceditor'
     autogrow: true
     focusOnLoad: true
-    #button: false
+    clientSideStorage: false
+    button:
+      preview: false
     theme:
       editor: '/themes/editor/epic-grey.css'
       preview: '/themes/preview/github.css'
 
   post = Post.first slug: Session.get('postSlug')
   @editor.load()
-  @editor.importFile 'blog-post', post.body
+  @editor.importFile post.slug, post.body
 
   $('.make-switch').bootstrapSwitch().on 'switch-change', (e, data) =>
     if data.value
@@ -24,7 +26,7 @@ Template.blogAdminEdit.rendered = ->
 Template.blogAdminEdit.events
 
   'click .for-deleting': (e, tpl) ->
-    e.preventDefault();
+    e.preventDefault()
     if confirm 'Are you sure?'
       @destroy()
       Router.go 'blogAdmin'
