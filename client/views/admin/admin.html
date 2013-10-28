@@ -20,9 +20,13 @@
             <ul class="blog-admin-list">
               {{#each posts}}
                 <li>
-                  <div class="col-md-8"><a href="/admin/blog/edit/{{id}}">{{title}}</a></div>
-                  <div class="col-md-2">{{author}}</div>
-                  <div class="col-md-2 blog-draft">{{status}}</div>
+                  <div class="col-md-6"><a href="/admin/blog/edit/{{slug}}">{{title}}</a></div>
+                  <div class="col-md-3">{{author}}</div>
+                  {{#if published}}
+                    <div class="col-md-3">{{formatDate createdAt}}</div>
+                  {{else}}
+                    <div class="col-md-3 blog-draft">DRAFT</div>
+                  {{/if}}
                 </li>
               {{else}}
                 <li><a href="/admin/blog/new">Create the first blog</a></li>

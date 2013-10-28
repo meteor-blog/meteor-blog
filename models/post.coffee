@@ -6,6 +6,10 @@ class @Post extends Minimongoid
     name: 'user'
   ]
 
+  @before_create: (post) ->
+    post.slug = post.title.toLowerCase().replace(/[^\w ]+/g, "").replace RegExp(" +", "g"), "-"
+    post
+
 Post._collection.allow
   insert: (userId, item) ->
     userId

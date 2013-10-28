@@ -1,9 +1,6 @@
 Template.blogAdminNew.rendered = ->
   $('.post-form').parsley()
 
-  #tpl.editor.remove 'resources'
-  #tpl.editor.unload()
-
   @editor = new EpicEditor
     container: 'editor',
     basePath: '/packages/blog/public/epiceditor'
@@ -14,9 +11,9 @@ Template.blogAdminNew.rendered = ->
       editor: '/themes/editor/epic-grey.css'
       preview: '/themes/preview/github.css'
 
-  #page = Page.first name: 'resources'
   @editor.load()
-  #@editor.importFile 'resources', page.text
+  @editor.importFile 'blog-post', ''
+  $('[name=title]').val ''
 
   $('.make-switch').bootstrapSwitch().on 'switch-change', (e, data) =>
     if data.value
@@ -37,10 +34,12 @@ Template.blogAdminNew.events
       body: tpl.editor.exportFile()
       published: true
       createdAt: new Date()
+      updatedAt: new Date()
+      publishedAt: new Date()
       userId: Meteor.userId()
 
-    $(e.currentTarget).html '<i class="icon-globe"> Published'
-    $('.status').hide().html('Saved &amp; Published').fadeIn 'slow'
+    $(e.currentTarget).html '<i class="icon-globe"> Unpublish'
+    $('.status').hide().html('Published').fadeIn 'slow'
     setTimeout ->
       $('.status').fadeOut('slow')
     , 2500
@@ -56,6 +55,7 @@ Template.blogAdminNew.events
       body: tpl.editor.exportFile()
       published: false
       createdAt: new Date()
+      updatedAt: new Date()
       userId: Meteor.userId()
 
     $('.status').hide().html('Saved').fadeIn 'slow'

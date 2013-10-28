@@ -1,4 +1,4 @@
-<template name="blogAdminNew">
+<template name="blogAdminEdit">
   <div id="blog-admin">
     <div class="container">
       <div class="row">
@@ -10,7 +10,7 @@
         </div>
         <div class="col-md-9">
           <h1>
-            New Blog Post
+            <strong>EDIT:</strong> {{title}}
             <div class="switch-wrap">
               Preview
               <div class="make-switch" data-on="success">
@@ -21,7 +21,7 @@
           <form class="post-form">
             <div class="form-group">
               <label>Title</label>
-              <input data-required="true" name="title" type="text" class="form-control"/>
+              <input data-required="true" name="title" type="text" class="form-control" value="{{title}}"/>
             </div>
             <div class="form-group">
               <label>Body</label>
@@ -29,6 +29,7 @@
             </div>
             <button type="submit" class="for-saving btn-save btn btn-default"><i class="icon-save"></i> Save</button>
             <button type="submit" class="for-publishing btn-publish btn btn-default"><i class="icon-globe"></i> {{#if published}}Unpublish{{else}}Publish{{/if}}</button>
+            <button type="submit" class="for-deleting btn-delete btn btn-default"><i class="icon-trash"></i> Delete</button>
             <span class="hidden status"></span>
           </form>
         </div>

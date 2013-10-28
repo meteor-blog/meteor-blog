@@ -15,8 +15,5 @@ Template.blogAdmin.helpers
 
     'Mystery blogger'
 
-  status: ->
-    if @published
-      return 'PUBLISHED'
-
-    'DRAFT'
+  formatDate: (date) ->
+    moment(new Date(date)).format "MMM Do, YYYY"

@@ -31,7 +31,9 @@ Package.on_use(function(api) {
     'client/views/admin/admin.html',
     'client/views/admin/admin.coffee',
     'client/views/admin/new.html',
-    'client/views/admin/new.coffee'
+    'client/views/admin/new.coffee',
+    'client/views/admin/edit.html',
+    'client/views/admin/edit.coffee'
   ], 'client');
 
   /**

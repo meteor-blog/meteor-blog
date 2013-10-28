@@ -8,6 +8,7 @@
   "packages": {
     "iron-router": "0.5.4",
     "parsleyjs": "1.1.7",
-    "minimongoid": "0.8.0"
+    "minimongoid": "0.8.0",
+    "moment": "2.2.1"
   }
 }
