@@ -7,7 +7,7 @@ class @Post extends Minimongoid
   ]
 
   @before_create: (post) ->
-    post.slug = post.title.toLowerCase().replace(/[^\w ]+/g, "").replace RegExp(" +", "g"), "-"
+    post.slug = URLify2 post.title
     post
 
 Post._collection.allow

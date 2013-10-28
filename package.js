@@ -65,7 +65,9 @@ Package.on_use(function(api) {
     'coffeescript',
     'iron-router',
     'accounts-base',
-    'minimongoid'
+    'minimongoid',
+    'moment',
+    'urlify2'
   ], both);
 
   /**

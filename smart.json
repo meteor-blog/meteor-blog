@@ -9,6 +9,7 @@
     "iron-router": "0.5.4",
     "parsleyjs": "1.1.7",
     "minimongoid": "0.8.0",
-    "moment": "2.2.1"
+    "moment": "2.2.1",
+    "urlify2": "0.1.1"
   }
 }
