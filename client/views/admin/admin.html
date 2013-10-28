@@ -11,29 +11,33 @@
         <div class="col-md-9">
           <h1>
             Blog Admin
-            <select class="form-control">
-              <option>All Posts</option>
-              <option>My Posts</option>
+            <select class="for-filtering form-control">
+              <option value="all">All Posts</option>
+              <option value="mine">My Posts</option>
             </select>
           </h1>
           <div class="row">
-            <ul class="blog-admin-list">
-              {{#each posts}}
-                <li>
-                  <div class="col-md-6"><a href="/admin/blog/edit/{{slug}}">{{title}}</a></div>
-                  <div class="col-md-3">{{author}}</div>
-                  {{#if published}}
-                    <div class="col-md-3">{{formatDate createdAt}}</div>
-                  {{else}}
-                    <div class="col-md-3 blog-draft">DRAFT</div>
-                  {{/if}}
-                </li>
-              {{else}}
-                <li><a href="/admin/blog/new">Create the first blog</a></li>
-              {{/each}}
-            </ul>
+            {{> blogAdminList}}
           </div>
       </div>
     </div>
   </div>
+</template>
+
+<template name="blogAdminList">
+  <ul class="blog-admin-list">
+    {{#each posts}}
+      <li>
+        <div class="col-md-6"><a href="/admin/blog/edit/{{slug}}">{{title}}</a></div>
+        <div class="col-md-3">{{author}}</div>
+        {{#if published}}
+          <div class="col-md-3">{{formatDate createdAt}}</div>
+        {{else}}
+          <div class="col-md-3 blog-draft">DRAFT</div>
+        {{/if}}
+      </li>
+    {{else}}
+      <li><a href="/admin/blog/new">Create the first blog</a></li>
+    {{/each}}
+  </ul>
 </template>

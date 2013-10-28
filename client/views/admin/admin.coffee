@@ -1,4 +1,12 @@
-Template.blogAdmin.helpers
+Template.blogAdminList.helpers
+
+  posts: ->
+    results = Post.all()
+
+    if _.size Session.get 'filters'
+      results = _(results).where Session.get('filters')
+
+    results
 
   author: ->
     #user = @user() # doesn't work?
@@ -17,3 +25,14 @@ Template.blogAdmin.helpers
 
   formatDate: (date) ->
     moment(new Date(date)).format "MMM Do, YYYY"
+
+Template.blogAdmin.events
+
+  'change .for-filtering': (e) ->
+    e.preventDefault()
+
+    filters = {}
+    if $(e.currentTarget).val() == 'mine'
+      filters.userId = Meteor.userId()
+
+    Session.set 'filters', filters

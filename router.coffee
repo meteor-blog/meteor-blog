@@ -7,8 +7,6 @@ Router.map ->
     path: '/admin/blog'
     waitOn: ->
       Meteor.subscribe 'posts'
-    data: ->
-      posts: Post.all()
     before: ->
       if Meteor.loggingIn()
         return @stop()
