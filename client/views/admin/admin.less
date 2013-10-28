@@ -1,13 +1,8 @@
-@import '../../stylesheets/variables';
-@import '../../stylesheets/mixins';
+#blog-admin {
 
-.blog-admin {
-
-  h1 {
-    .switch-wrap {
-      float: right;
-      font-size: 14px;
-    }
+  h1 .switch-wrap {
+    float: right;
+    font-size: 14px;
   }
 
   select {
@@ -17,6 +12,10 @@
   .blog-draft {
     font-weight: 600;
     color: #DB2727;
+  }
+
+  .status {
+    margin-left: 3%; 
   }
 
   ul.blog-admin-sidebar {
@@ -58,3 +57,14 @@
     }
   }
 }
+
+.parsley-error {
+  background: #fbe3e4 !important;
+  color: #8a1f11 !important;
+  border-color: #fbc2c4 !important;
+}
+
+.parsley-error-list {
+  display: none !important;
+}
+

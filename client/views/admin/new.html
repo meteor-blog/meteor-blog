@@ -1,5 +1,5 @@
 <template name="blogAdminNew">
-  <div class="blog-admin">
+  <div id="blog-admin">
     <div class="container">
       <div class="row">
         <div class="col-md-3">
@@ -14,21 +14,24 @@
             <div class="switch-wrap">
               Preview
               <div class="make-switch" data-on="success">
-                <input type="checkbox">
+                <input name="preview" type="checkbox">
               </div>
             </div>
           </h1>
-          <form>
+          <form class="post-form">
             <div class="form-group">
               <label>Title</label>
-              <input type="text" class="form-control"/>
+              <input data-required="true" name="title" type="text" class="form-control"/>
             </div>
             <div class="form-group">
               <label>Body</label>
-              <textarea rows="15" class="form-control"/>
+              <div id="editor">
+                {{{ content }}}
+              </div>
             </div>
-            <button type="submit" class="btn btn-default"><i class="icon-save"></i> Save Draft</button>
-            <button type="submit" class="btn btn-default"><i class="icon-globe"></i> Publish</button>
+            <button type="submit" class="for-saving btn btn-default"><i class="icon-save"></i> Save Draft</button>
+            <button type="submit" class="for-publishing btn btn-default"><i class="icon-globe"></i> Publish</button>
+            <span class="hidden status"></span>
           </form>
         </div>
       </div>

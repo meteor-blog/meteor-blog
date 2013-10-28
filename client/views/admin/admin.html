@@ -1,5 +1,5 @@
 <template name="blogAdmin">
-  <div class="blog-admin">
+  <div id="blog-admin">
     <div class="container">
       <div class="row">
         <div class="col-md-3">
@@ -18,31 +18,15 @@
           </h1>
           <div class="row">
             <ul class="blog-admin-list">
-              <li>
-                <div class="col-md-8"><a href="/admin/blog/edit/1">Blog Post Title Here</a></div>
-                <div class="col-md-2">Author</div>
-                <div class="col-md-2 blog-draft">DRAFT</div>
-              </li>
-              <li>
-                <div class="col-md-8"><a href="/admin/blog/edit/1">Blog Post Title Here</a></div>
-                <div class="col-md-2">Author</div>
-                <div class="col-md-2">10/12/2013</div>
-              </li>
-              <li>
-                <div class="col-md-8"><a href="/admin/blog/edit/1">Blog Post Title Here</a></div>
-                <div class="col-md-2">Author</div>
-                <div class="col-md-2">10/12/2013</div>
-              </li>
-              <li>
-                <div class="col-md-8"><a href="/admin/blog/edit/1">Blog Post Title Here</a></div>
-                <div class="col-md-2">Author</div>
-                <div class="col-md-2">10/12/2013</div>
-              </li>
-              <li>
-                <div class="col-md-8"><a href="/admin/blog/edit/1">Blog Post Title Here</a></div>
-                <div class="col-md-2">Author</div>
-                <div class="col-md-2">10/12/2013</div>
-              </li>
+              {{#each posts}}
+                <li>
+                  <div class="col-md-8"><a href="/admin/blog/edit/{{id}}">{{title}}</a></div>
+                  <div class="col-md-2">{{author}}</div>
+                  <div class="col-md-2 blog-draft">{{status}}</div>
+                </li>
+              {{else}}
+                <li><a href="/admin/blog/new">Create the first blog</a></li>
+              {{/each}}
             </ul>
           </div>
       </div>
