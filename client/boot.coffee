@@ -4,7 +4,10 @@ Meteor.startup ->
     rel: 'stylesheet'
   ).appendTo 'head'
 
-## Adding active class to navigation
+#
+# Register global helpers
+#
+
 # Get the current path for URL 
 curPath = ->
   c = window.location.pathname
@@ -18,9 +21,10 @@ curPath = ->
     else
       c
 
-
-#register a global helper
+# Use the pattern {{active '/path'}} inside of the class="" to have an active
+# class added end add active class to navigation
 Handlebars.registerHelper "active", (path) ->
   (if curPath() is path then "active" else "")
-# now you can use the pattern {{active '/path'}} inside of the class="" to have an active class added
-# end add active class to navigation
+
+Handlebars.registerHelper "formatDate", (date) ->
+  moment(new Date(date)).format "MMM Do, YYYY"

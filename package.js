@@ -26,7 +26,7 @@ Package.on_use(function(api) {
     'client/stylesheets/lib/bootstrap-forms.css',
     'client/stylesheets/lib/bootstrap-buttons.css',
     'client/stylesheets/lib/bootstrap-switch.css',
-    'client/config.coffee',
+    'client/boot.coffee',
     'client/compatibility/bootstrap-switch.js',
     'client/compatibility/epiceditor.js',
     'client/views/admin/nav.html',
@@ -36,7 +36,10 @@ Package.on_use(function(api) {
     'client/views/admin/new.html',
     'client/views/admin/new.coffee',
     'client/views/admin/edit.html',
-    'client/views/admin/edit.coffee'
+    'client/views/admin/edit.coffee',
+    'client/views/blog/blog.less',
+    'client/views/blog/blog.html',
+    'client/views/blog/blog.coffee'
   ], 'client');
 
   /**

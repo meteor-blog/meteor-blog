@@ -1,0 +1,24 @@
+<template name="blogIndex">
+  <div id="meteor-blog">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          {{#each posts}}
+            <article class="post">
+              <h2>
+                <a href="/blog/{{slug}}">{{title}}</a>
+              </h2>
+              <div class="post-meta">
+                By {{author}} on {{formatDate publishedAt}}
+              </div>
+              <div class="the-content">
+                {{{excerpt}}}
+              </div>
+            </article>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+

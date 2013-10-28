@@ -1,12 +1,4 @@
-Template.blogAdminList.helpers
-
-  posts: ->
-    results = Post.all()
-
-    if _.size Session.get 'filters'
-      results = _(results).where Session.get('filters')
-
-    results
+Template.blogIndex.helpers
 
   author: ->
     #user = @user() # doesn't work?
@@ -23,13 +15,15 @@ Template.blogAdminList.helpers
 
     'Mystery blogger'
 
-Template.blogAdmin.events
+  excerpt: ->
+    html = marked @body
 
-  'change .for-filtering': (e) ->
-    e.preventDefault()
+    # Find 1st non-empty paragraph
+    matches = html.split /<\/div>|<\/p>|<br><br>|\\n\\n|\\r\\n\\r\\n/m
 
-    filters = {}
-    if $(e.currentTarget).val() == 'mine'
-      filters.userId = Meteor.userId()
+    i = 0
+    ret = ''
+    while not ret and matches[i]
+      ret += matches[i++].trim().replace(/(<([^>]+)>)/ig, '').replace('&nbsp;', '')
 
-    Session.set 'filters', filters
+    ret

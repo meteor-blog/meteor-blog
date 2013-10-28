@@ -2,6 +2,15 @@ Router.map ->
 
   @route 'blogIndex',
     path: '/blog'
+    waitOn: ->
+      Meteor.subscribe 'posts'
+    data: ->
+      posts: Post.where published: true
+
+  #@route 'blogShow',
+    #path: '/blog/:slug'
+    #before: ->
+      #Session.set 'postSlug', @params.slug
 
   @route 'blogAdmin',
     path: '/admin/blog'
