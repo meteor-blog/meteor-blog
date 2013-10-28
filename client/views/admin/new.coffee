@@ -5,7 +5,7 @@ Template.blogAdminNew.rendered = ->
     container: 'editor',
     basePath: '/packages/blog/public/epiceditor'
     autogrow: true
-    focusOnLoad: true
+    focusOnLoad: false
     clientSideStorage: false
     button:
       preview: false
@@ -14,13 +14,21 @@ Template.blogAdminNew.rendered = ->
       preview: '/themes/preview/github.css'
 
   @editor.load()
-  $('[name=title]').val ''
+  $('[name=title]').focus().val ''
 
   $('.make-switch').bootstrapSwitch().on 'switch-change', (e, data) =>
     if data.value
       return @editor.preview()
 
     @editor.edit()
+
+flash = (status, post) ->
+  setTimeout ->
+    $('.status').hide().html(status).fadeIn 'slow', ->
+      setTimeout ->
+        Router.go "blogAdminEdit", slug: post.slug
+      , 2500
+  , 100
 
 Template.blogAdminNew.events
 
@@ -30,7 +38,7 @@ Template.blogAdminNew.events
     if not $('.post-form').parsley 'validate'
       return
 
-    Post.create
+    post = Post.create
       title: $('[name=title]').val()
       body: tpl.editor.exportFile()
       published: true
@@ -39,11 +47,7 @@ Template.blogAdminNew.events
       publishedAt: new Date()
       userId: Meteor.userId()
 
-    $(e.currentTarget).html '<i class="icon-globe"> Unpublish'
-    $('.status').hide().html('Published').fadeIn 'slow'
-    setTimeout ->
-      $('.status').fadeOut('slow')
-    , 2500
+    flash 'Publishing...', post
 
   'click .for-saving': (e, tpl) ->
     e.preventDefault()
@@ -51,7 +55,7 @@ Template.blogAdminNew.events
     if not $('.post-form').parsley 'validate'
       return
 
-    Post.create
+    post = Post.create
       title: $('[name=title]').val()
       body: tpl.editor.exportFile()
       published: false
@@ -59,7 +63,4 @@ Template.blogAdminNew.events
       updatedAt: new Date()
       userId: Meteor.userId()
 
-    $('.status').hide().html('Saved').fadeIn 'slow'
-    setTimeout ->
-      $('.status').fadeOut 'slow'
-    , 2500
+    flash 'Saving...', post

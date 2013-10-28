@@ -13,8 +13,8 @@ Template.blogAdminEdit.rendered = ->
       editor: '/themes/editor/epic-grey.css'
       preview: '/themes/preview/github.css'
 
-  post = Post.first slug: Session.get('postSlug')
   @editor.load()
+  post = Post.first slug: Session.get('postSlug')
   @editor.importFile post.slug, post.body
 
   $('.make-switch').bootstrapSwitch().on 'switch-change', (e, data) =>
@@ -22,6 +22,14 @@ Template.blogAdminEdit.rendered = ->
       return @editor.preview()
 
     @editor.edit()
+
+flash = (status) ->
+  setTimeout ->
+    $('.status').hide().html(status).fadeIn 'slow', ->
+      setTimeout ->
+        $('.status').fadeOut 'slow'
+      , 2500
+  , 100
 
 Template.blogAdminEdit.events
 
@@ -37,32 +45,25 @@ Template.blogAdminEdit.events
     if not $('.post-form').parsley 'validate'
       return
 
+    attrs =
+      title: $('[name=title]').val()
+      body: tpl.editor.exportFile()
+      updatedAt: new Date()
+
     if @published
       status = 'Unpublished'
       $(e.currentTarget).html '<i class="icon-globe"> Publish'
-      @update
-        title: $('[name=title]').val()
-        body: tpl.editor.exportFile()
-        published: false
-        publishedAt: null
-        updatedAt: new Date()
+      attrs.published = false
+      attrs.publishedAt = null
 
     else
       status = 'Published'
       $(e.currentTarget).html '<i class="icon-globe"> Unpublish'
-      @update
-        title: $('[name=title]').val()
-        body: tpl.editor.exportFile()
-        published: true
-        publishedAt: new Date()
-        updatedAt: new Date()
+      attrs.published = true
+      attrs.publishedAt = new Date()
 
-    setTimeout ->
-      $('.status').hide().html(status).fadeIn 'slow', ->
-        setTimeout ->
-          $('.status').fadeOut 'slow'
-        , 2500
-    , 100
+    @update attrs
+    flash status
 
   'click .for-saving': (e, tpl) ->
     e.preventDefault()
@@ -75,9 +76,4 @@ Template.blogAdminEdit.events
       body: tpl.editor.exportFile()
       updatedAt: new Date()
 
-    setTimeout ->
-      $('.status').hide().html('Saved').fadeIn 'slow', ->
-        setTimeout ->
-          $('.status').fadeOut 'slow'
-        , 2500
-    , 100
+    flash 'Saved'
