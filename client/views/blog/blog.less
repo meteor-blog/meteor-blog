@@ -1,42 +1,109 @@
 @import '../../stylesheets/variables';
 
 #meteor-blog {
-  article.post {
-    border-bottom: 1px solid #EEE;
-    padding-bottom: 40px;
-    margin-bottom: 40px;
+  &.blog-list {
+    article.post {
+      border-bottom: 1px solid #EEE;
+      padding-bottom: 40px;
+      margin-bottom: 40px;
 
-    &:last-child {
-      border-bottom: none;
-    }
-
-    h2 {
-      font-size: 32px;
-      line-height: 45px;
-      margin-bottom: 8px;
-      padding-right: 0px;
-
-      @media @tablet {
-        padding-right: 100px;
+      &:last-child {
+        border-bottom: none;
       }
 
-      a {
-        &:hover {
-          text-decoration: none;
+      h2 {
+        font-size: 32px;
+        line-height: 45px;
+        margin-bottom: 8px;
+        padding-right: 0px;
+
+        @media @tablet {
+          padding-right: 100px;
+        }
+
+        a {
+          &:hover {
+            text-decoration: none;
+          }
         }
       }
-    }
 
-    .post-meta {
-      color: #bbb;
-      margin-bottom: 20px;
-
-      a {
+      .post-meta {
         color: #bbb;
+        margin-bottom: 20px;
 
-        &:hover {
+        a {
           color: #bbb;
+
+          &:hover {
+            color: #bbb;
+          }
         }
+      }
+    }
+  }
+
+  &.blog-single {
+    article.post {
+      border-bottom: 1px solid #EEE;
+      padding-bottom: 10px;
+      margin-bottom: 30px;
+
+      .post-meta {
+        color: #bbb;
+        margin-bottom: 20px;
+
+        a {
+          color: #bbb;
+
+          &:hover {
+            color: #bbb;
+          }
+        }
+      }
+
+      h2 {
+        font-size: 40px;
+        line-height: 48px;
+        margin-bottom: 8px;
+
+        a {
+          &:hover {
+            text-decoration: none;
+          }
+        }
+      }
+
+      img {
+        max-width: 60%;
+        border: 1px solid rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+      }
+
+      code {
+        color: inherit;
+      }
+    }
+
+    .blog-back-link {
+      margin-bottom: 20px;
+      i {
+        margin-right: 10px;
+      }
+
+      a:hover {
+        text-decoration: none;
+      }
+    }
+
+    .share-buttons {
+      .btn-facebook, .btn-twitter {
+        margin-right: 7px;
+      }
+
+      i {
+        margin-right: 10px;
+        font-size: 14px;
       }
     }
   }

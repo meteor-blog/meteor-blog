@@ -10,6 +10,17 @@ class @Post extends Minimongoid
     post.slug = URLify2 post.title
     post
 
+  html: ->
+    marked @body
+
+  thumbnail: ->
+    # Convert markdown to HTML
+    html = marked @body
+    regex = new RegExp /img src=[\'"]([^\'"]+)/ig
+
+    while match = regex.exec html
+      return match
+
   excerpt: ->
     # Convert markdown to HTML
     html = marked @body
@@ -31,10 +42,13 @@ class @Post extends Minimongoid
 
     if user.profile.firstName and user.profile.lastName
       return "#{user.profile.firstName} #{user.profile.lastName}"
+
     else if user.profile.twitter
-      return user.profile.twitter
+      return "<a href=\"http://twitter.com/#{user.profile.twitter}\">#{user.profile.twitter}</a>"
+
     else if user.username
       return user.username
+
     else if user.emails and user.emails[0]
       return user.emails[0].address
 

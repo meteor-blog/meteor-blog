@@ -7,10 +7,15 @@ Router.map ->
     data: ->
       posts: Post.where published: true
 
-  #@route 'blogShow',
-    #path: '/blog/:slug'
-    #before: ->
-      #Session.set 'postSlug', @params.slug
+  @route 'blogShow',
+    path: '/blog/:slug'
+    waitOn: ->
+      [ Meteor.subscribe 'posts'
+        Meteor.subscribe 'users' ]
+    data: ->
+      Post.first slug: @params.slug
+    before: ->
+      Session.set 'postSlug', @params.slug
 
   @route 'blogAdmin',
     path: '/admin/blog'
