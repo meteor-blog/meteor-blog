@@ -40,10 +40,10 @@ class @Post extends Minimongoid
     #user = @user() # why doesn't this work?
     user = User.first @userId
 
-    if user.profile.firstName and user.profile.lastName
+    if user.profile and user.profile.firstName and user.profile.lastName
       return "#{user.profile.firstName} #{user.profile.lastName}"
 
-    else if user.profile.twitter
+    else if user.profile and user.profile.twitter
       return "<a href=\"http://twitter.com/#{user.profile.twitter}\">#{user.profile.twitter}</a>"
 
     else if user.username
