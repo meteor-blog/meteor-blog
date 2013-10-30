@@ -4,14 +4,23 @@ Meteor.startup ->
     rel: 'stylesheet'
   ).appendTo 'head'
 
-  js = undefined
-  fjs = document.getElementsByTagName('script')[0]
-  unless document.getElementById('twitter-wjs')
-    js = document.createElement('script')
-    js.id = 'twitter-wjs'
+  # Twitter
+  window.twttr = do (d = document, s = 'script', id = 'twitter-wjs') ->
+    t = undefined
+    js = undefined
+    fjs = d.getElementsByTagName(s)[0]
+    return  if d.getElementById(id)
+    js = d.createElement(s)
+    js.id = id
     js.src = "https://platform.twitter.com/widgets.js"
     fjs.parentNode.insertBefore js, fjs
+    window.twttr or (t =
+      _e: []
+      ready: (f) ->
+        t._e.push f
+    )
 
+  # Facebook
   js = undefined
   id = "facebook-jssdk"
   ref = document.getElementsByTagName("script")[0]
