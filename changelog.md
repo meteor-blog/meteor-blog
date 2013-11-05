@@ -10,7 +10,7 @@ desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ### v0.1.0
 
-_NOTE: `iron-router` 0.6.x is not backwards-compatible with earlier versions
+_NOTE: `iron-router` 0.6.x is not backwards-compatible with earlier versions_
 
 * Upgrade iron-router to 0.6.1 and minimongoid to 0.8.3
 * Add 404 template
