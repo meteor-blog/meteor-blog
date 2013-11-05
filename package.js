@@ -29,6 +29,7 @@ Package.on_use(function(api) {
     'client/boot.coffee',
     'client/compatibility/bootstrap-switch.js',
     'client/compatibility/epiceditor.js',
+    'client/views/404.html',
     'client/views/admin/nav.html',
     'client/views/admin/admin.less',
     'client/views/admin/admin.html',

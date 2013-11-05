@@ -9,6 +9,7 @@ Router.map ->
 
   @route 'blogShow',
     path: '/blog/:slug'
+    notFoundTemplate: '404'
     waitOn: ->
       [ Meteor.subscribe 'posts'
         Meteor.subscribe 'users' ]
