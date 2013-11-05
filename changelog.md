@@ -8,7 +8,7 @@ desc: Gives you an basic, out-of-the-box blog at `/blog`
 ---
 # Changelog
 
-### v0.1.0
+### v0.2.0
 
 _NOTE: `iron-router` 0.6.x is not backwards-compatible with earlier versions_
 
