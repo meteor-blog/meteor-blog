@@ -77,7 +77,7 @@ Package.on_use(function(api) {
 
   api.add_files([
     'router.coffee',
-    'models/user.coffee',
-    'models/post.coffee'
+    'collections/user.coffee',
+    'collections/post.coffee'
   ], both);
 });
