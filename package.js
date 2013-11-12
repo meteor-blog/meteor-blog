@@ -60,6 +60,14 @@ Package.on_use(function(api) {
   ], 'client', { isAsset: true });
 
   /**
+   * Files for server
+   */
+
+  api.add_files([
+    'server/publications.coffee'
+  ], 'server');
+
+  /**
    * Packages for server and client
    */
 
