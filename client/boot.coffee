@@ -1,3 +1,24 @@
+################################################################################
+# Blog Config
+#
+
+
+Blog =
+  settings:
+    blogIndexTemplate: 'blogIndex'
+    blogShowTemplate: 'blogShow'
+
+  config: (appConfig) ->
+    @settings = _.extend(@settings, appConfig)
+
+@Blog = Blog
+
+
+################################################################################
+# Bootstrap Code
+#
+
+
 Meteor.startup ->
   $('<link>',
     href: '//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css'
@@ -31,9 +52,11 @@ Meteor.startup ->
   js.src = "//connect.facebook.net/en_US/all.js"
   ref.parentNode.insertBefore js, ref
 
+
+################################################################################
+# Register Global Helpers
 #
-# Register global helpers
-#
+
 
 # Use the pattern {{active '/path'}} inside of the class="" to have an active
 # class added end add active class to navigation

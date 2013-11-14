@@ -2,6 +2,9 @@ Router.map ->
 
   @route 'blogIndex',
     path: '/blog'
+    before: ->
+      if Blog.settings.blogIndexTemplate
+        @template = Blog.settings.blogIndexTemplate
     waitOn: ->
       Meteor.subscribe 'posts'
     data: ->
@@ -10,13 +13,15 @@ Router.map ->
   @route 'blogShow',
     path: '/blog/:slug'
     notFoundTemplate: 'blogNotFound'
+    before: ->
+      if Blog.settings.blogShowTemplate
+        @template = Blog.settings.blogShowTemplate
+      Session.set 'postSlug', @params.slug
     waitOn: ->
       [ Meteor.subscribe 'posts'
         Meteor.subscribe 'users' ]
     data: ->
       Post.first slug: @params.slug
-    before: ->
-      Session.set 'postSlug', @params.slug
 
   @route 'blogAdmin',
     path: '/admin/blog'
