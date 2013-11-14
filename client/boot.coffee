@@ -78,3 +78,9 @@ Handlebars.registerHelper "active", (path) ->
 
 Handlebars.registerHelper "formatDate", (date) ->
   moment(new Date(date)).format "MMM Do, YYYY"
+
+Handlebars.registerHelper "blogIndex", ->
+  new Handlebars.SafeString Template.blogIndexLoop(this)
+
+Handlebars.registerHelper "blogShow", ->
+  new Handlebars.SafeString Template.blogShowBody(this)

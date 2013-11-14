@@ -1,10 +1,9 @@
-Template.blogShow.rendered = ->
+Template.blogShowBody.rendered = ->
 
   # Twitter
   base = "https://twitter.com/intent/tweet"
   url = encodeURIComponent location.origin + location.pathname
-  #author = @data.user() # why doesn't this work?
-  author = User.first @data.userId
+  author = @data.user()
   text = encodeURIComponent @data.title
   href = base + "?url=" + url + "&text=" + text
 
