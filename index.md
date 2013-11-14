@@ -46,3 +46,58 @@ You will get routes for:
 `/admin/blog` requires that `Meteor.user()` return a user.
 
 ## Usage
+
+Meteor blog should work out-of-the-box (hopefully) with some decent looking
+templates. The templates have a hard dependency on the Bootstrap 3 grid, forms,
+and buttons. These files are included in the package.
+
+#### Customisation
+
+If the default templates aren't doing it for you, you can override the default
+templates with your own by setting configuration variables:
+
+{% highlight coffeescript %}
+Meteor.startup ->
+  Blog.config
+    blogIndexTemplate: 'myBlogIndexTemplate' # '/blog' route
+    blogShowTemplate: 'myShowBlogTemplate'   # '/blog/:slug' route
+{% endhighlight %}
+
+In your templates, you can use these Handlebars helpers provided by the package
+to display blog posts with some basic markup:
+
+`{{blogIndex}}` - Renders list of blog posts (`/blog` route)
+`{{blogShow}}` - Renders single blog post (`/blog/:slug` route)
+
+Example:
+
+{% highlight html %}
+<template name="myBlogIndexTemplate">
+  <h1>Welcome to my Blog</h1>
+  <div>{{blogIndex}}</div>
+</template>
+{% endhighlight %}
+
+For finer-grained control, the blog routes provides the data in the template
+context:
+
+`posts` - Collection of [`minimongoid`](https://github.com/Exygy/minimongoid) blog post objects (`/blog` route)
+`this` - [`minimongoid`](https://github.com/Exygy/minimongoid) blog post object (`/blog/:slug` route)
+
+Example:
+
+{% highlight html %}
+<template name="myBlogIndexTemplate">
+  <h1>Welcome to my Blog</h1>
+  <ul>
+    {{#each posts}}
+      <li>
+        <h2>{{title}}</h2>
+        <p>Published on {{publishedAt}}</p>
+        <p>Markdown: {{body}}</p>
+        <p>HTML: {{{html}}}</p>
+      </li>
+    {{/each}}
+  </ul>
+</template>
+{% endhighlight %}
