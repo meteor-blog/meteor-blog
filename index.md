@@ -2,7 +2,7 @@
 layout: default
 username: BeDifferential
 repo: meteor-blog
-version: 0.2.0
+version: 0.2.1
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
@@ -18,8 +18,8 @@ vote with your Github issues!
 ## Roadmap
 
 * <s>Basic markdown editor</s>
-* Easily add images
 * <s>URL's based on slug from title</s> (but be editable)
+* Easily add images
 * Allow for comments (or at least a comment plugin)
 * Ability to create categories/tags
 * Widget to embed recent posts on another page
@@ -66,36 +66,43 @@ Meteor.startup ->
 In your templates, you can use these Handlebars helpers provided by the package
 to display blog posts with some basic markup:
 
-`{{blogIndex}}` - Renders list of blog posts (`/blog` route)
-`{{blogShow}}` - Renders single blog post (`/blog/:slug` route)
+{% assign bi = '{{blogIndex}}' %}
+{% assign bs = '{{blogShow}}' %}
+* `{{ bi }}` - Renders list of blog posts (`/blog` route)
+* `{{ bs }}` - Renders single blog post (`/blog/:slug` route)
 
 Example:
 
 {% highlight html %}
 <template name="myBlogIndexTemplate">
   <h1>Welcome to my Blog</h1>
-  <div>{{blogIndex}}</div>
+  <div>{{ bi }}</div>
 </template>
 {% endhighlight %}
 
 For finer-grained control, the blog routes provides the data in the template
 context:
 
-`posts` - Collection of [`minimongoid`](https://github.com/Exygy/minimongoid) blog post objects (`/blog` route)
-`this` - [`minimongoid`](https://github.com/Exygy/minimongoid) blog post object (`/blog/:slug` route)
+* `posts` - Collection of [`minimongoid`](https://github.com/Exygy/minimongoid) blog post objects (`/blog` route)
+* `this` - [`minimongoid`](https://github.com/Exygy/minimongoid) blog post object (`/blog/:slug` route)
 
 Example:
 
+{% assign ep = '{{#each posts}}' %}
+{% assign t = '{{title}}' %}
+{% assign p = '{{publishedAt}}' %}
+{% assign b = '{{body}}' %}
+{% assign h = '{{{html}}}' %}
 {% highlight html %}
 <template name="myBlogIndexTemplate">
   <h1>Welcome to my Blog</h1>
   <ul>
     {{#each posts}}
       <li>
-        <h2>{{title}}</h2>
-        <p>Published on {{publishedAt}}</p>
-        <p>Markdown: {{body}}</p>
-        <p>HTML: {{{html}}}</p>
+        <h2>{{t}}</h2>
+        <p>Published on {{p}}</p>
+        <p>Markdown: {{b}}</p>
+        <p>HTML: {{h}}</p>
       </li>
     {{/each}}
   </ul>

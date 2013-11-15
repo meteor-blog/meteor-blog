@@ -2,11 +2,18 @@
 layout: default
 username: BeDifferential
 repo: meteor-blog
-version: 0.2.0
+version: 0.2.1
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
+
+### v0.2.1
+
+* Rename 404 template
+* Allow user to override package templates
+* Add experimental handlebar helpers for blog content
+* Fix a few bugs related to joining blog to author
 
 ### v0.2.0
 
