@@ -37,7 +37,7 @@ class @Post extends Minimongoid
     ret
 
   author: ->
-    user = @user()
+    user = User.first(@userId)
 
     if user.profile and user.profile.firstName and user.profile.lastName
       return "#{user.profile.firstName} #{user.profile.lastName}"
