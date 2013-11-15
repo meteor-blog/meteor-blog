@@ -39,17 +39,18 @@ class @Post extends Minimongoid
   author: ->
     user = User.first(@userId)
 
-    if user.profile and user.profile.firstName and user.profile.lastName
-      return "#{user.profile.firstName} #{user.profile.lastName}"
+    if user
+      if user.profile and user.profile.firstName and user.profile.lastName
+        return "#{user.profile.firstName} #{user.profile.lastName}"
 
-    else if user.profile and user.profile.twitter
-      return "<a href=\"http://twitter.com/#{user.profile.twitter}\">#{user.profile.twitter}</a>"
+      else if user.profile and user.profile.twitter
+        return "<a href=\"http://twitter.com/#{user.profile.twitter}\">#{user.profile.twitter}</a>"
 
-    else if user.username
-      return user.username
+      else if user.username
+        return user.username
 
-    else if user.emails and user.emails[0]
-      return user.emails[0].address
+      else if user.emails and user.emails[0]
+        return user.emails[0].address
 
     'Mystery blogger'
 
