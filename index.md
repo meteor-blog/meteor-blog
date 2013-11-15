@@ -89,6 +89,7 @@ context:
 Example:
 
 {% assign ep = '{{#each posts}}' %}
+{% assign ee = '{{/each}}' %}
 {% assign t = '{{title}}' %}
 {% assign p = '{{publishedAt}}' %}
 {% assign b = '{{body}}' %}
@@ -97,14 +98,14 @@ Example:
 <template name="myBlogIndexTemplate">
   <h1>Welcome to my Blog</h1>
   <ul>
-    {{#each posts}}
+    {{ep}}
       <li>
         <h2>{{t}}</h2>
         <p>Published on {{p}}</p>
         <p>Markdown: {{b}}</p>
         <p>HTML: {{h}}</p>
       </li>
-    {{/each}}
+    {{ee}}
   </ul>
 </template>
 {% endhighlight %}
