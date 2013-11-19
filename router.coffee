@@ -6,7 +6,8 @@ Router.map ->
       if Blog.settings.blogIndexTemplate
         @template = Blog.settings.blogIndexTemplate
     waitOn: ->
-      Meteor.subscribe 'posts'
+      [ Meteor.subscribe 'posts'
+        Meteor.subscribe 'users' ]
     data: ->
       posts: Post.where published: true
 
@@ -26,7 +27,8 @@ Router.map ->
   @route 'blogAdmin',
     path: '/admin/blog'
     waitOn: ->
-      Meteor.subscribe 'posts'
+      [ Meteor.subscribe 'posts'
+        Meteor.subscribe 'users' ]
     before: ->
       if Meteor.loggingIn()
         return @stop()
@@ -46,7 +48,8 @@ Router.map ->
   @route 'blogAdminEdit',
     path: '/admin/blog/edit/:slug'
     waitOn: ->
-      Meteor.subscribe 'posts'
+      [ Meteor.subscribe 'posts'
+        Meteor.subscribe 'users' ]
     data: ->
       Post.first slug: @params.slug
     before: ->
