@@ -2,11 +2,18 @@
 layout: default
 username: BeDifferential
 repo: meteor-blog
-version: 0.2.1
+version: 0.2.2
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
+
+### v0.2.2
+
+* Fix bug where every blog author was 'Mystery author' on blog index page
+* Fix sorting of blogs on index and admin pages
+* Fix flash status message
+* Rename 'user' model to 'author' (to help avoid conflicts)
 
 ### v0.2.1
 
