@@ -3,7 +3,7 @@ class @Post extends Minimongoid
   @_collection: new Meteor.Collection 'blog_posts'
 
   @belongs_to: [
-    name: 'user'
+    name: 'author'
   ]
 
   @before_create: (post) ->
@@ -36,21 +36,21 @@ class @Post extends Minimongoid
 
     ret
 
-  author: ->
-    user = User.first(@userId)
+  authorName: ->
+    author = Author.first(@userId)
 
-    if user
-      if user.profile and user.profile.firstName and user.profile.lastName
-        return "#{user.profile.firstName} #{user.profile.lastName}"
+    if author
+      if author.profile and author.profile.firstName and author.profile.lastName
+        return "#{author.profile.firstName} #{author.profile.lastName}"
 
-      else if user.profile and user.profile.twitter
-        return "<a href=\"http://twitter.com/#{user.profile.twitter}\">#{user.profile.twitter}</a>"
+      else if author.profile and author.profile.twitter
+        return "<a href=\"http://twitter.com/#{author.profile.twitter}\">#{author.profile.twitter}</a>"
 
-      else if user.username
-        return user.username
+      else if author.username
+        return author.username
 
-      else if user.emails and user.emails[0]
-        return user.emails[0].address
+      else if author.emails and author.emails[0]
+        return author.emails[0].address
 
     'Mystery blogger'
 

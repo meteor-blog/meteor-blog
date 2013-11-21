@@ -26,9 +26,9 @@
     {{#each posts}}
       <li>
         <div class="col-md-6"><a href="{{pathFor 'blogAdminEdit'}}">{{title}}</a></div>
-        <div class="col-md-3">{{author}}</div>
+        <div class="col-md-3">{{authorName}}</div>
         {{#if published}}
-          <div class="col-md-3">{{formatDate createdAt}}</div>
+          <div class="col-md-3">{{blogFormatDate createdAt}}</div>
         {{else}}
           <div class="col-md-3 blog-draft">DRAFT</div>
         {{/if}}
