@@ -9,7 +9,7 @@ Router.map ->
       [ Meteor.subscribe 'posts'
         Meteor.subscribe 'users' ]
     data: ->
-      posts: Post.where published: true
+      posts: Post.where { published: true }, { sort: { publishedAt: -1 }}
 
   @route 'blogShow',
     path: '/blog/:slug'

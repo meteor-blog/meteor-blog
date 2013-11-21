@@ -1,7 +1,7 @@
 Template.blogAdminList.helpers
 
   posts: ->
-    results = Post.all()
+    results = Post.all { sort: { updatedAt: -1 }}
 
     if _.size Session.get 'filters'
       results = _(results).where Session.get('filters')
