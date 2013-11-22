@@ -3,7 +3,7 @@ Template.blogShowBody.rendered = ->
   # Twitter
   base = "https://twitter.com/intent/tweet"
   url = encodeURIComponent location.origin + location.pathname
-  author = @data.user()
+  author = @data.author()
   text = encodeURIComponent @data.title
   href = base + "?url=" + url + "&text=" + text
 
