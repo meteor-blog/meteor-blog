@@ -2,4 +2,11 @@ Meteor.publish 'posts', ->
   Post.find()
 
 Meteor.publish 'authors', ->
-  Author.find()
+  ids = _.pluck Post.all
+    fields:
+      id: 1
+  , 'id'
+
+  Author.find
+    id:
+      $in: ids
