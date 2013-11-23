@@ -48,8 +48,12 @@ You will get routes for:
 ## Usage
 
 Meteor blog should work out-of-the-box (hopefully) with some decent looking
-templates. The templates have a hard dependency on the Bootstrap 3 grid, forms,
-and buttons. These files are included in the package.
+templates. If you use the default templates, you must add the meteor
+`bootstrap-3` package.
+
+```
+mrt add bootstrap-3
+```
 
 #### Customisation
 
