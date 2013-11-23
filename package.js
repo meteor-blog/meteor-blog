@@ -22,9 +22,6 @@ Package.on_use(function(api) {
    */
 
   api.add_files([
-    'client/stylesheets/lib/bootstrap-grid.css',
-    'client/stylesheets/lib/bootstrap-forms.css',
-    'client/stylesheets/lib/bootstrap-buttons.css',
     'client/stylesheets/lib/bootstrap-switch.css',
     'client/boot.coffee',
     'client/compatibility/bootstrap-switch.js',
