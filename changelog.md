@@ -2,11 +2,17 @@
 layout: default
 username: BeDifferential
 repo: meteor-blog
-version: 0.2.2
+version: 0.2.3
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
+
+### v0.2.3
+
+* Take out Bootstrap 3 files by default (user must add manually)
+* Fix bug getting blog post thumbnail
+* Publish only blog authors
 
 ### v0.2.2
 
