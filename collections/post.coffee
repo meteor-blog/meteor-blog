@@ -19,7 +19,7 @@ class @Post extends Minimongoid
     regex = new RegExp /img src=[\'"]([^\'"]+)/ig
 
     while match = regex.exec html
-      return match
+      return match[1]
 
   excerpt: ->
     # Convert markdown to HTML
