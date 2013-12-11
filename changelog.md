@@ -2,11 +2,15 @@
 layout: default
 username: BeDifferential
 repo: meteor-blog
-version: 0.2.3
+version: 0.2.4
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
+
+### v0.2.4
+
+* Remove 'urlify2' package (was crashing phantomjs in production)
 
 ### v0.2.3
 
