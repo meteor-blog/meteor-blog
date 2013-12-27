@@ -47,8 +47,8 @@ You will get routes for:
 
 ## Usage
 
-Meteor blog should work out-of-the-box (hopefully) with some decent looking
-templates. If you use the default templates, you must add the meteor
+Meteor blog works out-of-the-box with minimal, decent-looking Bootstrap
+templates. If you use these default templates, you must add the meteor
 `bootstrap-3` package.
 
 ```
