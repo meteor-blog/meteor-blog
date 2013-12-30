@@ -61,7 +61,8 @@ Package.on_use(function(api) {
    */
 
   api.add_files([
-    'server/publications.coffee'
+    'server/publications.coffee',
+    'server/boot.coffee'
   ], 'server');
 
   /**
