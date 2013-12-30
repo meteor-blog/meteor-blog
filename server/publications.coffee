@@ -1,3 +1,6 @@
+Meteor.publish 'singlePost', (slug) ->
+  Post.find({slug: slug})
+
 Meteor.publish 'posts', ->
   Post.find()
 

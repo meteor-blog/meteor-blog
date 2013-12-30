@@ -8,6 +8,7 @@ Router.map ->
     waitOn: ->
       [ Meteor.subscribe 'posts'
         Meteor.subscribe 'authors' ]
+    fastRender: true
     data: ->
       posts: Post.where { published: true }, { sort: { publishedAt: -1 }}
 
@@ -19,8 +20,9 @@ Router.map ->
         @template = Blog.settings.blogShowTemplate
       Session.set 'postSlug', @params.slug
     waitOn: ->
-      [ Meteor.subscribe 'posts'
+      [ Meteor.subscribe 'singlePost', this.params.slug
         Meteor.subscribe 'authors' ]
+    fastRender: true
     data: ->
       Post.first slug: @params.slug
 
