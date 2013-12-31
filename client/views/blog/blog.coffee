@@ -1,5 +1,9 @@
 Template.blogShowBody.rendered = ->
 
+  # Hide draft posts from crawlers
+  if not @data.published
+    $('<meta>', { name: 'robots', content: 'noindex,nofollow' }).appendTo 'head'
+
   # Twitter
   base = "https://twitter.com/intent/tweet"
   url = encodeURIComponent location.origin + location.pathname
