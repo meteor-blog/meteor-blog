@@ -23,7 +23,10 @@ Template.blogShowBody.rendered = ->
   summary = encodeURIComponent @data.excerpt()
   href = base + "?s=100&p[url]=" + url + "&p[title]=" + title + "&p[summary]=" + summary
 
-  if @data.thumbnail()
-    href += "&p[images][0]=" + encodeURIComponent @data.thumbnail()
+  img = @data.thumbnail()
+  if img
+    if not /^http(s?):\/\/+/.test(img)
+      img = location.origin + img
+    href += "&p[images][0]=" + encodeURIComponent img
 
   $(".fb-share").attr "href", href
