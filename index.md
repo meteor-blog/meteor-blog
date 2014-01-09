@@ -47,6 +47,15 @@ You will get routes for:
 
 ## Usage
 
+### blogAdmin Role
+
+For admin users, you need to give them `blogAdmin` role. You can do this
+directly in the database by adding a `"roles": ["blogAdmin"]` node to
+users you want to be able to admin the blog, or use the methods provided
+by [meteor-roles](https://github.com/alanning/meteor-roles).
+
+### Interface
+
 Meteor blog works out-of-the-box with minimal, decent-looking Bootstrap
 templates. If you use these default templates, you must add the meteor
 `bootstrap-3` package.
