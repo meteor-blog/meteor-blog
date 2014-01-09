@@ -35,7 +35,7 @@ Router.map ->
       if Meteor.loggingIn()
         return @stop()
 
-      if not Meteor.user()
+      if not Meteor.user() || not Roles.userIsInRole(Meteor.user(), 'blogAdmin')
         return @redirect('/blog')
 
   @route 'blogAdminNew',
@@ -44,7 +44,7 @@ Router.map ->
       if Meteor.loggingIn()
         return @stop()
 
-      if not Meteor.user()
+      if not Meteor.user() || not Roles.userIsInRole(Meteor.user(), 'blogAdmin')
         return @redirect('/blog')
 
   @route 'blogAdminEdit',
@@ -58,7 +58,7 @@ Router.map ->
       if Meteor.loggingIn()
         return @stop()
 
-      if not Meteor.user()
+      if not Meteor.user() || not Roles.userIsInRole(Meteor.user(), 'blogAdmin')
         return @redirect('/blog')
 
       Session.set 'postSlug', @params.slug
