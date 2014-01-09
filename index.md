@@ -2,7 +2,7 @@
 layout: default
 username: BeDifferential
 repo: meteor-blog
-version: 0.2.4
+version: 0.2.5
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
@@ -53,6 +53,12 @@ For admin users, you need to give them `blogAdmin` role. You can do this
 directly in the database by adding a `"roles": ["blogAdmin"]` node to
 users you want to be able to admin the blog, or use the methods provided
 by [meteor-roles](https://github.com/alanning/meteor-roles).
+
+### fast-render
+
+If your app uses
+[fast-render](https://github.com/arunoda/meteor-fast-render), the blog
+pages will render using fast-render automatically.
 
 ### Interface
 

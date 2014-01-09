@@ -2,11 +2,20 @@
 layout: default
 username: BeDifferential
 repo: meteor-blog
-version: 0.2.4
+version: 0.2.5
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
+
+### v0.2.5
+
+* Support for fast-render, if your app is using it
+* Ensure there is an index on the `slug` field for posts
+* Hide draft posts from crawlers
+* Improve FB share link
+* Make default theme more narrow
+* Require `blogAdmin` role to be allowed to admin posts
 
 ### v0.2.4
 
