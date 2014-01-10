@@ -7,6 +7,7 @@ Blog =
   settings:
     blogIndexTemplate: 'blogIndex'
     blogShowTemplate: 'blogShow'
+    adminRole: null
 
   config: (appConfig) ->
     @settings = _.extend(@settings, appConfig)

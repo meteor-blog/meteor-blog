@@ -74,7 +74,8 @@ Package.on_use(function(api) {
     'iron-router',
     'accounts-base',
     'minimongoid',
-    'moment'
+    'moment',
+    'roles'
   ], both);
 
   /**
