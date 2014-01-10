@@ -26,8 +26,8 @@ vote with your Github issues!
 * Customize how posts are displayed on main blog home
 * Use Google+ attributions for SEO
 * Other SEO best practices
-* Pagination
-* Multiple roles (admin/author/etc)
+* <s>Pagination</s>
+* Multiple roles (<s>admin</s>/author/etc)
 * Themes
 
 ## Quick Start
@@ -59,8 +59,8 @@ Meteor.startup ->
 {% endhighlight %}
 
 Then, you need to give blog admin users that role. Currently, you have to do
-this directly in the database by adding a `"roles": ["blogAdmin"]` field to
-admin users, or use the methods provided by
+this directly in the database field (e.g. `"roles": ["blogAdmin"]`) to
+all admin users, or use the methods provided by
 [meteor-roles](https://github.com/alanning/meteor-roles).
 
 ## Fast Render
@@ -91,7 +91,7 @@ Meteor.startup ->
 {% endhighlight %}
 
 In your templates, you can use these Handlebars helpers provided by the package
-to display blog posts with some basic markup:
+to display blog posts with some basic, semantic markup:
 
 {% assign bi = '{{blogIndex}}' %}
 {% assign bs = '{{blogShow}}' %}
@@ -107,8 +107,8 @@ Example:
 </template>
 {% endhighlight %}
 
-For finer-grained control, the blog routes provides the data in the template
-context:
+If you don't want any of our markup, use the blog data provided in the template
+context directly:
 
 * `posts` - Collection of [`minimongoid`](https://github.com/Exygy/minimongoid) blog post objects (`/blog` route)
 * `this` - [`minimongoid`](https://github.com/Exygy/minimongoid) blog post object (`/blog/:slug` route)
@@ -136,3 +136,18 @@ Example:
   </ul>
 </template>
 {% endhighlight %}
+
+## Pagination
+
+By default, blog posts are paged in 20 at a time.  You can modify this value in
+settings. Set to `null` to turn off paging entirely.
+
+{% highlight coffeescript %}
+Meteor.startup ->
+  Blog.config
+    pageSize: 10
+{% endhighlight %}
+
+{% assign bp = '{{blogPager}}' %}
+The default `blogIndexTemplate` template displays a `Load More` button. If you
+use your own template, include the `{{ bp }}` helper to display the button.
