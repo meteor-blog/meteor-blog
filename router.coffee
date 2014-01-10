@@ -11,21 +11,24 @@ Router.map ->
       if Blog.settings.blogIndexTemplate
         @template = Blog.settings.blogIndexTemplate
 
+      # Set up our own 'waitOn' here since IR does not atually wait on 'waitOn'
+      # (see https://github.com/EventedMind/iron-router/issues/265).
       if not Session.get('postLimit') and Blog.settings.pageSize
         Session.set 'postLimit', Blog.settings.pageSize
+      @subscribe('posts', Session.get('postLimit')).wait()
 
     waitOn: ->
-      [ Meteor.subscribe 'posts', Session.get('postLimit')
-        Meteor.subscribe 'authors' ]
+      Meteor.subscribe 'authors'
 
     fastRender: true
 
     data: ->
-      posts: Post.where
-        published: true
-      ,
-        sort:
-          publishedAt: -1
+      if @ready()
+        posts: Post.where
+          published: true
+        ,
+          sort:
+            publishedAt: -1
 
   #
   # Show Blog
@@ -41,10 +44,9 @@ Router.map ->
       if Blog.settings.blogShowTemplate
         @template = Blog.settings.blogShowTemplate
 
-      Session.set 'postSlug', @params.slug
-
       # Set up our own 'waitOn' here since IR does not atually wait on 'waitOn'
       # (see https://github.com/EventedMind/iron-router/issues/265).
+      Session.set 'postSlug', @params.slug
       @subscribe('singlePost', @params.slug).wait()
 
     waitOn: ->
@@ -103,9 +105,6 @@ Router.map ->
     path: '/admin/blog/edit/:slug'
 
     waitOn: ->
-
-      # Set up our own 'waitOn' here since IR does not atually wait on 'waitOn'
-      # (see https://github.com/EventedMind/iron-router/issues/265).
       Meteor.subscribe 'authors'
 
     data: ->
@@ -122,5 +121,7 @@ Router.map ->
       if Blog.settings.adminRole and not Roles.userIsInRole(Meteor.user(), Blog.settings.adminRole)
         return @redirect('/blog')
 
+      # Set up our own 'waitOn' here since IR does not atually wait on 'waitOn'
+      # (see https://github.com/EventedMind/iron-router/issues/265).
       Session.set 'postSlug', @params.slug
       @subscribe('singlePost', @params.slug).wait()
