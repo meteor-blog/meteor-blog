@@ -14,7 +14,8 @@ Package.on_use(function(api) {
     'templating',
     'handlebars',
     'less',
-    'parsleyjs'
+    'parsleyjs',
+    'ace-embed'
   ], 'client');
 
   /**
@@ -25,7 +26,6 @@ Package.on_use(function(api) {
     'client/stylesheets/lib/bootstrap-switch.css',
     'client/boot.coffee',
     'client/compatibility/bootstrap-switch.js',
-    'client/compatibility/epiceditor.js',
     'client/views/404.html',
     'client/views/admin/nav.html',
     'client/views/admin/admin.less',
@@ -40,29 +40,6 @@ Package.on_use(function(api) {
     'client/views/blog/show.html',
     'client/views/blog/blog.coffee'
   ], 'client');
-
-  /**
-   * Static assets for client
-   */
-
-  api.add_files([
-    'public/epiceditor/themes/base/epiceditor.css',
-    'public/epiceditor/themes/editor/epic-dark.css',
-    'public/epiceditor/themes/editor/epic-grey.css',
-    'public/epiceditor/themes/editor/epic-light.css',
-    'public/epiceditor/themes/preview/bartik.css',
-    'public/epiceditor/themes/preview/blank.css',
-    'public/epiceditor/themes/preview/github.css',
-    'public/epiceditor/themes/preview/preview-dark.css',
-  ], 'client', { isAsset: true });
-
-  /**
-   * Packages for server
-   */
-
-  api.use([
-    'marked'
-  ], 'server');
 
   /**
    * Files for server
@@ -83,7 +60,8 @@ Package.on_use(function(api) {
     'accounts-base',
     'minimongoid',
     'moment',
-    'roles'
+    'roles',
+    'marked'
   ], both);
 
   /**

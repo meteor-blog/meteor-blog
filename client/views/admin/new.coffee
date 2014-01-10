@@ -1,26 +1,30 @@
 Template.blogAdminNew.rendered = ->
   $('.post-form').parsley()
-
-  @editor = new EpicEditor
-    container: 'editor',
-    basePath: '/packages/blog/public/epiceditor'
-    autogrow: true
-    focusOnLoad: false
-    clientSideStorage: false
-    button:
-      preview: false
-    theme:
-      editor: '/themes/editor/epic-grey.css'
-      preview: '/themes/preview/github.css'
-
-  @editor.load()
   $('[name=title]').focus().val ''
+
+  @editor = ace.edit 'editor'
+  @editor.setTheme 'ace/theme/chrome'
+  @editor.getSession().setMode 'ace/mode/markdown'
+  @editor.setFontSize 14
+  @editor.renderer.setShowPrintMargin false
+  @editor.renderer.setShowGutter false
+  @editor.setHighlightActiveLine true
+
+  @editor.on 'change', _.debounce((e) =>
+    height = @editor.getSession().getDocument().getLength() * @editor.renderer.lineHeight + @editor.renderer.scrollBar.getWidth()
+    $('#editor, #preview').height height
+    @editor.resize()
+  , 250)
 
   $('.make-switch').bootstrapSwitch().on 'switch-change', (e, data) =>
     if data.value
-      return @editor.preview()
+      $('#editor').hide()
+      val = marked @editor.getValue()
+      return $('#preview').html(val).show()
 
-    @editor.edit()
+    $('#editor').show()
+    @editor.focus()
+    $('#preview').hide()
 
 flash = (status, post) ->
   setTimeout ->
@@ -40,7 +44,7 @@ Template.blogAdminNew.events
 
     post = Post.create
       title: $('[name=title]').val()
-      body: tpl.editor.exportFile()
+      body: tpl.editor.getValue()
       published: true
       createdAt: new Date()
       updatedAt: new Date()
@@ -57,7 +61,7 @@ Template.blogAdminNew.events
 
     post = Post.create
       title: $('[name=title]').val()
-      body: tpl.editor.exportFile()
+      body: tpl.editor.getValue()
       published: false
       createdAt: new Date()
       updatedAt: new Date()
