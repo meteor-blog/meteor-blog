@@ -30,7 +30,7 @@ vote with your Github issues!
 * Multiple roles (admin/author/etc)
 * Themes
 
-## Getting Started
+## Quick Start
 
 ```
 mrt add blog
@@ -45,29 +45,30 @@ You will get routes for:
 
 `/admin/blog` requires that `Meteor.user()` return a user.
 
-## Usage
+# Usage
 
-### blogAdmin Role
+## Roles
 
-Your app needs to use
-[meteor-roles](https://github.com/alanning/meteor-roles) package.
+By default, any logged-in user can administer the blog. To ensure that only
+select users can edit the blog, specify an `adminRole` in the blog config:
 
-```
-mrt add roles
-```
+{% highlight coffeescript %}
+Meteor.startup ->
+  Blog.config
+    adminRole: 'blogAdmin'
+{% endhighlight %}
 
-For admin users, you need to give them `blogAdmin` role. You can do this
-directly in the database by adding a `"roles": ["blogAdmin"]` node to
-users you want to be able to admin the blog, or use the methods provided
-by [meteor-roles](https://github.com/alanning/meteor-roles).
+Then, you need to give blog admin users that role. Currently, you have to do
+this directly in the database by adding a `"roles": ["blogAdmin"]` field to
+admin users, or use the methods provided by
+[meteor-roles](https://github.com/alanning/meteor-roles).
 
-### fast-render
+## Fast Render
 
-If your app uses
-[fast-render](https://github.com/arunoda/meteor-fast-render), the blog
-pages will render using fast-render automatically.
+If your app uses [fast-render](https://github.com/arunoda/meteor-fast-render),
+the blog pages will render using fast-render automatically.
 
-### Interface
+## Bootstrap Templates
 
 Meteor blog works out-of-the-box with minimal, decent-looking Bootstrap
 templates. If you use these default templates, you must add the meteor
@@ -77,7 +78,7 @@ templates. If you use these default templates, you must add the meteor
 mrt add bootstrap-3
 ```
 
-#### Customisation
+## Custom Templates
 
 If the default templates aren't doing it for you, you can override the default
 templates with your own by setting configuration variables:
