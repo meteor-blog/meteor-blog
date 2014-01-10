@@ -2,11 +2,19 @@
 layout: default
 username: BeDifferential
 repo: meteor-blog
-version: 0.2.5
+version: 0.2.6
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
+
+### v0.2.6
+
+* Publish less data to blog index. **NOTE**: If you were using the `excerpt`
+  helper before (`data.excerpt()`), it is now a field (`data.excerpt`).
+* Replace EpicEditor with Ace Editor
+* Add simple 'Load More' pagination
+* Turn admin roles off by default
 
 ### v0.2.5
 
