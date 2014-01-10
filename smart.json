@@ -10,6 +10,7 @@
     "parsleyjs": "1.1.7",
     "minimongoid": "0.8.3",
     "moment": "2.2.1",
-    "roles": "1.2.6"
+    "roles": "1.2.6",
+    "marked": "0.2.9"
   }
 }

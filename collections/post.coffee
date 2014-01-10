@@ -8,6 +8,7 @@ class @Post extends Minimongoid
 
   @before_create: (post) ->
     post.slug = post.title.toLowerCase().replace(/[^\w ]+/g, "").replace(RegExp(" +", "g"), "-")
+    post.excerpt = Post.excerpt post.body
     post
 
   html: ->
@@ -21,9 +22,9 @@ class @Post extends Minimongoid
     while match = regex.exec html
       return match[1]
 
-  excerpt: ->
+  @excerpt: (markdown) ->
     # Convert markdown to HTML
-    html = marked @body
+    html = marked markdown
 
     # Find 1st non-empty paragraph
     matches = html.split /<\/div>|<\/p>|<br><br>|\\n\\n|\\r\\n\\r\\n/m

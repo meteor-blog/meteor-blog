@@ -57,6 +57,14 @@ Package.on_use(function(api) {
   ], 'client', { isAsset: true });
 
   /**
+   * Packages for server
+   */
+
+  api.use([
+    'marked'
+  ], 'server');
+
+  /**
    * Files for server
    */
 

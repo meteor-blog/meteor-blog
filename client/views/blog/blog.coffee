@@ -20,7 +20,7 @@ Template.blogShowBody.rendered = ->
   base = "https://www.facebook.com/sharer/sharer.php"
   url = encodeURIComponent location.origin + location.pathname
   title = encodeURIComponent @data.title
-  summary = encodeURIComponent @data.excerpt()
+  summary = encodeURIComponent @data.excerpt
   href = base + "?s=100&p[url]=" + url + "&p[title]=" + title + "&p[summary]=" + summary
 
   img = @data.thumbnail()

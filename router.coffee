@@ -19,12 +19,16 @@ Router.map ->
       if Blog.settings.blogShowTemplate
         @template = Blog.settings.blogShowTemplate
       Session.set 'postSlug', @params.slug
+
+      # Set up our own 'waitOn' here since IR does not atually wait on 'waitOn'
+      # (see https://github.com/EventedMind/iron-router/issues/265).
+      @subscribe('singlePost', @params.slug).wait()
     waitOn: ->
-      [ Meteor.subscribe 'singlePost', this.params.slug
-        Meteor.subscribe 'authors' ]
+      Meteor.subscribe 'authors'
     fastRender: true
     data: ->
-      Post.first slug: @params.slug
+      if @ready()
+        Post.first slug: @params.slug
 
   @route 'blogAdmin',
     path: '/admin/blog'
@@ -56,10 +60,13 @@ Router.map ->
   @route 'blogAdminEdit',
     path: '/admin/blog/edit/:slug'
     waitOn: ->
-      [ Meteor.subscribe 'posts'
-        Meteor.subscribe 'authors' ]
+
+      # Set up our own 'waitOn' here since IR does not atually wait on 'waitOn'
+      # (see https://github.com/EventedMind/iron-router/issues/265).
+      Meteor.subscribe 'authors'
     data: ->
-      Post.first slug: @params.slug
+      if @ready()
+        Post.first slug: @params.slug
     before: ->
       if Meteor.loggingIn()
         return @stop()
@@ -71,3 +78,4 @@ Router.map ->
         return @redirect('/blog')
 
       Session.set 'postSlug', @params.slug
+      @subscribe('singlePost', @params.slug).wait()

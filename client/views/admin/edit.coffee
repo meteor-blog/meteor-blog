@@ -48,6 +48,7 @@ Template.blogAdminEdit.events
     attrs =
       title: $('[name=title]').val()
       body: tpl.editor.exportFile()
+      excerpt: Post.excerpt tpl.editor.exportFile()
       updatedAt: new Date()
 
     if @published
@@ -74,6 +75,7 @@ Template.blogAdminEdit.events
     @update
       title: $('[name=title]').val()
       body: tpl.editor.exportFile()
+      excerpt: Post.excerpt tpl.editor.exportFile()
       updatedAt: new Date()
 
     flash 'Saved'
