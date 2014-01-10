@@ -13,7 +13,7 @@ This is a meteorite package that gives you a basic, out-of-the-box blog at
 and didn't require us to run another dyno for a meteor-based blog.
 
 This blog is very much a work in progress. To help decide what gets add next,
-vote with your Github issues!
+vote with your [Github issues](https://github.com/BeDifferential/meteor-blog/issues)!
 
 ## Roadmap
 
@@ -25,7 +25,7 @@ vote with your Github issues!
 * Widget to embed recent posts on another page
 * Customize how posts are displayed on main blog home
 * Use Google+ attributions for SEO
-* Other SEO best practices
+* Other SEO best practices (<s> OpenGraph, Twitter Cards, share buttons</s>)
 * <s>Pagination</s>
 * Multiple roles (<s>admin</s>/author/etc)
 * Themes

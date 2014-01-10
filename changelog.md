@@ -10,8 +10,9 @@ desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ### v0.2.6
 
-* Publish less data to blog index. **NOTE**: If you were using the `excerpt`
-  helper before (`data.excerpt()`), it is now a field (`data.excerpt`).
+_NOTE: If you were using the `excerpt` helper before (`data.excerpt()`), it is now a field (`data.excerpt`)._
+
+* Publish less data to blog index. 
 * Replace EpicEditor with Ace Editor
 * Add simple 'Load More' pagination
 * Turn admin roles off by default
