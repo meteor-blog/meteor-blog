@@ -8,6 +8,7 @@ Blog =
     blogIndexTemplate: 'blogIndex'
     blogShowTemplate: 'blogShow'
     adminRole: null
+    pageSize: 20
 
   config: (appConfig) ->
     @settings = _.extend(@settings, appConfig)
@@ -53,6 +54,11 @@ Meteor.startup ->
   js.src = "//connect.facebook.net/en_US/all.js"
   ref.parentNode.insertBefore js, ref
 
+  # Listen for any 'Load More' clicks
+  $('body').on 'click', '.load-more', (e) ->
+    e.preventDefault()
+    if Session.get 'postLimit'
+      Session.set 'postLimit', Session.get('postLimit') + Blog.settings.pageSize
 
 ################################################################################
 # Register Global Helpers
@@ -60,6 +66,10 @@ Meteor.startup ->
 
 Handlebars.registerHelper "blogFormatDate", (date) ->
   moment(new Date(date)).format "MMM Do, YYYY"
+
+Handlebars.registerHelper "blogPager", ->
+  if Post.count() is Session.get 'postLimit'
+    return new Handlebars.SafeString '<a class="load-more btn" href="#">Load More</a>'
 
 Handlebars.registerHelper "blogIndex", ->
   new Handlebars.SafeString Template.blogIndexLoop(this)

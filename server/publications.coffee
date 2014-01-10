@@ -1,10 +1,14 @@
 Meteor.publish 'singlePost', (slug) ->
   Post.find slug: slug
 
-Meteor.publish 'posts', ->
+Meteor.publish 'posts', (limit) ->
   Post.find {},
     fields:
       body: 0
+    sort:
+      publishedAt: -1
+    limit:
+      limit
 
 Meteor.publish 'authors', ->
   ids = _.pluck Post.all
