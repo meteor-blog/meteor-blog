@@ -4,11 +4,12 @@ Template.blogAdminNew.rendered = ->
 
   @editor = ace.edit 'editor'
   @editor.setTheme 'ace/theme/chrome'
-  @editor.getSession().setMode 'ace/mode/markdown'
   @editor.setFontSize 14
   @editor.renderer.setShowPrintMargin false
   @editor.renderer.setShowGutter false
   @editor.setHighlightActiveLine true
+  @editor.getSession().setMode 'ace/mode/markdown'
+  @editor.getSession().setUseWrapMode true
 
   @editor.on 'change', _.debounce((e) =>
     height = @editor.getSession().getDocument().getLength() * @editor.renderer.lineHeight + @editor.renderer.scrollBar.getWidth()

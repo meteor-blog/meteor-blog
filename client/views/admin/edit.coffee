@@ -3,11 +3,12 @@ Template.blogAdminEdit.rendered = ->
 
   @editor = ace.edit 'editor'
   @editor.setTheme 'ace/theme/chrome'
-  @editor.getSession().setMode 'ace/mode/markdown'
   @editor.setFontSize 14
   @editor.renderer.setShowPrintMargin false
   @editor.renderer.setShowGutter false
   @editor.setHighlightActiveLine true
+  @editor.getSession().setMode 'ace/mode/markdown'
+  @editor.getSession().setUseWrapMode true
 
   @editor.on 'change', _.debounce((e) =>
     height = @editor.getSession().getDocument().getLength() * @editor.renderer.lineHeight + @editor.renderer.scrollBar.getWidth()
@@ -23,11 +24,13 @@ Template.blogAdminEdit.rendered = ->
 
     $('#editor').show()
     @editor.focus()
+    @editor.getSelection().clearSelection()
     $('#preview').hide()
 
   post = Post.first slug: Session.get('postSlug')
   @editor.setValue post.body
   @editor.focus()
+  @editor.getSelection().clearSelection()
   @editor.trigger 'change'
 
 flash = (status) ->
