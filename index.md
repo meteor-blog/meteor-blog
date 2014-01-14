@@ -49,6 +49,13 @@ You will get routes for:
 
 ### blogAdmin Role
 
+Your app needs to use
+[meteor-roles](https://github.com/alanning/meteor-roles) package.
+
+```
+mrt add roles
+```
+
 For admin users, you need to give them `blogAdmin` role. You can do this
 directly in the database by adding a `"roles": ["blogAdmin"]` node to
 users you want to be able to admin the blog, or use the methods provided
