@@ -58,7 +58,7 @@ Meteor.startup ->
     adminRole: 'blogAdmin'
 {% endhighlight %}
 
-You will need to install the `meteor-roles` package:
+You will need to install the `meteor-roles` package to your app:
 
 ```
 mrt add roles
