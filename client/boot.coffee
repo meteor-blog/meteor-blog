@@ -1,5 +1,5 @@
 ################################################################################
-# Blog Config
+# Client-side Config
 #
 
 
@@ -7,7 +7,6 @@ Blog =
   settings:
     blogIndexTemplate: 'blogIndex'
     blogShowTemplate: 'blogShow'
-    adminRole: null
     pageSize: 20
 
   config: (appConfig) ->

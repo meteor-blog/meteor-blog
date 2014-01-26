@@ -74,11 +74,9 @@ Router.map ->
       if Meteor.loggingIn()
         return @stop()
 
-      if not Meteor.user()
-        return @redirect('/blog')
-
-      if Blog.settings.adminRole and not Roles.userIsInRole(Meteor.user(), Blog.settings.adminRole)
-        return @redirect('/blog')
+      Meteor.call 'isAuthorized', (err, authorized) =>
+        if not authorized
+          return @redirect('/blog')
 
   #
   # New Blog
@@ -94,8 +92,9 @@ Router.map ->
       if not Meteor.user()
         return @redirect('/blog')
 
-      if Blog.settings.adminRole and not Roles.userIsInRole(Meteor.user(), Blog.settings.adminRole)
-        return @redirect('/blog')
+      Meteor.call 'isAuthorized', (err, authorized) =>
+        if not authorized
+          return @redirect('/blog')
 
   #
   # Edit Blog
@@ -118,8 +117,9 @@ Router.map ->
       if not Meteor.user()
         return @redirect('/blog')
 
-      if Blog.settings.adminRole and not Roles.userIsInRole(Meteor.user(), Blog.settings.adminRole)
-        return @redirect('/blog')
+      Meteor.call 'isAuthorized', (err, authorized) =>
+        if not authorized
+          return @redirect('/blog')
 
       # Set up our own 'waitOn' here since IR does not atually wait on 'waitOn'
       # (see https://github.com/EventedMind/iron-router/issues/265).
