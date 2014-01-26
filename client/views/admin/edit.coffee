@@ -27,8 +27,7 @@ Template.blogAdminEdit.rendered = ->
     @editor.getSelection().clearSelection()
     $('#preview').hide()
 
-  post = Post.first slug: Session.get('postSlug')
-  @editor.setValue post.body
+  @editor.setValue @data.body
   @editor.focus()
   @editor.getSelection().clearSelection()
 

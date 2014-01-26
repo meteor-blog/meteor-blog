@@ -46,7 +46,6 @@ Router.map ->
 
       # Set up our own 'waitOn' here since IR does not atually wait on 'waitOn'
       # (see https://github.com/EventedMind/iron-router/issues/265).
-      Session.set 'postSlug', @params.slug
       @subscribe('singlePost', @params.slug).wait()
 
     waitOn: ->
@@ -123,5 +122,4 @@ Router.map ->
 
       # Set up our own 'waitOn' here since IR does not atually wait on 'waitOn'
       # (see https://github.com/EventedMind/iron-router/issues/265).
-      Session.set 'postSlug', @params.slug
       @subscribe('singlePost', @params.slug).wait()
