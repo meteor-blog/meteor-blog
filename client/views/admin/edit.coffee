@@ -31,7 +31,6 @@ Template.blogAdminEdit.rendered = ->
   @editor.setValue post.body
   @editor.focus()
   @editor.getSelection().clearSelection()
-  @editor.trigger 'change'
 
 flash = (status) ->
   setTimeout ->
