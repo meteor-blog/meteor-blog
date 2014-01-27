@@ -161,7 +161,7 @@ use your own template, include the `{{ bp }}` helper to display the button.
 
 ## RSS
 
-### Discovery
+### Configuration
 
 On the server, you configure RSS:
 
@@ -172,6 +172,22 @@ On the server, you configure RSS:
     feedPath: 'rss/posts'
     imagePath: 'img/favicon.png'
 ```
+
+Add route:
+
+```
+Meteor.startup ->
+  Router.map ->
+    if Meteor.isServer
+      @route 'rssPosts',
+        where: 'server'
+        path: Blog.settings.feedPath
+        action: ->
+          @response.write Meteor.call 'serveRSS'
+          @response.end()
+```
+
+### Discovery
 
 Add a head tag like this so your RSS feed can be discovered:
 
