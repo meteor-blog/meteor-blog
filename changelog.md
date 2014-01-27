@@ -2,11 +2,19 @@
 layout: default
 username: BeDifferential
 repo: meteor-blog
-version: 0.2.6
+version: 0.2.7
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
+
+### v0.2.7
+
+* Update to iron-router 0.6.2
+* Fixed a few bugs (issues
+[#16](https://github.com/BeDifferential/meteor-blog/issues/16) and
+[#17](https://github.com/BeDifferential/meteor-blog/issues/17)
+* Add server-side RSS feed
 
 ### v0.2.6
 
