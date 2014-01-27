@@ -157,3 +157,23 @@ Meteor.startup ->
 {% assign bp = '{{blogPager}}' %}
 The default `blogIndexTemplate` template displays a `Load More` button. If you
 use your own template, include the `{{ bp }}` helper to display the button.
+
+## RSS
+
+### Discovery
+
+On the server, you configure RSS:
+
+```
+  Blog.settings
+    title: 'My blog title'
+    description: 'My blog description'
+    feedPath: 'rss/posts'
+    imagePath: 'img/favicon.png'
+```
+
+Add a head tag like this so your RSS feed can be discovered:
+
+```
+<link rel="alternate" type="application/rss+xml" title="Big blog" href="/rss/posts"/>
+```
