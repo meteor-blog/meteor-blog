@@ -75,3 +75,6 @@ Handlebars.registerHelper "blogIndex", ->
 
 Handlebars.registerHelper "blogShow", ->
   new Handlebars.SafeString Template.blogShowBody(this)
+
+Handlebars.registerHelper "blogName", ->
+  'Foo'

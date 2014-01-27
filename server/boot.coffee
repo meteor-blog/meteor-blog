@@ -21,6 +21,10 @@ Meteor.startup ->
   Blog =
     settings:
       adminRole: null
+      title: ''
+      description: ''
+      feedPath: 'rss/posts'
+      imagePath: 'img/favicon.png'
 
     config: (appConfig) ->
       @settings = _.extend(@settings, appConfig)
@@ -30,7 +34,6 @@ Meteor.startup ->
   ##############################################################################
   # Server-side methods
   #
-
   Meteor.methods
     isAuthorized: () ->
       if not Meteor.user()
@@ -40,3 +43,25 @@ Meteor.startup ->
         return false
 
       true
+
+    serveRSS: () ->
+      RSS = Npm.require('rss')
+      feed = new RSS
+        title: Blog.settings.title
+        description: Blog.settings.description
+        feed_url: Meteor.absoluteUrl()+Blog.settings.feedPath
+        site_url: Meteor.absoluteUrl()
+        image_url: Meteor.absoluteUrl()+Blog.settings.imagePath
+
+      Post.find({published: true}, { fields: { published: 1 }, sort: { publishedAt: -1 } }, { limit: 20 }).forEach (post)->
+        postObj = Post.find(post._id)
+
+        feed.item
+         title: post.title
+         description: post.excerpt
+         author: postObj.authorName()
+         date: post.publishedAt
+         url: Meteor.absoluteUrl()+'blog/'+post.slug
+         guid: post._id
+
+      return feed.xml()

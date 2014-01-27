@@ -46,9 +46,15 @@ Package.on_use(function(api) {
    */
 
   api.add_files([
-    'server/publications.coffee',
-    'server/boot.coffee'
+    'server/boot.coffee',
+    'server/publications.coffee'
   ], 'server');
+
+  /**
+   * Packages for server
+   */
+
+  Npm.depends({rss: '0.0.4'});
 
   /**
    * Packages for server and client
@@ -74,3 +80,4 @@ Package.on_use(function(api) {
     'collections/post.coffee'
   ], both);
 });
+
