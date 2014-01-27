@@ -189,7 +189,7 @@ Meteor.startup ->
 
 ### Discovery
 
-Add a head tag like this so your RSS feed can be discovered:
+Add a head tag somewhere in your .html files so your RSS feed can be discovered:
 
 {% highlight html %}
 <head>
