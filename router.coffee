@@ -88,9 +88,6 @@ Router.map ->
       if Meteor.loggingIn()
         return @stop()
 
-      if not Meteor.user()
-        return @redirect('/blog')
-
       Meteor.call 'isAuthorized', (err, authorized) =>
         if not authorized
           return @redirect('/blog')
@@ -112,9 +109,6 @@ Router.map ->
     before: ->
       if Meteor.loggingIn()
         return @stop()
-
-      if not Meteor.user()
-        return @redirect('/blog')
 
       Meteor.call 'isAuthorized', (err, authorized) =>
         if not authorized
