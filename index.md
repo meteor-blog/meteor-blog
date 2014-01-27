@@ -165,7 +165,7 @@ use your own template, include the `{{ bp }}` helper to display the button.
 
 On the server, you configure RSS:
 
-```
+```coffeescript
 Blog.settings
   title: 'My blog title'
   description: 'My blog description'
