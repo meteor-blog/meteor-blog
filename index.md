@@ -192,6 +192,8 @@ Meteor.startup ->
 Add a head tag like this so your RSS feed can be discovered:
 
 {% highlight html %}
-<link rel="alternate" type="application/rss+xml" title="Big blog" href="/rss/posts"/>
+<head>
+  <link rel="alternate" type="application/rss+xml" title="Big blog" href="/rss/posts"/>
+</head>
 {% endhighlight %}
 
