@@ -54,9 +54,10 @@ By default, any logged-in user can administer the blog. To ensure that only
 select users can edit the blog, specify an `adminRole` in the blog config:
 
 {% highlight coffeescript %}
-Meteor.startup ->
-  Blog.config
-    adminRole: 'blogAdmin'
+if Meteor.isServer
+  Meteor.startup ->
+    Blog.config
+      adminRole: 'blogAdmin'
 {% endhighlight %}
 
 You will need to install the `meteor-roles` package to your app:
@@ -91,10 +92,11 @@ If the default templates aren't doing it for you, you can override the default
 templates with your own by setting configuration variables:
 
 {% highlight coffeescript %}
-Meteor.startup ->
-  Blog.config
-    blogIndexTemplate: 'myBlogIndexTemplate' # '/blog' route
-    blogShowTemplate: 'myShowBlogTemplate'   # '/blog/:slug' route
+if Meteor.isClient
+  Meteor.startup ->
+    Blog.config
+      blogIndexTemplate: 'myBlogIndexTemplate' # '/blog' route
+      blogShowTemplate: 'myShowBlogTemplate'   # '/blog/:slug' route
 {% endhighlight %}
 
 In your templates, you can use these Handlebars helpers provided by the package
@@ -150,9 +152,10 @@ By default, blog posts are paged in 20 at a time.  You can modify this value in
 settings. Set to `null` to turn off paging entirely.
 
 {% highlight coffeescript %}
-Meteor.startup ->
-  Blog.config
-    pageSize: 10
+if Meteor.isClient
+  Meteor.startup ->
+    Blog.config
+      pageSize: 10
 {% endhighlight %}
 
 {% assign bp = '{{blogPager}}' %}
@@ -166,11 +169,12 @@ use your own template, include the `{{ bp }}` helper to display the button.
 On the server, you configure RSS:
 
 {% highlight coffeescript %}
-Blog.settings
-  title: 'My blog title'
-  description: 'My blog description'
-  feedPath: 'rss/posts'
-  imagePath: 'img/favicon.png'
+if Meteor.isServer
+  Blog.config
+    title: 'My blog title'
+    description: 'My blog description'
+    feedPath: 'rss/posts'
+    imagePath: 'img/favicon.png'
 {% endhighlight %}
 
 Add route:
