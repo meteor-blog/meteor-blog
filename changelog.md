@@ -13,7 +13,7 @@ desc: Gives you an basic, out-of-the-box blog at `/blog`
 * Update to iron-router 0.6.2
 * Fixed a few bugs (issues
 [#16](https://github.com/BeDifferential/meteor-blog/issues/16) and
-[#17](https://github.com/BeDifferential/meteor-blog/issues/17)
+[#17](https://github.com/BeDifferential/meteor-blog/issues/17))
 * Add server-side RSS feed
 
 ### v0.2.6

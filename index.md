@@ -60,12 +60,6 @@ if Meteor.isServer
       adminRole: 'blogAdmin'
 {% endhighlight %}
 
-You will need to install the `meteor-roles` package to your app:
-
-```
-mrt add roles
-```
-
 Then, you need to give blog admin users that role. Currently, you have to do
 this directly in the database field (e.g. `"roles": ["blogAdmin"]`) to
 all admin users, or use the methods provided by
