@@ -165,17 +165,17 @@ use your own template, include the `{{ bp }}` helper to display the button.
 
 On the server, you configure RSS:
 
-```coffeescript
+{% highlight coffeescript %}
 Blog.settings
   title: 'My blog title'
   description: 'My blog description'
   feedPath: 'rss/posts'
   imagePath: 'img/favicon.png'
-```
+{% endhighlight %}
 
 Add route:
 
-```
+{% highlight coffeescript %}
 Meteor.startup ->
   Router.map ->
     if Meteor.isServer
@@ -185,12 +185,13 @@ Meteor.startup ->
         action: ->
           @response.write Meteor.call 'serveRSS'
           @response.end()
-```
+{% endhighlight %}
 
 ### Discovery
 
 Add a head tag like this so your RSS feed can be discovered:
 
-```
+{% highlight html %}
 <link rel="alternate" type="application/rss+xml" title="Big blog" href="/rss/posts"/>
-```
+{% endhighlight %}
+
