@@ -29,6 +29,7 @@ vote with your [Github issues](https://github.com/BeDifferential/meteor-blog/iss
 * <s>Pagination</s>
 * Multiple roles (<s>admin</s>/author/etc)
 * Themes
+* <s>RSS</s>
 
 ## Quick Start
 
