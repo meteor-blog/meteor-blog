@@ -9,7 +9,7 @@
     "iron-router": "0.6.2",
     "parsleyjs": "1.1.7",
     "minimongoid": "0.8.3",
-    "moment": "2.2.1",
+    "moment": {},
     "roles": "1.2.6",
     "marked": "0.2.9",
     "ace-embed": "0.0.4"
