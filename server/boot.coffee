@@ -35,7 +35,7 @@ Meteor.startup ->
   # Server-side methods
   #
   Meteor.methods
-    isAuthorized: () ->
+    isBlogAuthorized: () ->
       if not Meteor.user()
         return false
 
