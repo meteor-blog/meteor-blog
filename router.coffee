@@ -82,6 +82,10 @@ Router.map ->
         Meteor.subscribe 'authors' ]
 
     before: ->
+
+      if Blog.settings.blogAdminTemplate
+        @template = Blog.settings.blogAdminTemplate
+
       if Meteor.loggingIn()
         return @stop()
 
@@ -97,6 +101,10 @@ Router.map ->
     path: '/admin/blog/new'
 
     before: ->
+
+      if Blog.settings.blogAdminNewTemplate
+        @template = Blog.settings.blogAdminNewTemplate
+
       if Meteor.loggingIn()
         return @stop()
 
@@ -119,6 +127,9 @@ Router.map ->
         Post.first slug: @params.slug
 
     before: ->
+      if Blog.settings.blogAdminEditTemplate
+        @template = Blog.settings.blogAdminEditTemplate
+
       if Meteor.loggingIn()
         return @stop()
 
