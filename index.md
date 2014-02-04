@@ -6,11 +6,11 @@ version: 0.2.9
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
-# Meteor Blog
+# Blog
 
-This is a meteorite package that gives you a basic, out-of-the-box blog at
-`/blog`.  We wanted something to work with that uses Iron Router, Bootstrap 3,
-and didn't require us to run another dyno for a meteor-based blog.
+This Meteor package gives you a basic, out-of-the-box blog at `/blog`.  We
+wanted something to work with that uses Iron Router, Bootstrap 3, and didn't
+require us to run another dyno for a meteor-based blog.
 
 This blog is very much a work in progress. To help decide what gets add next,
 vote with your [Github issues](https://github.com/BeDifferential/meteor-blog/issues)!
