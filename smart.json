@@ -7,7 +7,6 @@
   "git": "https://github.com/BeDifferential/meteor-blog.git",
   "packages": {
     "iron-router": "0.6.2",
-    "parsleyjs": "1.1.7",
     "minimongoid": "0.8.3",
     "moment": {},
     "roles": "1.2.6",

@@ -1,6 +1,4 @@
 Template.blogAdminEdit.rendered = ->
-  $('.post-form').parsley()
-
   @editor = ace.edit 'editor'
   @editor.setTheme 'ace/theme/chrome'
   @editor.setFontSize 14
@@ -82,9 +80,6 @@ Template.blogAdminEdit.events
   'click .for-publishing': (e, tpl) ->
     e.preventDefault()
 
-    if not $('.post-form').parsley 'validate'
-      return
-
     attrs =
       title: $('[name=title]').val()
       body: tpl.editor.getValue()
@@ -103,19 +98,23 @@ Template.blogAdminEdit.events
       attrs.published = true
       attrs.publishedAt = new Date()
 
-    @update attrs
+    post = @update attrs
+
+    if post.errors
+      return alert(_(post.errors[0]).values()[0])
+
     flash status
 
   'click .for-saving': (e, tpl) ->
     e.preventDefault()
 
-    if not $('.post-form').parsley 'validate'
-      return
-
-    @update
+    post = @update
       title: $('[name=title]').val()
       body: tpl.editor.getValue()
       excerpt: Post.excerpt tpl.editor.getValue()
       updatedAt: new Date()
+
+    if post.errors
+      return alert(_(post.errors[0]).values()[0])
 
     flash 'Saved'

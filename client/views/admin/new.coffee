@@ -1,5 +1,4 @@
 Template.blogAdminNew.rendered = ->
-  $('.post-form').parsley()
   $('[name=title]').focus().val ''
 
   @editor = ace.edit 'editor'
@@ -72,9 +71,6 @@ Template.blogAdminNew.events
   'click .for-publishing': (e, tpl) ->
     e.preventDefault()
 
-    if not $('.post-form').parsley 'validate'
-      return
-
     post = Post.create
       title: $('[name=title]').val()
       body: tpl.editor.getValue()
@@ -84,13 +80,13 @@ Template.blogAdminNew.events
       publishedAt: new Date()
       userId: Meteor.userId()
 
+    if post.errors
+      return alert(_(post.errors[0]).values()[0])
+
     flash 'Publishing...', post
 
   'click .for-saving': (e, tpl) ->
     e.preventDefault()
-
-    if not $('.post-form').parsley 'validate'
-      return
 
     post = Post.create
       title: $('[name=title]').val()

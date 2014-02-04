@@ -19,9 +19,11 @@ class @Post extends Minimongoid
     if not @title
       @error 'title', "Blog title is required"
 
-    slug = Post.slugify @title
-    if Post.first(slug: slug)
-      @error 'taken', "Blog with this slug already exists"
+    # If post is new, guard against duplicate slugs
+    if not @id
+      slug = Post.slugify @title
+      if Post.first(slug: slug)
+        @error 'taken', "Blog with this slug already exists"
 
   html: ->
     marked @body
