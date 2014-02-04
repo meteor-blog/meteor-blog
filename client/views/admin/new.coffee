@@ -35,7 +35,11 @@ Template.blogAdminNew.rendered = ->
     $label.text 'Body'
     $preview.hide()
 
-  # Needed for keyboard shortcut
+  # Logic for the keyboard preview shortcut: some browsers work on 'keyup', and
+  # some on 'keydown', and some on both, but we don't want to toggle it twice so
+  # we have these guard variables. Also, use Apple key on Mac, and Ctrl key
+  # otherwise.
+
   justpressed = justtoggled = false
   isMac = (window.navigator.platform.toLowerCase().indexOf('mac') >= 0)
   ctrl = if isMac then 'metaKey' else 'ctrlKey'
