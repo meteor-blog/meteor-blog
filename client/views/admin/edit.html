@@ -13,6 +13,9 @@
               <div class="make-switch" data-on="success">
                 <input name="preview" type="checkbox">
               </div>
+              <div class="hint">
+                <small><strong><span class="ctrl-label">CTRL</span>-p</strong> toggles <em>Preview</em></small>
+              </div>
             </div>
           </h1>
           <form class="post-form">
@@ -21,9 +24,12 @@
               <input data-required="true" name="title" type="text" class="form-control" value="{{title}}"/>
             </div>
             <div class="form-group">
-              <label>Body</label>
+              <label class="body-label">Body</label>
               <div id="editor"></div>
               <div id="preview" hidden></div>
+              <div class="hint">
+                <a target="_blank" href="http://daringfireball.net/projects/markdown/syntax"><strong>Markdown</strong> syntax guide</a>
+              </div>
             </div>
             <button type="submit" class="for-saving btn-save btn btn-default"><i class="icon-save"></i> Save</button>
             <button type="submit" class="for-publishing btn-publish btn btn-default"><i class="icon-globe"></i> {{#if published}}Unpublish{{else}}Publish{{/if}}</button>

@@ -16,20 +16,48 @@ Template.blogAdminEdit.rendered = ->
     @editor.resize()
   , 250)
 
-  $('.make-switch').bootstrapSwitch().on 'switch-change', (e, data) =>
-    if data.value
-      $('#editor').hide()
-      val = marked @editor.getValue()
-      return $('#preview').html(val).show()
+  $label = $('.body-label')
+  $switch = $('.make-switch')
+  $editor = $('#editor')
+  $preview = $('#preview')
+  $document = $(document)
 
-    $('#editor').show()
+  $switch.bootstrapSwitch().on 'switch-change', (e, data) =>
+    if data.value
+      $editor.hide()
+      val = marked @editor.getValue()
+      $label.text 'Preview'
+      return $preview.html(val).show()
+
+    $editor.show()
     @editor.focus()
     @editor.getSelection().clearSelection()
-    $('#preview').hide()
+    $label.text 'Body'
+    $preview.hide()
 
   @editor.setValue @data.body
   @editor.focus()
   @editor.getSelection().clearSelection()
+
+  # Needed for keyboard shortcut
+  justpressed = justtoggled = false
+  isMac = (window.navigator.platform.toLowerCase().indexOf('mac') >= 0)
+  ctrl = if isMac then 'metaKey' else 'ctrlKey'
+  if isMac
+    $('.ctrl-label').html '&#8984;'
+
+  $document.on 'keyup', (e) ->
+    if justpressed and not justtoggled and e[ctrl] and e.which is 80
+      e.preventDefault()
+      $switch.bootstrapSwitch 'toggleState'
+    justpressed = justtoggled = false
+
+  $document.on 'keydown', (e) ->
+    justpressed = true
+    if e[ctrl] and e.which is 80
+      e.preventDefault()
+      $switch.bootstrapSwitch 'toggleState'
+      justtoggled = true
 
 flash = (status) ->
   setTimeout ->
