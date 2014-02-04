@@ -8,9 +8,20 @@ class @Post extends Minimongoid
   ]
 
   @before_create: (post) ->
-    post.slug = post.title.toLowerCase().replace(/[^\w ]+/g, "").replace(RegExp(" +", "g"), "-")
+    post.slug = Post.slugify post.title
     post.excerpt = Post.excerpt post.body
     post
+
+  @slugify: (str) ->
+    str.toLowerCase().replace(/[^\w ]+/g, "").replace(RegExp(" +", "g"), "-")
+
+  validate: ->
+    if not @title
+      @error 'title', "Blog title is required"
+
+    slug = Post.slugify @title
+    if Post.first(slug: slug)
+      @error 'taken', "Blog with this slug already exists"
 
   html: ->
     marked @body

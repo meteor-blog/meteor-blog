@@ -100,6 +100,9 @@ Router.map ->
   @route 'blogAdminNew',
     path: '/admin/blog/new'
 
+    waitOn: ->
+      Meteor.subscribe 'posts'
+
     before: ->
 
       if Blog.settings.blogAdminNewTemplate

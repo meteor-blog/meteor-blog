@@ -68,4 +68,7 @@ Template.blogAdminNew.events
       updatedAt: new Date()
       userId: Meteor.userId()
 
+    if post.errors
+      return alert(_(post.errors[0]).values()[0])
+
     flash 'Saving...', post
