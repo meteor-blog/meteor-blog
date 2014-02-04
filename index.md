@@ -59,10 +59,12 @@ if Meteor.isServer
     adminRole: 'blogAdmin'
 {% endhighlight %}
 
-Then, you need to give blog admin users that role. Currently, you have to do
-this directly in the database field (e.g. `"roles": ["blogAdmin"]`) to
-all admin users, or use the methods provided by
-[meteor-roles](https://github.com/alanning/meteor-roles).
+Then, you need to give blog admin users that role. Currently, you're on your own
+to add these roles somehow:
+
+* Add these directly to admin users in the database (`"roles": ["blogAdmin"]`), or
+* Roll your own admin page using the methods provided by [meteor-roles](https://github.com/alanning/meteor-roles), or
+* Use an accounts admin package like [accounts-admin-ui-bootstrap-3](https://atmosphere.meteor.com/package/accounts-admin-ui-bootstrap-3).
 
 ## Fast Render
 
