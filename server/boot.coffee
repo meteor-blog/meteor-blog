@@ -1,3 +1,23 @@
+##############################################################################
+# Server-side config
+#
+
+Blog =
+  settings:
+    adminRole: null
+    rss:
+      title: ''
+      description: ''
+
+  config: (appConfig) ->
+    @settings = _.extend(@settings, appConfig)
+
+@Blog = Blog
+
+################################################################################
+# Bootstrap Code
+#
+
 Meteor.startup ->
 
   ##############################################################################
@@ -15,25 +35,9 @@ Meteor.startup ->
       obj.update({ excerpt: Post.excerpt(obj.body) })
 
   ##############################################################################
-  # Server-side config
-  #
-
-  Blog =
-    settings:
-      adminRole: null
-      title: ''
-      description: ''
-      feedPath: 'rss/posts'
-      imagePath: 'img/favicon.png'
-
-    config: (appConfig) ->
-      @settings = _.extend(@settings, appConfig)
-
-  @Blog = Blog
-
-  ##############################################################################
   # Server-side methods
   #
+
   Meteor.methods
     isBlogAuthorized: () ->
       if not Meteor.user()
@@ -46,22 +50,29 @@ Meteor.startup ->
 
     serveRSS: () ->
       RSS = Npm.require('rss')
+      host = _.trim Meteor.absoluteUrl(), '/'
+
       feed = new RSS
-        title: Blog.settings.title
-        description: Blog.settings.description
-        feed_url: Meteor.absoluteUrl()+Blog.settings.feedPath
-        site_url: Meteor.absoluteUrl()
-        image_url: Meteor.absoluteUrl()+Blog.settings.imagePath
+        title: Blog.settings.rss.title
+        description: Blog.settings.rss.description
+        feed_url: host + '/rss/posts'
+        site_url: host
+        image_url: host + '/favicon.ico'
 
-      Post.find({published: true}, { fields: { published: 1 }, sort: { publishedAt: -1 } }, { limit: 20 }).forEach (post)->
-        postObj = Post.find(post._id)
+      posts = Post.where
+        published: true
+      ,
+        sort:
+          publishedAt: -1
+        limit: 20
 
+      posts.forEach (post) ->
         feed.item
          title: post.title
          description: post.excerpt
-         author: postObj.authorName()
+         author: post.authorName()
          date: post.publishedAt
-         url: Meteor.absoluteUrl()+'blog/'+post.slug
+         url: "#{host}/blog/#{post.slug}"
          guid: post._id
 
       return feed.xml()

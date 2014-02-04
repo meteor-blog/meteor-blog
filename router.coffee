@@ -1,6 +1,18 @@
 Router.map ->
 
   #
+  # RSS Feed
+  #
+
+  if Meteor.isServer
+    @route 'rss',
+      where: 'server'
+      path: '/rss/posts'
+      action: ->
+        @response.write Meteor.call 'serveRSS'
+        @response.end()
+
+  #
   # Blog Index
   #
 
