@@ -55,9 +55,8 @@ select users can edit the blog, specify an `adminRole` in the blog config:
 
 {% highlight coffeescript %}
 if Meteor.isServer
-  Meteor.startup ->
-    Blog.config
-      adminRole: 'blogAdmin'
+  Blog.config
+    adminRole: 'blogAdmin'
 {% endhighlight %}
 
 Then, you need to give blog admin users that role. Currently, you have to do
@@ -87,10 +86,9 @@ templates with your own by setting configuration variables:
 
 {% highlight coffeescript %}
 if Meteor.isClient
-  Meteor.startup ->
-    Blog.config
-      blogIndexTemplate: 'myBlogIndexTemplate' # '/blog' route
-      blogShowTemplate: 'myShowBlogTemplate'   # '/blog/:slug' route
+  Blog.config
+    blogIndexTemplate: 'myBlogIndexTemplate' # '/blog' route
+    blogShowTemplate: 'myShowBlogTemplate'   # '/blog/:slug' route
 {% endhighlight %}
 
 In your templates, you can use these Handlebars helpers provided by the package
@@ -147,9 +145,8 @@ settings. Set to `null` to turn off paging entirely.
 
 {% highlight coffeescript %}
 if Meteor.isClient
-  Meteor.startup ->
-    Blog.config
-      pageSize: 10
+  Blog.config
+    pageSize: 10
 {% endhighlight %}
 
 {% assign bp = '{{blogPager}}' %}
@@ -158,40 +155,20 @@ use your own template, include the `{{ bp }}` helper to display the button.
 
 ## RSS
 
-### Configuration
-
-On the server, you configure RSS:
+An RSS feed is automatically generated at `/rss/posts`. To set the title and
+description in the feed, configure RSS:
 
 {% highlight coffeescript %}
 if Meteor.isServer
   Blog.config
     title: 'My blog title'
     description: 'My blog description'
-    feedPath: 'rss/posts'
-    imagePath: 'img/favicon.png'
 {% endhighlight %}
 
-Add route:
-
-{% highlight coffeescript %}
-Meteor.startup ->
-  Router.map ->
-    if Meteor.isServer
-      @route 'rssPosts',
-        where: 'server'
-        path: Blog.settings.feedPath
-        action: ->
-          @response.write Meteor.call 'serveRSS'
-          @response.end()
-{% endhighlight %}
-
-### Discovery
-
-Add a head tag somewhere in your .html files so your RSS feed can be discovered:
+Add a head tag somewhere in your `.html` files so your RSS feed can be discovered:
 
 {% highlight html %}
 <head>
-  <link rel="alternate" type="application/rss+xml" title="Big blog" href="/rss/posts"/>
+  <link rel="alternate" type="application/rss+xml" title="My blog title" href="/rss/posts">
 </head>
 {% endhighlight %}
-
