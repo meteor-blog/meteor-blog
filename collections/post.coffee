@@ -4,6 +4,7 @@ class @Post extends Minimongoid
 
   @belongs_to: [
     name: 'author'
+    identifier: 'userId'
   ]
 
   @before_create: (post) ->
@@ -38,7 +39,7 @@ class @Post extends Minimongoid
     ret
 
   authorName: ->
-    author = Author.first(@userId)
+    author = @author()
 
     if author
       if author.profile and author.profile.firstName and author.profile.lastName
