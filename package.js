@@ -47,6 +47,7 @@ Package.on_use(function(api) {
 
   api.add_files([
     'server/boot.coffee',
+    'server/rss.coffee',
     'server/publications.coffee'
   ], 'server');
 
@@ -81,3 +82,11 @@ Package.on_use(function(api) {
   ], both);
 });
 
+Package.on_test(function (api) {
+  api.use('blog', ['client', 'server']);
+  api.use('tinytest', ['client', 'server']);
+  api.use('test-helpers', ['client', 'server']);
+  api.use('coffeescript', ['client', 'server']);
+
+  api.add_files('test/server/rss.coffee', 'server');
+});
