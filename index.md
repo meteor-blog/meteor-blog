@@ -2,7 +2,7 @@
 layout: default
 username: BeDifferential
 repo: meteor-blog
-version: 0.2.7
+version: 0.2.8
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---

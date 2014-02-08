@@ -2,11 +2,19 @@
 layout: default
 username: BeDifferential
 repo: meteor-blog
-version: 0.2.7
+version: 0.2.8
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
+
+### v0.2.8
+
+* Unnecessary code cleanup
+* Remove hard dependency on moment.js version
+* Rename method to minimize conflict
+* Fix blog author in model
+* Improve RSS
 
 ### v0.2.7
 
