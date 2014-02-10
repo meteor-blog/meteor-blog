@@ -1,4 +1,4 @@
-Meteor.methods ->
+Meteor.methods
 
   serveRSS: () ->
     RSS = Npm.require('rss')
