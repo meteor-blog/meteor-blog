@@ -1,0 +1,30 @@
+<template name="blogShow">
+  <div id="meteor-blog" class="blog-single">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          {{> blogShowBody}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="blogShowBody">
+  <article class="post">
+    <h2>{{title}}</h2>
+    <div class="post-meta">
+      By {{authorName}} on {{blogFormatDate publishedAt}}
+    </div>
+    <div class="the-content">
+      {{{html}}}
+    </div>
+  </article>
+  <div class="blog-back-link pull-left">
+    <a href="{{pathFor 'blogIndex'}}"><i class="icon-caret-left"></i>Back to the Blog</a>
+  </div>
+  <div class="share-buttons pull-right">
+    <a target="_blank" class="btn-facebook fb-share" href="#"><i class="icon-facebook"></i>Share on Facebook </a>
+    <a class="btn-twitter tw-share" href="#"><i class="icon-twitter"></i>Share on Twitter </a>
+  </div>
+</template>

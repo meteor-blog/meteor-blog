@@ -1,0 +1,37 @@
+<template name="blogAdminEdit">
+  <div id="blog-admin">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          {{> blogAdminNav}}
+        </div>
+        <div class="col-md-9">
+          <h1>
+            <strong>EDIT:</strong> {{title}}
+            <div class="switch-wrap">
+              Preview
+              <div class="make-switch" data-on="success">
+                <input name="preview" type="checkbox">
+              </div>
+            </div>
+          </h1>
+          <form class="post-form">
+            <div class="form-group">
+              <label>Title</label>
+              <input data-required="true" name="title" type="text" class="form-control" value="{{title}}"/>
+            </div>
+            <div class="form-group">
+              <label>Body</label>
+              <div id="editor"></div>
+              <div id="preview" hidden></div>
+            </div>
+            <button type="submit" class="for-saving btn-save btn btn-default"><i class="icon-save"></i> Save</button>
+            <button type="submit" class="for-publishing btn-publish btn btn-default"><i class="icon-globe"></i> {{#if published}}Unpublish{{else}}Publish{{/if}}</button>
+            <button type="submit" class="for-deleting btn-delete btn btn-default"><i class="icon-trash"></i> Delete</button>
+            <span class="status" hidden></span>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

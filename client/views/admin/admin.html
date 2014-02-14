@@ -1,0 +1,40 @@
+<template name="blogAdmin">
+  <div id="blog-admin">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          {{> blogAdminNav}}
+        </div>
+        <div class="col-md-9">
+          <h1>
+            Blog Admin
+            <select class="for-filtering form-control">
+              <option value="all">All Posts</option>
+              <option value="mine">My Posts</option>
+            </select>
+          </h1>
+          <div class="row">
+            {{> blogAdminList}}
+          </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="blogAdminList">
+  <ul class="blog-admin-list">
+    {{#each posts}}
+      <li>
+        <div class="col-md-6"><a href="{{pathFor 'blogAdminEdit'}}">{{title}}</a></div>
+        <div class="col-md-3">{{authorName}}</div>
+        {{#if published}}
+          <div class="col-md-3">{{blogFormatDate createdAt}}</div>
+        {{else}}
+          <div class="col-md-3 blog-draft">DRAFT</div>
+        {{/if}}
+      </li>
+    {{else}}
+      <li><a href="{{pathFor 'blogAdminNew'}}">Create the first blog</a></li>
+    {{/each}}
+  </ul>
+</template>

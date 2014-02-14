@@ -1,0 +1,3 @@
+.build*
+.npm
+.DS_Store
