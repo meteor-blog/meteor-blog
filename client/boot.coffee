@@ -7,6 +7,9 @@ Blog =
   settings:
     blogIndexTemplate: 'blogIndex'
     blogShowTemplate: 'blogShow'
+    blogAdminTemplate: 'blogAdmin'
+    blogAdminNewTemplate:'blogAdminNew'
+    blogAdminEditTemplate: 'blogAdminEdit'
     pageSize: 20
 
   config: (appConfig) ->
