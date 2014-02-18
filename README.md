@@ -1,5 +1,7 @@
 ## meteor-blog
 
+[![Build Status](https://travis-ci.org/BeDifferential/meteor-blog.png?branch=master)](https://travis-ci.org/BeDifferential/meteor-blog)
+
 This package gives you a basic, out-of-the-box blog at `/blog`.  We wanted
 something to work with that uses Iron Router, Bootstrap 3, and didn't require
 us to run another dyno for a meteor-based blog.
