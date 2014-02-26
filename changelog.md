@@ -2,11 +2,20 @@
 layout: default
 username: BeDifferential
 repo: meteor-blog
-version: 0.2.9
+version: 0.2.11
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
+
+### v0.2.11
+
+* Remove `parsleyjs` as a dependency
+* Maintain package JS when user overrides view templates ([#28](https://github.com/BeDifferential/meteor-blog/issues/28))
+* Add keyboard shortcut to toggle `Preview` mode
+* Ensure blog post slugs are unique
+* Allow user to override admin templates ([#31](https://github.com/BeDifferential/meteor-blog/issues/31))
+* Tweak default CSS for blog list padding and blog post image margins
 
 ### v0.2.9
 
