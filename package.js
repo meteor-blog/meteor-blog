@@ -14,7 +14,6 @@ Package.on_use(function(api) {
     'templating',
     'handlebars',
     'less',
-    'parsleyjs',
     'ace-embed'
   ], 'client');
 
