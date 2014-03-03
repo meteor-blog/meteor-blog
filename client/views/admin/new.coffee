@@ -66,49 +66,35 @@ flash = (status, post) ->
       , 2500
   , 100
 
+save = (tpl, published) ->
+  $title = $(tpl.find('[name=title]'))
+
+  slug = Post.slugify $title.val()
+
+  Meteor.call 'doesBlogExist', slug, (err, exists) ->
+    if not exists
+      post = Post.create
+        title: $title.val()
+        body: tpl.editor.getValue()
+        published: published
+        createdAt: new Date()
+        updatedAt: new Date()
+        publishedAt: new Date()
+        userId: Meteor.userId()
+
+      if post.errors
+        return alert(_(post.errors[0]).values()[0])
+
+      flash 'Publishing...', post
+    else
+      return alert 'Blog with this slug already exists'
+
 Template.blogAdminNew.events
 
   'click .for-publishing': (e, tpl) ->
     e.preventDefault()
-
-    slug = Post.slugify $('[name=title]').val()
-
-    Meteor.call 'doesBlogExist', slug, (err, exists) ->
-      if not exists
-        post = Post.create
-          title: $('[name=title]').val()
-          body: tpl.editor.getValue()
-          published: true
-          createdAt: new Date()
-          updatedAt: new Date()
-          publishedAt: new Date()
-          userId: Meteor.userId()
-
-        if post.errors
-          return alert(_(post.errors[0]).values()[0])
-
-        flash 'Publishing...', post
-      else
-        return alert 'Blog with this slug already exists'
+    return save(tpl, true)
 
   'click .for-saving': (e, tpl) ->
     e.preventDefault()
-
-    slug = Post.slugify $('[name=title]').val()
-
-    Meteor.call 'doesBlogExist', slug, (err, exists) ->
-      if not exists
-        post = Post.create
-          title: $('[name=title]').val()
-          body: tpl.editor.getValue()
-          published: false
-          createdAt: new Date()
-          updatedAt: new Date()
-          userId: Meteor.userId()
-
-        if post.errors
-          return alert(_(post.errors[0]).values()[0])
-
-        flash 'Saving...', post
-      else
-        return alert 'Blog with this slug already exists'
+    return save(tpl, false)
