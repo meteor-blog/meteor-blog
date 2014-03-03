@@ -71,32 +71,44 @@ Template.blogAdminNew.events
   'click .for-publishing': (e, tpl) ->
     e.preventDefault()
 
-    post = Post.create
-      title: $('[name=title]').val()
-      body: tpl.editor.getValue()
-      published: true
-      createdAt: new Date()
-      updatedAt: new Date()
-      publishedAt: new Date()
-      userId: Meteor.userId()
+    slug = Post.slugify $('[name=title]').val()
 
-    if post.errors
-      return alert(_(post.errors[0]).values()[0])
+    Meteor.call 'doesBlogExist', slug, (err, exists) ->
+      if not exists
+        post = Post.create
+          title: $('[name=title]').val()
+          body: tpl.editor.getValue()
+          published: true
+          createdAt: new Date()
+          updatedAt: new Date()
+          publishedAt: new Date()
+          userId: Meteor.userId()
 
-    flash 'Publishing...', post
+        if post.errors
+          return alert(_(post.errors[0]).values()[0])
+
+        flash 'Publishing...', post
+      else
+        return alert 'Blog with this slug already exists'
 
   'click .for-saving': (e, tpl) ->
     e.preventDefault()
 
-    post = Post.create
-      title: $('[name=title]').val()
-      body: tpl.editor.getValue()
-      published: false
-      createdAt: new Date()
-      updatedAt: new Date()
-      userId: Meteor.userId()
+    slug = Post.slugify $('[name=title]').val()
 
-    if post.errors
-      return alert(_(post.errors[0]).values()[0])
+    Meteor.call 'doesBlogExist', slug, (err, exists) ->
+      if not exists
+        post = Post.create
+          title: $('[name=title]').val()
+          body: tpl.editor.getValue()
+          published: false
+          createdAt: new Date()
+          updatedAt: new Date()
+          userId: Meteor.userId()
 
-    flash 'Saving...', post
+        if post.errors
+          return alert(_(post.errors[0]).values()[0])
+
+        flash 'Saving...', post
+      else
+        return alert 'Blog with this slug already exists'

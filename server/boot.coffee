@@ -39,6 +39,11 @@ Meteor.startup ->
   #
 
   Meteor.methods
+    doesBlogExist: (slug) ->
+      check slug, String
+
+      !! Post.first slug: slug
+
     isBlogAuthorized: () ->
       if not Meteor.user()
         return false
