@@ -18,7 +18,7 @@ Router.map ->
 
   @route 'blogIndex',
     path: '/blog'
-
+    controller: 'BasicController'
     before: ->
       if Blog.settings.blogIndexTemplate
         @template = Blog.settings.blogIndexTemplate
@@ -50,24 +50,12 @@ Router.map ->
 
     path: '/blog/:slug'
 
+    controller: 'BasicController'
     notFoundTemplate: 'blogNotFound'
 
     before: ->
       if Blog.settings.blogShowTemplate
         @template = Blog.settings.blogShowTemplate
-
-        # If the user has a custom template, and not using the helper, then
-        # maintain the package Javascript so that OpenGraph tags and share
-        # buttons still work.
-        pkgFunc = Template.blogShowBody.rendered
-        userFunc = Template[@template].rendered
-
-        if userFunc
-          Template[@template].rendered = ->
-            pkgFunc.call(@)
-            userFunc.call(@)
-        else
-          Template[@template].rendered = pkgFunc
 
       # Set up our own 'waitOn' here since IR does not atually wait on 'waitOn'
       # (see https://github.com/EventedMind/iron-router/issues/265).
@@ -89,16 +77,13 @@ Router.map ->
   @route 'blogAdmin',
 
     path: '/admin/blog'
+    controller: 'BasicController'
 
     waitOn: ->
       [ Meteor.subscribe 'posts'
         Meteor.subscribe 'authors' ]
 
     before: ->
-
-      if Blog.settings.blogAdminTemplate
-        @template = Blog.settings.blogAdminTemplate
-
       if Meteor.loggingIn()
         return @stop()
 
@@ -112,15 +97,9 @@ Router.map ->
 
   @route 'blogAdminNew',
     path: '/admin/blog/new'
-
-    waitOn: ->
-      Meteor.subscribe 'posts'
+    controller: 'BasicController'
 
     before: ->
-
-      if Blog.settings.blogAdminNewTemplate
-        @template = Blog.settings.blogAdminNewTemplate
-
       if Meteor.loggingIn()
         return @stop()
 
@@ -134,6 +113,7 @@ Router.map ->
 
   @route 'blogAdminEdit',
     path: '/admin/blog/edit/:slug'
+    controller: 'BasicController'
 
     waitOn: ->
       Meteor.subscribe 'authors'
@@ -143,9 +123,6 @@ Router.map ->
         Post.first slug: @params.slug
 
     before: ->
-      if Blog.settings.blogAdminEditTemplate
-        @template = Blog.settings.blogAdminEditTemplate
-
       if Meteor.loggingIn()
         return @stop()
 

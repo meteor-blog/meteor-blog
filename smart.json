@@ -1,5 +1,5 @@
 {
-  "name": "blog",
+  "name": "es-blog",
   "description": "Gives you a basic, out-of-the-box blog at `/blog`",
   "homepage": "http://github.differential.io/meteor-blog/",
   "author": "Differential (http://differential.io)",
