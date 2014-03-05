@@ -1,12 +1,10 @@
 <template name="blogShow">
   <div id="meteor-blog" class="blog-single">
-    <div class="container">
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-10">
           {{> blogShowBody}}
         </div>
       </div>
-    </div>
   </div>
 </template>
 
@@ -15,6 +13,7 @@
     <h2>{{title}}</h2>
     <div class="post-meta">
       {{blogFormatDate publishedAt}}
+      {{> blogTags }}
     </div>
     <div class="the-content">
       {{{html}}}
@@ -24,7 +23,7 @@
     <a href="{{pathFor 'blogIndex'}}"><i class="icon-caret-left"></i>Back to the Blog</a>
   </div>
   <div class="share-buttons pull-right">
-    <a target="_blank" class="btn-facebook fb-share" href="#"><i class="icon-facebook"></i>Share on Facebook </a>
-    <a class="btn-twitter tw-share" href="#"><i class="icon-twitter"></i>Share on Twitter </a>
+    <button class="btn btn-primary btn-facebook fb-share"><i class="icon-facebook"></i>Share on Facebook</button>
+    <button class="btn btn-info btn-twitter tw-share"><i class="icon-twitter"></i>Share on Twitter</button>
   </div>
 </template>

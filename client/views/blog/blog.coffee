@@ -68,3 +68,7 @@ Template.blogShowBody.rendered = ->
     href += "&p[images][0]=" + encodeURIComponent img
 
   $(".fb-share").attr "href", href
+
+  $(".tw-share, .fb-share").click = ->
+     window.location.href = $(this).attr("href")
+  

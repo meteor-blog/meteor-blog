@@ -1,6 +1,5 @@
 <template name="blogAdminNew">
   <div id="blog-admin">
-    <div class="container">
       <div class="row">
         <div class="col-md-3">
           {{> blogAdminNav}}
@@ -22,6 +21,8 @@
             <div class="form-group">
               <label>Title</label>
               <input data-required="true" name="title" type="text" class="form-control"/>
+              <label>Tags (comma separated)</label>
+              <input data-required="false" name="tags" type="text" class="form-control"/>
             </div>
             <div class="form-group">
               <label class="body-label">Body</label>
@@ -37,6 +38,5 @@
           </form>
         </div>
       </div>
-    </div>
   </div>
 </template>

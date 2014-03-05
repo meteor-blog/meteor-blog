@@ -43,6 +43,36 @@ Router.map ->
             publishedAt: -1
 
   #
+  # Blog Tag
+  #
+
+  @route 'blogTagged',
+    path: '/blog-tag/:tag'
+    controller: 'BasicController'
+    before: ->
+      if Blog.settings.blogIndexTemplate
+        @template = Blog.settings.blogIndexTemplate
+
+      # Set up our own 'waitOn' here since IR does not atually wait on 'waitOn'
+      # (see https://github.com/EventedMind/iron-router/issues/265).
+      @subscribe('taggedPosts', @params.tag).wait()
+
+    waitOn: ->
+      Meteor.subscribe 'authors'
+
+    fastRender: true
+
+    data: ->
+      if @ready()
+        posts: Post.where
+          published: true
+          tags: @params.tag
+        ,
+          sort:
+            publishedAt: -1
+
+
+  #
   # Show Blog
   #
 
