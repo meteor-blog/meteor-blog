@@ -66,6 +66,10 @@ Meteor.startup ->
 # Register Global Helpers
 #
 
+if Package.ui
+  ->
+    Handlebars = Package.ui.Handlebars
+
 Handlebars.registerHelper "blogFormatDate", (date) ->
   moment(new Date(date)).format "MMM Do, YYYY"
 
