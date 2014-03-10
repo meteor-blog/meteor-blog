@@ -15,7 +15,7 @@ require us to run another dyno for a meteor-based blog.
 This blog is very much a work in progress. To help decide what gets add next,
 vote with your [Github issues](https://github.com/BeDifferential/meteor-blog/issues)!
 
-## Roadmap
+### Roadmap
 
 * <s>Basic markdown editor</s>
 * <s>URL's based on slug from title</s> (but be editable)
@@ -31,7 +31,7 @@ vote with your [Github issues](https://github.com/BeDifferential/meteor-blog/iss
 * Themes
 * <s>RSS</s>
 
-## Quick Start
+### Quick Start
 
 ```
 mrt add blog
@@ -48,7 +48,7 @@ You will get routes for:
 
 # Usage
 
-## Roles
+### Roles
 
 By default, any logged-in user can administer the blog. To ensure that only
 select users can edit the blog, specify an `adminRole` in the blog config:
@@ -66,12 +66,12 @@ to add these roles somehow:
 * Roll your own admin page using the methods provided by [meteor-roles](https://atmosphere.meteor.com/package/roles), or
 * Use an accounts admin package like [accounts-admin-ui-bootstrap-3](https://atmosphere.meteor.com/package/accounts-admin-ui-bootstrap-3).
 
-## Fast Render
+### Fast Render
 
 If your app uses [fast-render](https://github.com/arunoda/meteor-fast-render),
 the blog pages will render using fast-render automatically.
 
-## Bootstrap Templates
+### Bootstrap Templates
 
 Meteor blog works out-of-the-box with minimal, decent-looking Bootstrap
 templates. If you use these default templates, you must add the meteor
@@ -81,7 +81,7 @@ templates. If you use these default templates, you must add the meteor
 mrt add bootstrap-3
 ```
 
-## Custom Templates
+### Custom Templates
 
 If the default templates aren't doing it for you, you can override the default
 templates with your own by setting configuration variables:
@@ -140,7 +140,7 @@ Example:
 </template>
 {% endhighlight %}
 
-## Pagination
+### Pagination
 
 By default, blog posts are paged in 20 at a time.  You can modify this value in
 settings. Set to `null` to turn off paging entirely.
@@ -155,7 +155,7 @@ if Meteor.isClient
 The default `blogIndexTemplate` template displays a `Load More` button. If you
 use your own template, include the `{{ bp }}` helper to display the button.
 
-## RSS
+### RSS
 
 An RSS feed is automatically generated at `/rss/posts`. To set the title and
 description in the feed, configure RSS:
