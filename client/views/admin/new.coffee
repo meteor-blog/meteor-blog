@@ -68,6 +68,7 @@ flash = (status, post) ->
 
 save = (tpl, published) ->
   $title = $(tpl.find('[name=title]'))
+  $tags = $(tpl.find('[name=tags]'))
 
   slug = Post.slugify $title.val()
 
@@ -75,6 +76,7 @@ save = (tpl, published) ->
     if not exists
       post = Post.create
         title: $title.val()
+        tags: $tags.val()
         body: tpl.editor.getValue()
         published: published
         createdAt: new Date()

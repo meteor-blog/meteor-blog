@@ -19,6 +19,7 @@
       </h2>
       <div class="post-meta">
         By {{authorName}} on {{blogFormatDate publishedAt}}
+        {{> blogTags }}
       </div>
       <div class="the-content">
         {{{excerpt}}}
@@ -27,4 +28,10 @@
   {{else}}
     This blog is looking pretty empty...
   {{/each}}
+</template>
+
+<template name="blogTags">
+  <div class="post-tags">
+    <p> - Tags: {{blogFormatTags tags}}</p>
+  </div>
 </template>
