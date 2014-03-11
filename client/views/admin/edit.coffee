@@ -82,6 +82,7 @@ Template.blogAdminEdit.events
 
     attrs =
       title: $('[name=title]').val()
+      tags: Post.splitTags $('[name=tags]').val()
       body: tpl.editor.getValue()
       excerpt: Post.excerpt tpl.editor.getValue()
       updatedAt: new Date()
@@ -110,6 +111,7 @@ Template.blogAdminEdit.events
 
     post = @update
       title: $('[name=title]').val()
+      tags: Post.splitTags $('[name=tags]').val()
       body: tpl.editor.getValue()
       excerpt: Post.excerpt tpl.editor.getValue()
       updatedAt: new Date()

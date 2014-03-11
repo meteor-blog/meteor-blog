@@ -69,6 +69,19 @@ Meteor.startup ->
 Handlebars.registerHelper "blogFormatDate", (date) ->
   moment(new Date(date)).format "MMM Do, YYYY"
 
+Handlebars.registerHelper "blogFormatTags", (tags) ->
+  return if !tags?
+  #$.each tags, (tag) ->
+  for tag in tags
+    if str?
+      str += ", <a href=\'" + location.origin + "/blog-tag/" + tag + "\'>" + tag + "</a>"
+    else
+      str = "<a href=\'" + location.origin + "/blog-tag/" + tag + "\'>" + tag + "</a>"
+  return new Handlebars.SafeString str
+
+Handlebars.registerHelper "joinTags", (list) ->
+  list.join(", ") if list?
+
 Handlebars.registerHelper "blogPager", ->
   if Post.count() is Session.get 'postLimit'
     return new Handlebars.SafeString '<a class="load-more btn" href="#">Load More</a>'

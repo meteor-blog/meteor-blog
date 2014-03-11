@@ -9,11 +9,15 @@ class @Post extends Minimongoid
 
   @before_create: (post) ->
     post.slug = Post.slugify post.title
+    post.tags = Post.splitTags post.tags
     post.excerpt = Post.excerpt post.body
     post
 
   @slugify: (str) ->
     str.toLowerCase().replace(/[^\w ]+/g, "").replace(RegExp(" +", "g"), "-")
+
+  @splitTags: (str) ->
+    str.split(/,\s*/) if str?
 
   validate: ->
     if not @title

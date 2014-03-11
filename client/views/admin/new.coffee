@@ -73,6 +73,7 @@ Template.blogAdminNew.events
 
     post = Post.create
       title: $('[name=title]').val()
+      tags: $('[name=tags]').val()
       body: tpl.editor.getValue()
       published: true
       createdAt: new Date()
@@ -90,6 +91,7 @@ Template.blogAdminNew.events
 
     post = Post.create
       title: $('[name=title]').val()
+      tags: $('[name=tags]').val()
       body: tpl.editor.getValue()
       published: false
       createdAt: new Date()
