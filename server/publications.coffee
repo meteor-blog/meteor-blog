@@ -14,6 +14,15 @@ Meteor.publish 'posts', (limit) ->
     limit:
       limit
 
+Meteor.publish 'taggedPosts', (tag) ->
+  check tag, String
+
+  Post.find {tags: tag},
+    fields:
+      body: 0
+    sort:
+      publishedAt: -1
+
 Meteor.publish 'authors', ->
   ids = _.pluck Post.all
     fields:
