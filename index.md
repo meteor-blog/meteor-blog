@@ -23,12 +23,11 @@ vote with your [Github issues](https://github.com/BeDifferential/meteor-blog/iss
 * Allow for comments (or at least a comment plugin)
 * <s>Ability to create categories/tags</s>
 * Widget to embed recent posts on another page
-* Customize how posts are displayed on main blog home
+* <s>Customize how posts are displayed on main blog home</s>
 * Use Google+ attributions for SEO
 * Other SEO best practices (<s> OpenGraph, Twitter Cards, share buttons</s>)
 * <s>Pagination</s>
 * Multiple roles (<s>admin</s>/author/etc)
-* Themes
 * <s>RSS</s>
 
 ### Quick Start
