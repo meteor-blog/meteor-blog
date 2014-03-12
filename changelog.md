@@ -2,11 +2,17 @@
 layout: default
 username: BeDifferential
 repo: meteor-blog
-version: 0.2.11
+version: 0.2.12
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
+
+### v0.2.12
+
+* Add basic tagging of blog posts
+* Save on publication data ([#33](https://github.com/BeDifferential/meteor-blog/issues/33))
+* Some preparations for Meteor Blaze
 
 ### v0.2.11
 

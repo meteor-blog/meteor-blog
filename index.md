@@ -2,7 +2,7 @@
 layout: default
 username: BeDifferential
 repo: meteor-blog
-version: 0.2.11
+version: 0.2.12
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
@@ -21,7 +21,7 @@ vote with your [Github issues](https://github.com/BeDifferential/meteor-blog/iss
 * <s>URL's based on slug from title</s> (but be editable)
 * Easily add images
 * Allow for comments (or at least a comment plugin)
-* Ability to create categories/tags
+* <s>Ability to create categories/tags</s>
 * Widget to embed recent posts on another page
 * Customize how posts are displayed on main blog home
 * Use Google+ attributions for SEO
