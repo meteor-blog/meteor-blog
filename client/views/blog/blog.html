@@ -31,7 +31,9 @@
 </template>
 
 <template name="blogTags">
-  <div class="post-tags">
-    <p> - Tags: {{blogFormatTags tags}}</p>
-  </div>
+  {{#if tags}}
+    <div class="post-tags">
+      <p> &ndash; Tags: {{blogFormatTags tags}}</p>
+    </div>
+  {{/if}}
 </template>

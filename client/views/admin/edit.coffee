@@ -81,8 +81,8 @@ Template.blogAdminEdit.events
     e.preventDefault()
 
     attrs =
-      title: $('[name=title]').val()
-      tags: Post.splitTags $('[name=tags]').val()
+      title: $(tpl.find '[name=title]').val()
+      tags: Post.splitTags $(tpl.find '[name=tags]').val()
       body: tpl.editor.getValue()
       excerpt: Post.excerpt tpl.editor.getValue()
       updatedAt: new Date()
@@ -110,8 +110,8 @@ Template.blogAdminEdit.events
     e.preventDefault()
 
     post = @update
-      title: $('[name=title]').val()
-      tags: Post.splitTags $('[name=tags]').val()
+      title: $(tpl.find '[name=title]').val()
+      tags: Post.splitTags $(tpl.find '[name=tags]').val()
       body: tpl.editor.getValue()
       excerpt: Post.excerpt tpl.editor.getValue()
       updatedAt: new Date()

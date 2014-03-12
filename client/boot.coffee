@@ -75,12 +75,13 @@ Handlebars.registerHelper "blogFormatDate", (date) ->
 
 Handlebars.registerHelper "blogFormatTags", (tags) ->
   return if !tags?
-  #$.each tags, (tag) ->
+
   for tag in tags
+    path = Router.path 'blogTagged', tag: tag
     if str?
-      str += ", <a href=\'" + location.origin + "/blog-tag/" + tag + "\'>" + tag + "</a>"
+      str += ", <a href=\"#{path}\">#{tag}</a>"
     else
-      str = "<a href=\'" + location.origin + "/blog-tag/" + tag + "\'>" + tag + "</a>"
+      str = "<a href=\"#{path}\">#{tag}</a>"
   return new Handlebars.SafeString str
 
 Handlebars.registerHelper "joinTags", (list) ->

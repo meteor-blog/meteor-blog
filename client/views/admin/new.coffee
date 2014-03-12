@@ -87,7 +87,8 @@ save = (tpl, published) ->
       if post.errors
         return alert(_(post.errors[0]).values()[0])
 
-      flash 'Publishing...', post
+      msg = if published then 'Publishing' else 'Saving'
+      flash "#{msg}...", post
     else
       return alert 'Blog with this slug already exists'
 

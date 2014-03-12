@@ -21,9 +21,11 @@
           <form class="post-form">
             <div class="form-group">
               <label>Title</label>
-              <input data-required="true" name="title" type="text" class="form-control" value="{{title}}"/>
-              <label>Tags (comma separated)</label>
-              <input data-required="true" name="tags" type="text" class="form-control" value="{{joinTags tags}}"/>
+              <input name="title" type="text" class="form-control" value="{{title}}"/>
+            </div>
+            <div class="form-group">
+              <label>Tags (comma-separated)</label>
+              <input name="tags" type="text" class="form-control" value="{{joinTags tags}}"/>
             </div>
             <div class="form-group">
               <label class="body-label">Body</label>

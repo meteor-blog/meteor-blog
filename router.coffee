@@ -48,7 +48,8 @@ Router.map ->
   #
 
   @route 'blogTagged',
-    path: '/blog-tag/:tag'
+    path: '/blog/tag/:tag'
+
     before: ->
       if Blog.settings.blogIndexTemplate
         @template = Blog.settings.blogIndexTemplate
@@ -77,7 +78,6 @@ Router.map ->
   #
 
   @route 'blogShow',
-
     path: '/blog/:slug'
 
     notFoundTemplate: 'blogNotFound'
