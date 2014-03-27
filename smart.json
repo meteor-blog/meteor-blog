@@ -4,7 +4,7 @@
   "homepage": "http://github.differential.io/meteor-blog/",
   "author": "Differential (http://differential.io)",
   "version": "0.2.12",
-  "git": "https://github.com/BeDifferential/meteor-blog.git",
+  "git": "https://github.com/Differential/meteor-blog.git",
   "packages": {
     "iron-router": "0.6.4",
     "minimongoid": "0.8.3",
