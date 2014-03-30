@@ -66,14 +66,10 @@ Meteor.startup ->
 # Register Global Helpers
 #
 
-if Package.ui
-  ->
-    Handlebars = Package.ui.Handlebars
-
-Handlebars.registerHelper "blogFormatDate", (date) ->
+UI.registerHelper "blogFormatDate", (date) ->
   moment(new Date(date)).format "MMM Do, YYYY"
 
-Handlebars.registerHelper "blogFormatTags", (tags) ->
+UI.registerHelper "blogFormatTags", (tags) ->
   return if !tags?
 
   for tag in tags
@@ -82,17 +78,17 @@ Handlebars.registerHelper "blogFormatTags", (tags) ->
       str += ", <a href=\"#{path}\">#{tag}</a>"
     else
       str = "<a href=\"#{path}\">#{tag}</a>"
-  return new Handlebars.SafeString str
+  return new Spacebars.SafeString str
 
-Handlebars.registerHelper "joinTags", (list) ->
+UI.registerHelper "joinTags", (list) ->
   list.join(", ") if list?
 
-Handlebars.registerHelper "blogPager", ->
+UI.registerHelper "blogPager", ->
   if Post.count() is Session.get 'postLimit'
-    return new Handlebars.SafeString '<a class="load-more btn" href="#">Load More</a>'
+    return new Spacebars.SafeString '<a class="load-more btn" href="#">Load More</a>'
 
-Handlebars.registerHelper "blogIndex", ->
-  new Handlebars.SafeString Template.blogIndexLoop(this)
+UI.registerHelper "blogIndex", ->
+  new Spacebars.SafeString Template.blogIndexLoop(this)
 
-Handlebars.registerHelper "blogShow", ->
-  new Handlebars.SafeString Template.blogShowBody(this)
+UI.registerHelper "blogShow", ->
+  new Spacebars.SafeString Template.blogShowBody(this)

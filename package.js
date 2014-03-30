@@ -12,7 +12,7 @@ Package.on_use(function(api) {
 
   api.use([
     'templating',
-    'handlebars',
+    'ui',
     'less',
     'ace-embed'
   ], 'client');

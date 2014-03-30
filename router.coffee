@@ -1,3 +1,10 @@
+class @BlogController extends RouteController
+  action: ->
+    if @ready()
+      @render()
+    else if Template['loading']
+      @render 'loading'
+
 Router.map ->
 
   #
@@ -18,30 +25,28 @@ Router.map ->
 
   @route 'blogIndex',
     path: '/blog'
+    controller: 'BlogController'
 
-    before: ->
+    onBeforeAction: ->
       if Blog.settings.blogIndexTemplate
         @template = Blog.settings.blogIndexTemplate
 
-      # Set up our own 'waitOn' here since IR does not atually wait on 'waitOn'
-      # (see https://github.com/EventedMind/iron-router/issues/265).
       if not Session.get('postLimit') and Blog.settings.pageSize
         Session.set 'postLimit', Blog.settings.pageSize
-      @subscribe('posts', Session.get('postLimit')).wait()
 
-    waitOn: ->
+    waitOn: -> [
+      Meteor.subscribe 'posts', Session.get('postLimit')
       Meteor.subscribe 'authors'
+    ]
 
     fastRender: true
 
     data: ->
-      if @ready()
-        posts: Post.where
-          published: true
-        ,
-          sort:
-            publishedAt: -1
-
+      posts: Post.where
+        published: true
+      ,
+        sort:
+          publishedAt: -1
 
   #
   # Blog Tag
@@ -49,8 +54,9 @@ Router.map ->
 
   @route 'blogTagged',
     path: '/blog/tag/:tag'
+    controller: 'BlogController'
 
-    before: ->
+    onBeforeAction: ->
       if Blog.settings.blogIndexTemplate
         @template = Blog.settings.blogIndexTemplate
 
@@ -58,20 +64,20 @@ Router.map ->
       # (see https://github.com/EventedMind/iron-router/issues/265).
       @subscribe('taggedPosts', @params.tag).wait()
 
-    waitOn: ->
+    waitOn: -> [
+      Meteor.subscribe 'taggedPosts', @params.tag
       Meteor.subscribe 'authors'
+    ]
 
     fastRender: true
 
     data: ->
-      if @ready()
-        posts: Post.where
-          published: true
-          tags: @params.tag
-        ,
-          sort:
-            publishedAt: -1
-
+      posts: Post.where
+        published: true
+        tags: @params.tag
+      ,
+        sort:
+          publishedAt: -1
 
   #
   # Show Blog
@@ -79,10 +85,10 @@ Router.map ->
 
   @route 'blogShow',
     path: '/blog/:slug'
-
+    controller: 'BlogController'
     notFoundTemplate: 'blogNotFound'
 
-    before: ->
+    onBeforeAction: ->
       if Blog.settings.blogShowTemplate
         @template = Blog.settings.blogShowTemplate
 
@@ -99,38 +105,35 @@ Router.map ->
         else
           Template[@template].rendered = pkgFunc
 
-      # Set up our own 'waitOn' here since IR does not atually wait on 'waitOn'
-      # (see https://github.com/EventedMind/iron-router/issues/265).
-      @subscribe('singlePost', @params.slug).wait()
-
-    waitOn: ->
+    waitOn: -> [
+      Meteor.subscribe 'singlePost', @params.slug
       Meteor.subscribe 'authors'
+    ]
 
     fastRender: true
 
     data: ->
-      if @ready()
-        Post.first slug: @params.slug
+      Post.first slug: @params.slug
 
   #
   # Blog Admin Index
   #
 
   @route 'blogAdmin',
-
     path: '/admin/blog'
+    controller: 'BlogController'
 
     waitOn: ->
       [ Meteor.subscribe 'posts'
         Meteor.subscribe 'authors' ]
 
-    before: ->
+    onBeforeAction: (pause) ->
 
       if Blog.settings.blogAdminTemplate
         @template = Blog.settings.blogAdminTemplate
 
       if Meteor.loggingIn()
-        return @stop()
+        return pause()
 
       Meteor.call 'isBlogAuthorized', (err, authorized) =>
         if not authorized
@@ -143,13 +146,13 @@ Router.map ->
   @route 'blogAdminNew',
     path: '/admin/blog/new'
 
-    before: ->
+    onBeforeAction: (pause) ->
 
       if Blog.settings.blogAdminNewTemplate
         @template = Blog.settings.blogAdminNewTemplate
 
       if Meteor.loggingIn()
-        return @stop()
+        return pause()
 
       Meteor.call 'isBlogAuthorized', (err, authorized) =>
         if not authorized
@@ -161,25 +164,23 @@ Router.map ->
 
   @route 'blogAdminEdit',
     path: '/admin/blog/edit/:slug'
+    controller: 'BlogController'
 
-    waitOn: ->
-      Meteor.subscribe 'authors'
-
-    data: ->
-      if @ready()
-        Post.first slug: @params.slug
-
-    before: ->
+    onBeforeAction: (pause) ->
       if Blog.settings.blogAdminEditTemplate
         @template = Blog.settings.blogAdminEditTemplate
 
       if Meteor.loggingIn()
-        return @stop()
+        return pause()
 
       Meteor.call 'isBlogAuthorized', (err, authorized) =>
         if not authorized
           return @redirect('/blog')
 
-      # Set up our own 'waitOn' here since IR does not atually wait on 'waitOn'
-      # (see https://github.com/EventedMind/iron-router/issues/265).
-      @subscribe('singlePost', @params.slug).wait()
+    waitOn: -> [
+      Meteor.subscribe 'singlePost', @params.slug
+      Meteor.subscribe 'authors'
+    ]
+
+    data: ->
+      Post.first slug: @params.slug
