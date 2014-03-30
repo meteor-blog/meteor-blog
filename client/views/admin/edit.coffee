@@ -63,11 +63,7 @@ Template.blogAdminEdit.rendered = ->
 
 flash = (status) ->
   setTimeout ->
-    $('.status').hide().html(status).fadeIn 'slow', ->
-      setTimeout ->
-        $('.status').fadeOut 'slow'
-      , 2500
-  , 100
+    $('.status').hide().html(status).fadeIn('slow').delay(2500).fadeOut('slow')
 
 Template.blogAdminEdit.events
 
@@ -82,7 +78,7 @@ Template.blogAdminEdit.events
 
     attrs =
       title: $(tpl.find '[name=title]').val()
-      tags: Post.splitTags $(tpl.find '[name=tags]').val()
+      tags: $(tpl.find '[name=tags]').val()
       body: tpl.editor.getValue()
       excerpt: Post.excerpt tpl.editor.getValue()
       updatedAt: new Date()
@@ -111,7 +107,7 @@ Template.blogAdminEdit.events
 
     post = @update
       title: $(tpl.find '[name=title]').val()
-      tags: Post.splitTags $(tpl.find '[name=tags]').val()
+      tags: $(tpl.find '[name=tags]').val()
       body: tpl.editor.getValue()
       excerpt: Post.excerpt tpl.editor.getValue()
       updatedAt: new Date()

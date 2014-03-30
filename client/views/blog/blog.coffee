@@ -14,7 +14,7 @@ Template.blogShowBody.rendered = ->
   $('<meta>', { property: 'og:type', content: 'article' }).appendTo 'head'
   $('<meta>', { property: 'og:site_name', content: location.hostname }).appendTo 'head'
   $('<meta>', { property: 'og:url', content: location.origin + location.pathname }).appendTo 'head'
-  $('<meta>', { property: 'og:title', content: "#{@data.title}" }).appendTo 'head'
+  $('<meta>', { property: 'og:title', content: @data.title }).appendTo 'head'
   $('<meta>', { property: 'og:description', content: @data.excerpt }).appendTo 'head'
 
   img = @data.thumbnail()
@@ -36,7 +36,7 @@ Template.blogShowBody.rendered = ->
     $('<meta>', { property: 'twitter:creator', content: author.profile.twitter }).appendTo 'head'
 
   $('<meta>', { property: 'twitter:url', content: location.origin + location.pathname }).appendTo 'head'
-  $('<meta>', { property: 'twitter:title', content: "#{@data.title}" }).appendTo 'head'
+  $('<meta>', { property: 'twitter:title', content: @data.title }).appendTo 'head'
   $('<meta>', { property: 'twitter:description', content: @data.excerpt }).appendTo 'head'
   $('<meta>', { property: 'twitter:image:src', content: img }).appendTo 'head'
 

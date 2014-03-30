@@ -7,11 +7,18 @@ class @Post extends Minimongoid
     identifier: 'userId'
   ]
 
-  @before_create: (post) ->
-    post.slug = Post.slugify post.title
+  @after_save: (post) ->
+    # Slug is immutable, for now
+    if not post.slug
+      post.slug = Post.slugify post.title
     post.tags = Post.splitTags post.tags
     post.excerpt = Post.excerpt post.body
-    post
+
+    @_collection.update _id: post.id,
+      $set:
+        slug: post.slug
+        tags: post.tags
+        excerpt: post.excerpt
 
   @slugify: (str) ->
     str.toLowerCase().replace(/[^\w ]+/g, "").replace(RegExp(" +", "g"), "-")
@@ -45,7 +52,7 @@ class @Post extends Minimongoid
     ret = ''
     while not ret and matches[i]
       # Strip tags and clean up whitespaces
-      ret += matches[i++].replace(/(<([^>]+)>)/ig, '').replace('&nbsp;', '').trim()
+      ret += matches[i++].replace(/(<([^>]+)>)/ig, ' ').replace('&nbsp;', ' ').trim()
 
     ret
 
