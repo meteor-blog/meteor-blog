@@ -2,7 +2,7 @@
 layout: default
 username: Differential
 repo: meteor-blog
-version: 0.2.13
+version: 0.3.0
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---

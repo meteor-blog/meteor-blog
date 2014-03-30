@@ -2,11 +2,17 @@
 layout: default
 username: Differential
 repo: meteor-blog
-version: 0.2.13
+version: 0.3.0
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
+
+### v0.3.0
+
+_NOTE: `0.3.0` is not guaranteed to work with Meteor `0.7.x` and below. If you are using an older version of Meteor, use Blog `0.2.13`._
+
+* Meteor `0.8.x` compatibility
 
 ### v0.2.13
 
