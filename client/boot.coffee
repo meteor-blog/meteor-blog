@@ -25,7 +25,7 @@ Blog =
 
 Meteor.startup ->
   $('<link>',
-    href: '//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css'
+    href: '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css'
     rel: 'stylesheet'
   ).appendTo 'head'
 
@@ -81,7 +81,8 @@ UI.registerHelper "blogFormatTags", (tags) ->
   return new Spacebars.SafeString str
 
 UI.registerHelper "joinTags", (list) ->
-  list.join(", ") if list?
+  if list
+    list.join ', '
 
 UI.registerHelper "blogPager", ->
   if Post.count() is Session.get 'postLimit'

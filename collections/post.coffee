@@ -8,15 +8,11 @@ class @Post extends Minimongoid
   ]
 
   @after_save: (post) ->
-    # Slug is immutable, for now
-    if not post.slug
-      post.slug = Post.slugify post.title
     post.tags = Post.splitTags post.tags
-    post.excerpt = Post.excerpt post.body
+    post.excerpt = Post.excerpt post.body if post.body
 
     @_collection.update _id: post.id,
       $set:
-        slug: post.slug
         tags: post.tags
         excerpt: post.excerpt
 
@@ -24,27 +20,27 @@ class @Post extends Minimongoid
     str.toLowerCase().replace(/[^\w ]+/g, "").replace(RegExp(" +", "g"), "-")
 
   @splitTags: (str) ->
-    str.split(/,\s*/) if str?
+    if str and typeof str is 'string'
+      return str.split(/,\s*/)
+    str
 
   validate: ->
     if not @title
       @error 'title', "Blog title is required"
 
+    if not @slug
+      @error 'slug', "Blog slug is required"
+
   html: ->
-    marked @body
+    @body
 
   thumbnail: ->
-    # Convert markdown to HTML
-    html = marked @body
     regex = new RegExp /img src=[\'"]([^\'"]+)/ig
 
-    while match = regex.exec html
+    while match = regex.exec @body
       return match[1]
 
-  @excerpt: (markdown) ->
-    # Convert markdown to HTML
-    html = marked markdown
-
+  @excerpt: (html) ->
     # Find 1st non-empty paragraph
     matches = html.split /<\/div>|<\/p>|<br><br>|\\n\\n|\\r\\n\\r\\n/m
 

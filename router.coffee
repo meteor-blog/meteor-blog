@@ -106,7 +106,7 @@ Router.map ->
           Template[@template].rendered = pkgFunc
 
     waitOn: -> [
-      Meteor.subscribe 'singlePost', @params.slug
+      Meteor.subscribe 'singlePostBySlug', @params.slug
       Meteor.subscribe 'authors'
     ]
 
@@ -123,10 +123,6 @@ Router.map ->
     path: '/admin/blog'
     controller: 'BlogController'
 
-    waitOn: ->
-      [ Meteor.subscribe 'posts'
-        Meteor.subscribe 'authors' ]
-
     onBeforeAction: (pause) ->
 
       if Blog.settings.blogAdminTemplate
@@ -139,31 +135,16 @@ Router.map ->
         if not authorized
           return @redirect('/blog')
 
-  #
-  # New Blog
-  #
-
-  @route 'blogAdminNew',
-    path: '/admin/blog/new'
-
-    onBeforeAction: (pause) ->
-
-      if Blog.settings.blogAdminNewTemplate
-        @template = Blog.settings.blogAdminNewTemplate
-
-      if Meteor.loggingIn()
-        return pause()
-
-      Meteor.call 'isBlogAuthorized', (err, authorized) =>
-        if not authorized
-          return @redirect('/blog')
+    waitOn: ->
+      [ Meteor.subscribe 'posts'
+        Meteor.subscribe 'authors' ]
 
   #
-  # Edit Blog
+  # New/Edit Blog
   #
 
   @route 'blogAdminEdit',
-    path: '/admin/blog/edit/:slug'
+    path: '/admin/blog/edit/:id'
     controller: 'BlogController'
 
     onBeforeAction: (pause) ->
@@ -176,11 +157,10 @@ Router.map ->
       Meteor.call 'isBlogAuthorized', (err, authorized) =>
         if not authorized
           return @redirect('/blog')
+        else
+          Session.set 'postId', @params.id
 
     waitOn: -> [
-      Meteor.subscribe 'singlePost', @params.slug
+      Meteor.subscribe 'singlePostById', @params.id
       Meteor.subscribe 'authors'
     ]
-
-    data: ->
-      Post.first slug: @params.slug

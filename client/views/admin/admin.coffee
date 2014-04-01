@@ -1,4 +1,4 @@
-Template.blogAdminList.helpers
+Template.blogAdmin.helpers
 
   posts: ->
     results = Post.all { sort: { updatedAt: -1 }}
@@ -10,6 +10,12 @@ Template.blogAdminList.helpers
 
 Template.blogAdmin.events
 
+  'click .for-new-blog': (e, tpl) ->
+    e.preventDefault()
+
+    id = new Meteor.Collection.ObjectID()._str
+    Router.go 'blogAdminEdit', id: id
+
   'change .for-filtering': (e) ->
     e.preventDefault()
 
@@ -18,3 +24,24 @@ Template.blogAdmin.events
       filters.userId = Meteor.userId()
 
     Session.set 'filters', filters
+
+Template.blogAdminRow.events
+
+  'click .for-publish': (e, tpl) ->
+    e.preventDefault()
+    @update
+      published: true
+      publishedAt: new Date()
+
+  'click .for-unpublish': (e, tpl) ->
+    e.preventDefault()
+    @update
+      published: false
+      publishedAt: null
+
+  'click .delete': (e, tpl) ->
+    e.preventDefault()
+
+    if confirm('Are you sure?')
+      $(e.currentTarget).parents('.blogAdminRow').fadeOut =>
+        @destroy()

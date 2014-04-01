@@ -2,93 +2,44 @@
   padding-top: 120px;
   padding-bottom: 100px;
 
-  #editor, #preview {
-    width: 100%;
-    min-height: 200px;
-    border-radius: 4px;
-  }
+  .blog-admin-index {
+    h1 {
+      margin-top: 0;
+    }
 
-  #editor {
-    border: 1px solid #ccc;
-    max-height: 600px;
-  }
+    select {
+      width: 20%;
+      float: right;
+    }
 
-  #preview {
-    border: 1px solid #eee;
-    overflow-y: auto;
-    padding:  0 10px;
-  }
+    .btn {
+      float: right;
+      margin-left: 20px;
+    }
 
-  .hint {
-    font-size: 0.9em;
-    text-align: right;
-  }
-
-  h1 .switch-wrap {
-    float: right;
-    font-size: 14px;
-  }
-
-  select {
-    float: right;
-    width: 20%;
-  }
-
-  .blog-draft {
-    font-weight: 600;
-    color: #DB2727;
-  }
-
-  .status {
-    margin-left: 3%; 
-  }
-
-  ul.blog-admin-sidebar {
-
-    li {
-      list-style: none;
-      border-bottom: 1px solid #ddd;
-      margin-bottom: 10px;
-      padding-left: 10px;
-
-      &:last-child {
-        border-bottom: 0px;
-      }
-
-      a {
-        display: block;
-
-        i {
-          width: 30px;
-          display: inline-block;
-          text-align: center;
-        }
-      }
+    .selected {
+      font-weight: bold;
+      text-transform: uppercase;
     }
   }
 
-  ul.blog-admin-list {
-    padding-left: 0px;
-
-    li {
-      list-style: none;
-      padding: 10px 0;
-      overflow: auto;
-      border-bottom: 1px solid #ddd;
-
-      &:last-child {
-        border-bottom: none;
-      }
+  .blog-admin-edit {
+    .editable {
+      outline: none;
+      margin-top: 15px;
+      margin-bottom: 30px;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+      -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      -moz-border-radius: 4px;
+      -webkit-border-radius: 4px;
+      padding: 12px 6px;
     }
-  }
 
-  .parsley-error {
-    background: #fbe3e4 !important;
-    color: #8a1f11 !important;
-    border-color: #fbc2c4 !important;
-  }
-
-  .parsley-error-list {
-    display: none !important;
+    .medium-editor-placeholder:after {
+      padding: 12px 6px;
+    }
   }
 }

@@ -1,7 +1,12 @@
-Meteor.publish 'singlePost', (slug) ->
+Meteor.publish 'singlePostBySlug', (slug) ->
   check slug, String
 
   Post.find slug: slug
+
+Meteor.publish 'singlePostById', (id) ->
+  check id, String
+
+  Post.find _id: id
 
 Meteor.publish 'posts', (limit) ->
   check limit, Match.Optional(Number)

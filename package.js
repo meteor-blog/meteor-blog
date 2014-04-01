@@ -13,8 +13,7 @@ Package.on_use(function(api) {
   api.use([
     'templating',
     'ui',
-    'less',
-    'ace-embed'
+    'less'
   ], 'client');
 
   /**
@@ -22,16 +21,14 @@ Package.on_use(function(api) {
    */
 
   api.add_files([
-    'client/stylesheets/lib/bootstrap-switch.css',
+    'client/stylesheets/lib/medium-editor.css',
+    'client/stylesheets/lib/medium-themes/bootstrap.css',
     'client/boot.coffee',
-    'client/compatibility/bootstrap-switch.js',
+    'client/compatibility/medium-editor.js',
     'client/views/404.html',
-    'client/views/admin/nav.html',
     'client/views/admin/admin.less',
     'client/views/admin/admin.html',
     'client/views/admin/admin.coffee',
-    'client/views/admin/new.html',
-    'client/views/admin/new.coffee',
     'client/views/admin/edit.html',
     'client/views/admin/edit.coffee',
     'client/views/blog/blog.less',
@@ -66,8 +63,7 @@ Package.on_use(function(api) {
     'accounts-base',
     'minimongoid',
     'moment',
-    'roles',
-    'marked'
+    'roles'
   ], both);
 
   /**

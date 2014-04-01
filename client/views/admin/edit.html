@@ -1,45 +1,47 @@
 <template name="blogAdminEdit">
   <div id="blog-admin">
-    <div class="container">
+    <div class="container blog-admin-edit">
       <div class="row">
-        <div class="col-md-3">
-          {{> blogAdminNav}}
-        </div>
-        <div class="col-md-9">
+        <div class="col-md-8 col-md-offset-2">
           <h1>
-            <strong>EDIT:</strong> {{title}}
-            <div class="switch-wrap">
-              Preview
-              <div class="make-switch" data-on="success">
-                <input name="preview" type="checkbox">
-              </div>
-              <div class="hint">
-                <small><strong><span class="ctrl-label">CTRL</span>-p</strong> toggles <em>Preview</em></small>
-              </div>
-            </div>
+            <strong>Edit Post</strong>
           </h1>
-          <form class="post-form">
-            <div class="form-group">
-              <label>Title</label>
-              <input name="title" type="text" class="form-control" value="{{title}}"/>
-            </div>
-            <div class="form-group">
-              <label>Tags (comma-separated)</label>
-              <input name="tags" type="text" class="form-control" value="{{joinTags tags}}"/>
-            </div>
-            <div class="form-group">
-              <label class="body-label">Body</label>
-              <div id="editor"></div>
-              <div id="preview" hidden></div>
-              <div class="hint">
-                <a target="_blank" href="http://daringfireball.net/projects/markdown/syntax"><strong>Markdown</strong> syntax guide</a>
+
+          {{#with post}}
+            <form>
+              <div class="row form-group">
+                <div class="col-md-12">
+                  <label>Title</label>
+                  <input autofocus tabindex="1" type="text" class="form-control" name="title" placeholder="Title" value="{{title}}">
+                </div>
               </div>
-            </div>
-            <button type="submit" class="for-saving btn-save btn btn-default"><i class="icon-save"></i> Save</button>
-            <button type="submit" class="for-publishing btn-publish btn btn-default"><i class="icon-globe"></i> {{#if published}}Unpublish{{else}}Publish{{/if}}</button>
-            <button type="submit" class="for-deleting btn-delete btn btn-default"><i class="icon-trash"></i> Delete</button>
-            <span class="status" hidden></span>
-          </form>
+              <div class="row form-group">
+                <div class="col-md-6">
+                  <label>Tags (comma-separated)</label>
+                  <input tabindex="2" type="text" class="form-control" name="tags" placeholder="Tags" value="{{joinTags tags}}">
+                </div>
+                <div class="col-md-6">
+                  <label>Slug</label>
+                  <input type="text" class="form-control" name="slug" placeholder="Slug" value="{{slug}}">
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-12">
+                  <label>Body</label>
+                  <div class="editable" tabindex="3">
+                    {{{body}}}
+                  </div>
+                  <button type="submit" class="btn btn-default">
+                    <i class="fa fa-save"></i> Save
+                  </button>
+                  <a href="{{pathFor 'blogAdmin'}}" class="btn btn-default">
+                    <i class="fa fa-ban"></i> Cancel
+                  </a>
+                </div>
+              </div>
+            </form>
+          {{/with}}
+
         </div>
       </div>
     </div>
