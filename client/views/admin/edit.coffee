@@ -26,6 +26,7 @@ Template.blogAdminEdit.events
     form = $(e.currentTarget)
 
     body = $('.editable', form).html().trim()
+    slug = $('[name=slug]', form).val()
 
     if not body
       return alert 'Blog body is required'
@@ -34,16 +35,25 @@ Template.blogAdminEdit.events
       userId: Meteor.userId()
       title: $('[name=title]', form).val()
       tags: $('[name=tags]', form).val()
-      slug: $('[name=slug]', form).val()
+      slug: slug
       body: body
       updatedAt: new Date()
 
     if getPost()
       post = getPost().update attrs
+      if post.errors
+        return alert(_(post.errors[0]).values()[0])
+
+      Router.go 'blogAdmin'
     else
-      post = Post.create attrs
+      Meteor.call 'doesBlogExist', slug, (err, exists) ->
+        if not exists
+          post = Post.create attrs
 
-    if post.errors
-      return alert(_(post.errors[0]).values()[0])
+          if post.errors
+            return alert(_(post.errors[0]).values()[0])
 
-    Router.go 'blogAdmin'
+          Router.go 'blogAdmin'
+
+        else
+          return alert 'Blog with this slug already exists'
