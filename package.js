@@ -11,6 +11,7 @@ Package.on_use(function(api) {
    */
 
   api.use([
+    'session',
     'templating',
     'ui',
     'less'
@@ -42,6 +43,7 @@ Package.on_use(function(api) {
    */
 
   api.add_files([
+    'collections/config.coffee',
     'server/boot.coffee',
     'server/rss.coffee',
     'server/publications.coffee'
