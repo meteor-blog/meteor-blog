@@ -35,6 +35,9 @@ Template.blogShowBody.rendered = ->
   if author.profile and author.profile.twitter
     $('<meta>', { property: 'twitter:creator', content: author.profile.twitter }).appendTo 'head'
 
+  if author.profile and author.profile.profileUrl
+    $('<link>', { href: author.profile.profileUrl, rel: 'author' }).appendTo 'head'
+
   $('<meta>', { property: 'twitter:url', content: location.origin + location.pathname }).appendTo 'head'
   $('<meta>', { property: 'twitter:title', content: @data.title }).appendTo 'head'
   $('<meta>', { property: 'twitter:description', content: @data.excerpt }).appendTo 'head'
