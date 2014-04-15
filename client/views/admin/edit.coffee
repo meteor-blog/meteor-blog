@@ -5,7 +5,7 @@ Template.blogAdminEdit.rendered = ->
   @editor = new MediumEditor '.editable',
     placeholder: 'Start typing...'
     buttons:
-      ['bold', 'italic', 'underline', 'anchor', 'pre', 'header1', 'header2', 'orderedlist', 'unorderedlist', 'quote']
+      ['bold', 'italic', 'underline', 'anchor', 'pre', 'header1', 'header2', 'orderedlist', 'unorderedlist', 'quote', 'image']
 
 Template.blogAdminEdit.helpers
   post: ->
