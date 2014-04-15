@@ -110,8 +110,6 @@ Router.map ->
       Meteor.subscribe 'authors'
     ]
 
-    fastRender: true
-
     data: ->
       Post.first slug: @params.slug
 
