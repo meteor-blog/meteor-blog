@@ -60,7 +60,10 @@ class @Post extends Minimongoid
     author = @author()
 
     if author
-      if author.profile and author.profile.firstName and author.profile.lastName
+      if author.profile.name
+        return author.profile.name
+        
+      else if author.profile and author.profile.firstName and author.profile.lastName
         return "#{author.profile.firstName} #{author.profile.lastName}"
 
       else if author.profile and author.profile.twitter
