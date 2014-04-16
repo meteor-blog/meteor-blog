@@ -42,7 +42,7 @@ class @Post extends Minimongoid
 
   @excerpt: (html) ->
     # Find 1st non-empty paragraph
-    matches = html.split /<\/div>|<\/p>|<br><br>|\\n\\n|\\r\\n\\r\\n/m
+    matches = html.split /<\/div>|<\/p>|<\/blockquote>|<br><br>|\\n\\n|\\r\\n\\r\\n/m
 
     i = 0
     ret = ''
