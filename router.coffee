@@ -31,11 +31,8 @@ Router.map ->
       if Blog.settings.blogIndexTemplate
         @template = Blog.settings.blogIndexTemplate
 
-      if not Session.get('postLimit') and Blog.settings.pageSize
-        Session.set 'postLimit', Blog.settings.pageSize
-
     waitOn: -> [
-      Meteor.subscribe 'posts', Session.get('postLimit')
+      Meteor.subscribe 'posts', Blog.settings.pageSize
       Meteor.subscribe 'authors'
     ]
 
@@ -59,10 +56,6 @@ Router.map ->
     onBeforeAction: ->
       if Blog.settings.blogIndexTemplate
         @template = Blog.settings.blogIndexTemplate
-
-      # Set up our own 'waitOn' here since IR does not atually wait on 'waitOn'
-      # (see https://github.com/EventedMind/iron-router/issues/265).
-      @subscribe('taggedPosts', @params.tag).wait()
 
     waitOn: -> [
       Meteor.subscribe 'taggedPosts', @params.tag
@@ -106,11 +99,9 @@ Router.map ->
           Template[@template].rendered = pkgFunc
 
     waitOn: -> [
-      Meteor.subscribe 'singlePost', @params.slug
+      Meteor.subscribe 'singlePostBySlug', @params.slug
       Meteor.subscribe 'authors'
     ]
-
-    fastRender: true
 
     data: ->
       Post.first slug: @params.slug
@@ -122,10 +113,6 @@ Router.map ->
   @route 'blogAdmin',
     path: '/admin/blog'
     controller: 'BlogController'
-
-    waitOn: ->
-      [ Meteor.subscribe 'posts'
-        Meteor.subscribe 'authors' ]
 
     onBeforeAction: (pause) ->
 
@@ -139,31 +126,16 @@ Router.map ->
         if not authorized
           return @redirect('/blog')
 
-  #
-  # New Blog
-  #
-
-  @route 'blogAdminNew',
-    path: '/admin/blog/new'
-
-    onBeforeAction: (pause) ->
-
-      if Blog.settings.blogAdminNewTemplate
-        @template = Blog.settings.blogAdminNewTemplate
-
-      if Meteor.loggingIn()
-        return pause()
-
-      Meteor.call 'isBlogAuthorized', (err, authorized) =>
-        if not authorized
-          return @redirect('/blog')
+    waitOn: ->
+      [ Meteor.subscribe 'posts'
+        Meteor.subscribe 'authors' ]
 
   #
-  # Edit Blog
+  # New/Edit Blog
   #
 
   @route 'blogAdminEdit',
-    path: '/admin/blog/edit/:slug'
+    path: '/admin/blog/edit/:id'
     controller: 'BlogController'
 
     onBeforeAction: (pause) ->
@@ -176,11 +148,10 @@ Router.map ->
       Meteor.call 'isBlogAuthorized', (err, authorized) =>
         if not authorized
           return @redirect('/blog')
+        else
+          Session.set 'postId', @params.id
 
     waitOn: -> [
-      Meteor.subscribe 'singlePost', @params.slug
+      Meteor.subscribe 'singlePostById', @params.id
       Meteor.subscribe 'authors'
     ]
-
-    data: ->
-      Post.first slug: @params.slug

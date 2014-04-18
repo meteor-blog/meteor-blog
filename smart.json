@@ -6,11 +6,11 @@
   "version": "0.3.0",
   "git": "https://github.com/Differential/meteor-blog.git",
   "packages": {
-    "iron-router": "0.7.0",
-    "minimongoid": "0.8.3",
+    "iron-router": {},
+    "minimongoid": {},
     "moment": {},
-    "roles": "1.2.8",
-    "marked": "0.3.2",
-    "ace-embed": "0.0.4"
+    "roles": {},
+    "marked": {},
+    "reactive-table": {}
   }
 }
