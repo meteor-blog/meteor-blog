@@ -1,5 +1,6 @@
 Template.blogAdmin.rendered = ->
   $(@find '.reactive-table').addClass 'table-bordered'
+  $(@find '.updatedAt').click().click()
 
 Template.blogAdmin.helpers
 
@@ -17,7 +18,7 @@ Template.blogAdmin.helpers
     useFontAwesome: true
     fields: [
       { key: 'title', label: 'Title', tmpl: Template.blogAdminTitleColumn }
-      { key: 'authorName', label: 'Author', tmpl: Template.blogAdminAuthorColumn }
+      { key: 'userId', label: 'Author', tmpl: Template.blogAdminAuthorColumn }
       { key: 'updatedAt', label: 'Updated At', tmpl: Template.blogAdminUpdatedColumn }
       { key: 'publishedAt', label: 'Published At', tmpl: Template.blogAdminPublishedColumn }
       { key: 'published', label: 'Status', tmpl: Template.blogAdminStatusColumn }
