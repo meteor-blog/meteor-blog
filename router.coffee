@@ -31,11 +31,8 @@ Router.map ->
       if Blog.settings.blogIndexTemplate
         @template = Blog.settings.blogIndexTemplate
 
-      if not Session.get('postLimit') and Blog.settings.pageSize
-        Session.set 'postLimit', Blog.settings.pageSize
-
     waitOn: -> [
-      Meteor.subscribe 'posts', Session.get('postLimit')
+      Meteor.subscribe 'posts', Blog.settings.pageSize
       Meteor.subscribe 'authors'
     ]
 
@@ -59,10 +56,6 @@ Router.map ->
     onBeforeAction: ->
       if Blog.settings.blogIndexTemplate
         @template = Blog.settings.blogIndexTemplate
-
-      # Set up our own 'waitOn' here since IR does not atually wait on 'waitOn'
-      # (see https://github.com/EventedMind/iron-router/issues/265).
-      @subscribe('taggedPosts', @params.tag).wait()
 
     waitOn: -> [
       Meteor.subscribe 'taggedPosts', @params.tag
