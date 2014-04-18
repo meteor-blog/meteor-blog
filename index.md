@@ -2,29 +2,29 @@
 layout: default
 username: Differential
 repo: meteor-blog
-version: 0.3.0
+version: 0.4.0
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Blog
 
-This Meteor package gives you a basic, out-of-the-box blog at `/blog`.  We
-wanted something to work with that uses Iron Router, Bootstrap 3, and didn't
-require us to run another dyno for a meteor-based blog.
+This Meteor package gives you a basic, out-of-the-box blog at `/blog`. We wanted
+a way to add a blog to an existing app without running another dyno or server
+for a meteor-based blog.
 
 This blog is very much a work in progress. To help decide what gets add next,
-vote with your [Github issues](https://github.com/BeDifferential/meteor-blog/issues)!
+vote with your [Github issues](https://github.com/Differential/meteor-blog/issues)!
 
 ### Roadmap
 
 * <s>Basic markdown editor</s>
-* <s>URL's based on slug from title</s> (but be editable)
+* <s>URL's based on slug from title (but be editable)</s>
 * Easily add images
 * Allow for comments (or at least a comment plugin)
 * <s>Ability to create categories/tags</s>
 * Widget to embed recent posts on another page
 * <s>Customize how posts are displayed on main blog home</s>
-* Use Google+ attributions for SEO
+* <s>Use Google+ attributions for SEO</s>
 * Other SEO best practices (<s> OpenGraph, Twitter Cards, share buttons</s>)
 * <s>Pagination</s>
 * Multiple roles (<s>admin</s>/author/etc)
@@ -82,8 +82,9 @@ mrt add bootstrap-3
 
 ### Custom Templates
 
-If the default templates aren't doing it for you, you can override the default
-templates with your own by setting configuration variables:
+While the admin templates are opinionated, the front-end is bare markup, ready
+to by styled. If the default templates aren't doing it for you, you can override
+the default templates with your own by setting configuration variables:
 
 {% highlight coffeescript %}
 if Meteor.isClient

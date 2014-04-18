@@ -2,21 +2,26 @@
 layout: default
 username: Differential
 repo: meteor-blog
-version: 0.3.0
+version: 0.4.0
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
+
+### v0.4.0
+
+_NOTE: In `0.4.0`, blog contents are stored as HTML, not markdown. There is an automatic migration step if you upgrade, but you may want to backup your blog posts first._
+
+* Complete re-write of blog administrative interface
+  * Replace Ace Editor with Medium Editor
+  * Replace administrative blog list with fancy table
+* Add Google+ authorship link to blog posts
 
 ### v0.3.0
 
 _NOTE: `0.3.0` is not guaranteed to work with Meteor `0.7.x` and below. If you are using an older version of Meteor, use Blog `0.2.13`._
 
 * Meteor `0.8.x` compatibility
-
-### v0.2.13
-
-* Fix git reference
 
 ### v0.2.12
 
@@ -33,10 +38,6 @@ _NOTE: `0.3.0` is not guaranteed to work with Meteor `0.7.x` and below. If you a
 * Allow user to override admin templates ([#31](https://github.com/BeDifferential/meteor-blog/issues/31))
 * Tweak default CSS for blog list padding and blog post image margins
 
-### v0.2.9
-
-* Fix typo
-
 ### v0.2.8
 
 * Unnecessary code cleanup
@@ -48,9 +49,7 @@ _NOTE: `0.3.0` is not guaranteed to work with Meteor `0.7.x` and below. If you a
 ### v0.2.7
 
 * Update to iron-router 0.6.2
-* Fixed a few bugs (issues
-[#16](https://github.com/BeDifferential/meteor-blog/issues/16) and
-[#17](https://github.com/BeDifferential/meteor-blog/issues/17))
+* Fixed a few bugs (issues [#16](https://github.com/BeDifferential/meteor-blog/issues/16) and [#17](https://github.com/BeDifferential/meteor-blog/issues/17))
 * Add server-side RSS feed
 
 ### v0.2.6
