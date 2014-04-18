@@ -14,7 +14,8 @@ Package.on_use(function(api) {
     'session',
     'templating',
     'ui',
-    'less'
+    'less',
+    'reactive-table'
   ], 'client');
 
   /**

@@ -1,3 +1,6 @@
+Template.blogAdmin.rendered = ->
+  $(@find '.reactive-table').addClass 'table-bordered'
+
 Template.blogAdmin.helpers
 
   posts: ->
@@ -7,6 +10,20 @@ Template.blogAdmin.helpers
       results = _(results).where Session.get('filters')
 
     results
+
+  table: ->
+    rowsPerPage: 20
+    showFilter: false
+    useFontAwesome: true
+    fields: [
+      { key: 'title', label: 'Title', tmpl: Template.blogAdminTitleColumn }
+      { key: 'authorName', label: 'Author', tmpl: Template.blogAdminAuthorColumn }
+      { key: 'updatedAt', label: 'Updated At', tmpl: Template.blogAdminUpdatedColumn }
+      { key: 'publishedAt', label: 'Published At', tmpl: Template.blogAdminPublishedColumn }
+      { key: 'published', label: 'Status', tmpl: Template.blogAdminStatusColumn }
+      { key: 'id', label: 'Edit', tmpl: Template.blogAdminEditColumn }
+      { key: 'id', label: 'Delete', tmpl: Template.blogAdminDeleteColumn }
+    ]
 
 Template.blogAdmin.events
 
@@ -25,7 +42,7 @@ Template.blogAdmin.events
 
     Session.set 'filters', filters
 
-Template.blogAdminRow.events
+Template.blogAdminStatusColumn.events
 
   'click .for-publish': (e, tpl) ->
     e.preventDefault()
@@ -39,9 +56,11 @@ Template.blogAdminRow.events
       published: false
       publishedAt: null
 
+Template.blogAdminDeleteColumn.events
+
   'click .delete': (e, tpl) ->
     e.preventDefault()
 
     if confirm('Are you sure?')
-      $(e.currentTarget).parents('.blogAdminRow').fadeOut =>
+      $(e.currentTarget).parents('tr').fadeOut =>
         @destroy()
