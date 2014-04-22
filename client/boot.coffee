@@ -58,7 +58,7 @@ Meteor.startup ->
 
   # Listen for any 'Load More' clicks
   $('body').on 'click', '.load-more', (e) ->
-    e.preventDefault()
+    e.preventDefault() and e.stopPropagation()
     if Session.get 'postLimit'
       Session.set 'postLimit', Session.get('postLimit') + Blog.settings.pageSize
 
