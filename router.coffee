@@ -27,17 +27,17 @@ Router.map ->
     path: '/blog'
     controller: 'BlogController'
 
-    onBeforeAction: ->
+    onRun: ->
       if Blog.settings.blogIndexTemplate
         @template = Blog.settings.blogIndexTemplate
 
       if not Session.get('postLimit') and Blog.settings.pageSize
         Session.set 'postLimit', Blog.settings.pageSize
 
-      @subscribe('posts', Session.get('postLimit')).wait()
-
-    waitOn: ->
+    waitOn: -> [
+      Meteor.subscribe 'posts', Session.get('postLimit')
       Meteor.subscribe 'authors'
+    ]
 
     fastRender: true
 
@@ -56,7 +56,7 @@ Router.map ->
     path: '/blog/tag/:tag'
     controller: 'BlogController'
 
-    onBeforeAction: ->
+    onRun: ->
       if Blog.settings.blogIndexTemplate
         @template = Blog.settings.blogIndexTemplate
 
@@ -84,7 +84,7 @@ Router.map ->
     controller: 'BlogController'
     notFoundTemplate: 'blogNotFound'
 
-    onBeforeAction: ->
+    onRun: ->
       if Blog.settings.blogShowTemplate
         @template = Blog.settings.blogShowTemplate
 
@@ -117,11 +117,11 @@ Router.map ->
     path: '/admin/blog'
     controller: 'BlogController'
 
-    onBeforeAction: (pause) ->
-
+    onRun: ->
       if Blog.settings.blogAdminTemplate
         @template = Blog.settings.blogAdminTemplate
 
+    onBeforeAction: (pause) ->
       if Meteor.loggingIn()
         return pause()
 
@@ -141,10 +141,11 @@ Router.map ->
     path: '/admin/blog/edit/:id'
     controller: 'BlogController'
 
-    onBeforeAction: (pause) ->
+    onRun: ->
       if Blog.settings.blogAdminEditTemplate
         @template = Blog.settings.blogAdminEditTemplate
 
+    onBeforeAction: (pause) ->
       if Meteor.loggingIn()
         return pause()
 
