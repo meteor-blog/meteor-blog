@@ -2,15 +2,15 @@
 layout: default
 username: Differential
 repo: meteor-blog
-version: 0.4.1
+version: 0.4.2
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
 
-### v0.4.1
+### v0.4.2
 
-* Fix pagination bug ([#44](https://github.com/BeDifferential/meteor-blog/issues/44))
+* Fix bugs with pagination ([#44](https://github.com/BeDifferential/meteor-blog/issues/44)), author profile, and T9n.
 
 ### v0.4.0
 
