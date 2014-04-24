@@ -64,13 +64,14 @@ Meteor.startup ->
 
   # reactive-table depends on just-i18n, which clashes with accounts-t9n. This
   # restores the mapping. See: https://github.com/ecohealthalliance/reactive-table/issues/50
-  T9n.map 'en',
-    reactiveTable:
-      filter: 'Filter'
-      show: 'Show'
-      rowsPerPage: 'rows per page'
-      page: 'Page'
-      of: 'of'
+  if typeof T9n isnt 'undefined'
+    T9n.map 'en',
+      reactiveTable:
+        filter: 'Filter'
+        show: 'Show'
+        rowsPerPage: 'rows per page'
+        page: 'Page'
+        of: 'of'
 
 ################################################################################
 # Register Global Helpers
