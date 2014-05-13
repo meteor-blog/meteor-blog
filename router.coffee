@@ -1,8 +1,6 @@
 class @BlogController extends RouteController
-  action: ->
-    if @ready()
-      @render()
-    else if Template['loading']
+  onBeforeAction: ->
+    if not @ready() and Template['loading']
       @render 'loading'
 
 Router.map ->
