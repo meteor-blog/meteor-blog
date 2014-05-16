@@ -5,6 +5,7 @@
 Blog =
   settings:
     adminRole: null
+    adminGroup: null
     rss:
       title: ''
       description: ''
@@ -60,6 +61,11 @@ Meteor.startup ->
       if not Meteor.user()
         return false
 
+      # If role AND group is passed
+      if Blog.settings.adminRole and Blog.settings.adminGroup and not Roles.userIsInRole(Meteor.user(), Blog.settings.adminRole, Blog.settings.adminGroup)
+        return false
+
+      # If only role is passed
       if Blog.settings.adminRole and not Roles.userIsInRole(Meteor.user(), Blog.settings.adminRole)
         return false
 
