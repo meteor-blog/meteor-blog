@@ -62,11 +62,13 @@ Meteor.startup ->
         return false
 
       # If role AND group is passed
-      if Blog.settings.adminRole and Blog.settings.adminGroup and not Roles.userIsInRole(Meteor.user(), Blog.settings.adminRole, Blog.settings.adminGroup)
-        return false
+      if Blog.settings.adminRole and Blog.settings.adminGroup
+        if not Roles.userIsInRole(Meteor.user(), Blog.settings.adminRole, Blog.settings.adminGroup)
+          return false
 
       # If only role is passed
-      if Blog.settings.adminRole and not Roles.userIsInRole(Meteor.user(), Blog.settings.adminRole)
-        return false
+      else if Blog.settings.adminRole
+        if not Roles.userIsInRole(Meteor.user(), Blog.settings.adminRole)
+          return false
 
       true
