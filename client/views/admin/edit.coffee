@@ -32,7 +32,6 @@ Template.blogAdminEdit.events
       return alert 'Blog body is required'
 
     attrs =
-      userId: Meteor.userId()
       title: $('[name=title]', form).val()
       tags: $('[name=tags]', form).val()
       slug: slug
@@ -48,6 +47,7 @@ Template.blogAdminEdit.events
     else
       Meteor.call 'doesBlogExist', slug, (err, exists) ->
         if not exists
+          attrs.userId = Meteor.userId()
           post = Post.create attrs
 
           if post.errors
