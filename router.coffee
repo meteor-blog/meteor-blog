@@ -126,6 +126,9 @@ Router.map ->
       [ Meteor.subscribe 'posts'
         Meteor.subscribe 'authors' ]
 
+    data: ->
+      true
+
   #
   # New/Edit Blog
   #
@@ -151,3 +154,6 @@ Router.map ->
       Meteor.subscribe 'singlePostById', @params.id
       Meteor.subscribe 'authors'
     ]
+
+    data: ->
+      true
