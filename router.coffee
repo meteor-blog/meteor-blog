@@ -1,6 +1,4 @@
 Router.onBeforeAction 'loading'
-Router.onBeforeAction 'dataNotFound'
-
 Router.map ->
 
   #
