@@ -1,7 +1,5 @@
-class @BlogController extends RouteController
-  onBeforeAction: ->
-    if not @ready() and Template['loading']
-      @render 'loading'
+Router.onBeforeAction 'loading'
+Router.onBeforeAction 'dataNotFound'
 
 Router.map ->
 
@@ -23,7 +21,6 @@ Router.map ->
 
   @route 'blogIndex',
     path: '/blog'
-    controller: 'BlogController'
 
     onRun: ->
       if Blog.settings.blogIndexTemplate
@@ -52,7 +49,6 @@ Router.map ->
 
   @route 'blogTagged',
     path: '/blog/tag/:tag'
-    controller: 'BlogController'
 
     onRun: ->
       if Blog.settings.blogIndexTemplate
@@ -79,7 +75,7 @@ Router.map ->
 
   @route 'blogShow',
     path: '/blog/:slug'
-    controller: 'BlogController'
+
     notFoundTemplate: 'blogNotFound'
 
     onRun: ->
@@ -113,7 +109,6 @@ Router.map ->
 
   @route 'blogAdmin',
     path: '/admin/blog'
-    controller: 'BlogController'
 
     onRun: ->
       if Blog.settings.blogAdminTemplate
@@ -137,7 +132,6 @@ Router.map ->
 
   @route 'blogAdminEdit',
     path: '/admin/blog/edit/:id'
-    controller: 'BlogController'
 
     onRun: ->
       if Blog.settings.blogAdminEditTemplate
