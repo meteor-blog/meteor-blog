@@ -31,8 +31,7 @@ Template.blogAdmin.events
   'click .for-new-blog': (e, tpl) ->
     e.preventDefault()
 
-    id = new Meteor.Collection.ObjectID()._str
-    Router.go 'blogAdminEdit', id: id
+    Router.go 'blogAdminEdit', id: Random.id()
 
   'change .for-filtering': (e) ->
     e.preventDefault()
