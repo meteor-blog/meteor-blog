@@ -1,4 +1,6 @@
-Router.onBeforeAction 'loading'
+if Meteor.isClient
+  Router.onBeforeAction 'loading'
+
 Router.map ->
 
   #
