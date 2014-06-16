@@ -37,3 +37,8 @@ Meteor.publish 'authors', ->
   Author.find
     id:
       $in: ids
+  ,
+    fields:
+      profile: 1
+      username: 1
+      emails: 1
