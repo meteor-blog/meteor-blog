@@ -41,16 +41,18 @@ class @Post extends Minimongoid
       return match[1]
 
   @excerpt: (html) ->
-    # Find 1st non-empty paragraph
-    matches = html.split /<\/div>|<\/p>|<\/blockquote>|<br><br>|\\n\\n|\\r\\n\\r\\n/m
+    if Blog.settings.excerptFunction?
+      Blog.settings.excerptFunction html
+    else
+      # Find 1st non-empty paragraph
+      matches = html.split /<\/div>|<\/p>|<\/blockquote>|<br><br>|\\n\\n|\\r\\n\\r\\n/m
 
-    i = 0
-    ret = ''
-    while not ret and matches[i]
-      # Strip tags and clean up whitespaces
-      ret += matches[i++].replace(/(<([^>]+)>)/ig, ' ').replace('&nbsp;', ' ').trim()
-
-    ret
+      i = 0
+      ret = ''
+      while not ret and matches[i]
+        # Strip tags and clean up whitespaces
+        ret += matches[i++].replace(/(<([^>]+)>)/ig, ' ').replace('&nbsp;', ' ').trim()
+      ret
 
   authorName: ->
     author = @author()
