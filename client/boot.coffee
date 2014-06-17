@@ -11,6 +11,8 @@ Blog =
     blogAdminNewTemplate:'blogAdminNew'
     blogAdminEditTemplate: 'blogAdminEdit'
     pageSize: 20
+    excerptFunction: null
+
 
   config: (appConfig) ->
     @settings = _.extend(@settings, appConfig)
