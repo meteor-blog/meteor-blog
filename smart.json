@@ -3,7 +3,7 @@
   "description": "Gives you a basic, out-of-the-box blog at `/blog`",
   "homepage": "http://github.differential.io/meteor-blog/",
   "author": "Differential (http://differential.io)",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "git": "https://github.com/Differential/meteor-blog.git",
   "packages": {
     "iron-router": {},
