@@ -2,11 +2,17 @@
 layout: default
 username: Differential
 repo: meteor-blog
-version: 0.4.3
+version: 0.4.4
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
+
+### v0.4.4
+
+* Allow user to override blog excerpt function ([#52](https://github.com/Differential/meteor-blog/pull/52))
+* Add minor performance improvements
+* Fix minor bugs
 
 ### v0.4.3
 
