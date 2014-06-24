@@ -96,8 +96,8 @@ if Meteor.isClient
 In your templates, you can use these Handlebars helpers provided by the package
 to display blog posts with some basic, semantic markup:
 
-{% assign bi = '{{blogIndex}}' %}
-{% assign bs = '{{blogShow}}' %}
+{% assign bi = '{{> blogIndex}}' %}
+{% assign bs = '{{> blogShow}}' %}
 * `{{ bi }}` - Renders list of blog posts (`/blog` route)
 * `{{ bs }}` - Renders single blog post (`/blog/:slug` route)
 
@@ -122,8 +122,7 @@ Example:
 {% assign ee = '{{/each}}' %}
 {% assign t = '{{title}}' %}
 {% assign p = '{{publishedAt}}' %}
-{% assign b = '{{body}}' %}
-{% assign h = '{{{html}}}' %}
+{% assign ex = '{{excerpt}}' %}
 {% highlight html %}
 <template name="myBlogIndexTemplate">
   <h1>Welcome to my Blog</h1>
@@ -132,8 +131,7 @@ Example:
       <li>
         <h2>{{t}}</h2>
         <p>Published on {{p}}</p>
-        <p>Markdown: {{b}}</p>
-        <p>HTML: {{h}}</p>
+        <p>Excerpt: {{ex}}</p>
       </li>
     {{ee}}
   </ul>
