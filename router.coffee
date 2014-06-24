@@ -22,10 +22,11 @@ Router.map ->
   @route 'blogIndex',
     path: '/blog'
 
-    onRun: ->
+    onBeforeAction: ->
       if Blog.settings.blogIndexTemplate
         @template = Blog.settings.blogIndexTemplate
 
+    onRun: ->
       if not Session.get('postLimit') and Blog.settings.pageSize
         Session.set 'postLimit', Blog.settings.pageSize
 
@@ -50,7 +51,7 @@ Router.map ->
   @route 'blogTagged',
     path: '/blog/tag/:tag'
 
-    onRun: ->
+    onBeforeAction: ->
       if Blog.settings.blogIndexTemplate
         @template = Blog.settings.blogIndexTemplate
 
@@ -78,7 +79,7 @@ Router.map ->
 
     notFoundTemplate: 'blogNotFound'
 
-    onRun: ->
+    onBeforeAction: ->
       if Blog.settings.blogShowTemplate
         @template = Blog.settings.blogShowTemplate
 
@@ -110,11 +111,10 @@ Router.map ->
   @route 'blogAdmin',
     path: '/admin/blog'
 
-    onRun: ->
+    onBeforeAction: (pause) ->
       if Blog.settings.blogAdminTemplate
         @template = Blog.settings.blogAdminTemplate
 
-    onBeforeAction: (pause) ->
       if Meteor.loggingIn()
         return pause()
 
@@ -136,11 +136,10 @@ Router.map ->
   @route 'blogAdminEdit',
     path: '/admin/blog/edit/:id'
 
-    onRun: ->
+    onBeforeAction: (pause) ->
       if Blog.settings.blogAdminEditTemplate
         @template = Blog.settings.blogAdminEditTemplate
 
-    onBeforeAction: (pause) ->
       if Meteor.loggingIn()
         return pause()
 
