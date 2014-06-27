@@ -84,10 +84,15 @@ Template.blogAdminEdit.events
     e.preventDefault()
     form = $(e.currentTarget)
 
-    if $('.editable').get(0)
+    # Make paragraphs commentable
+    $('.editable', form).find('p').each(->
+      $(this).addClass('commentable-section').attr('data-section-id', $(this).index() + 1)
+    )
+
+    if $('.editable', form).get(0)
       body = $('.editable', form).html().trim()
     else
-      body = $('.html-editor').val().trim()
+      body = $('.html-editor', form).val().trim()
 
     slug = $('[name=slug]', form).val()
 
