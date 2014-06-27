@@ -1,3 +1,6 @@
+Meteor.publish 'commentsBySlug', (slug) ->
+  Comment.find slug: slug
+
 Meteor.publish 'singlePostBySlug', (slug) ->
   check slug, String
 
