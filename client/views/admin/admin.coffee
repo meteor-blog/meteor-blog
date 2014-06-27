@@ -52,6 +52,18 @@ Template.blogAdminStatusColumn.events
       published: true
       publishedAt: new Date()
 
+Template.blogAdminCommentColumn.events
+
+  'click .for-comments': (e, tpl) ->
+    e.preventDefault()
+    @update
+      commentable: true
+
+  'click .for-nocomments': (e, tpl) ->
+    e.preventDefault()
+    @update
+      commentable: false
+
   'click .for-unpublish': (e, tpl) ->
     e.preventDefault()
     @update
