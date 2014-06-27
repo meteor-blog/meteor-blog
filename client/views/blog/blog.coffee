@@ -28,11 +28,14 @@ Template.blogShow.rendered = ->
 
       # load existing comments
       existingComments = []
-      @data.comments.forEach((section)->
-        existingComments.push(
-          sectionId: section.sectionId.toString()
-          comments: section.comments
-        )
+      @data.comments.forEach((comment)->
+        comment.comment.id = comment._id
+        if existingComments[comment.sectionId - 1]
+          existingComments[comment.sectionId - 1].comments.push comment.comment
+        else
+          existingComments[comment.sectionId - 1] =
+            sectionId: comment.sectionId.toString()
+            comments: [comment.comment]
       )
 
       # add side comments
@@ -40,17 +43,24 @@ Template.blogShow.rendered = ->
 
       # side comments events
       sideComments.on 'commentPosted', (comment) ->
-        attrs =
-          authorAvatarUrl: comment.authorAvatarUrl
-          authorName: comment.authorName
-          comment: comment.comment
-        if getComment(comment.sectionId)
-          newComment = getComment(comment.sectionId)
-          newComment.comments.push attrs
-          newComment.update comments: newComment.comments
+        if settings.allowAnonymous or Meteor.user()
+          attrs =
+            slug: Session.get('slug')
+            sectionId: comment.sectionId
+            comment:
+              authorAvatarUrl: comment.authorAvatarUrl
+              authorName: comment.authorName
+              authorId: comment.authorId
+              comment: comment.comment
+          commentId = Comment.create attrs
+          comment.id = commentId
+          sideComments.insertComment(comment)
         else
-          Comment.create slug: Session.get('slug'), sectionId: comment.sectionId, comments: [attrs]
-        sideComments.insertComment(comment)
+            comment.id = -1
+            sideComments.insertComment
+              sectionId: comment.sectionId
+              authorName: comment.authorName
+              comment: 'Please login to post comments'
 
 Template.blogShowBody.rendered = ->
 
