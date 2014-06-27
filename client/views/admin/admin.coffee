@@ -52,6 +52,12 @@ Template.blogAdminStatusColumn.events
       published: true
       publishedAt: new Date()
 
+  'click .for-unpublish': (e, tpl) ->
+    e.preventDefault()
+    @update
+    published: false
+    publishedAt: null
+
 Template.blogAdminDeleteColumn.events
 
   'click .delete': (e, tpl) ->
