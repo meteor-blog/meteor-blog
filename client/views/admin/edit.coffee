@@ -1,6 +1,6 @@
 getPost = ->
   Post.first Session.get('postId')
- 
+
 Template.blogAdminEdit.rendered = ->
   @editor = new MediumEditor '.editable',
     placeholder: 'Start typing...'
@@ -24,6 +24,11 @@ Template.blogAdminEdit.events
   'submit form': (e, tpl) ->
     e.preventDefault()
     form = $(e.currentTarget)
+
+    # Make paragraphs commentable
+    $('.editable', form).find('p').each(->
+      $(this).addClass('commentable-section').attr('data-section-id', $(this).index() + 1)
+    );
 
     body = $('.editable', form).html().trim()
     slug = $('[name=slug]', form).val()
