@@ -9,17 +9,24 @@ Template.blogShow.rendered = ->
     if settings.useSideComments
       SideComments = require 'side-comments'
 
-      # cehck if config allows anonymous commenters (default is null)
+      # check if config allows anonymous commenters (default is null)
       if settings.allowAnonymous and !Meteor.user()
         commentUser =
           name: 'Anonymous'
           avatarUrl: 'http://f.cl.ly/items/0s1a0q1y2Z2k2I193k1y/default-user.png'
-          id: Meteor.userId()
-      else
+          id: 0
+      else if Meteor.user()
         commentUser =
           name: Meteor.user().username
           avatarUrl: 'http://f.cl.ly/items/0s1a0q1y2Z2k2I193k1y/default-user.png'
           id: Meteor.userId()
+      else
+        commentUser =
+          name: 'Login to Comment'
+          avatarUrl: 'http://f.cl.ly/items/0s1a0q1y2Z2k2I193k1y/default-user.png'
+          id: 0
+
+      # load existing comments
       existingComments = []
       @data.comments.forEach((section)->
         existingComments.push(
@@ -27,7 +34,11 @@ Template.blogShow.rendered = ->
           comments: section.comments
         )
       )
+
+      # add side comments
       sideComments = new SideComments '#commentable-area', commentUser, existingComments
+
+      # side comments events
       sideComments.on 'commentPosted', (comment) ->
         attrs =
           authorAvatarUrl: comment.authorAvatarUrl
