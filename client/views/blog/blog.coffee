@@ -62,6 +62,10 @@ Template.blogShow.rendered = ->
               authorName: comment.authorName
               comment: 'Please login to post comments'
 
+      sideComments.on 'commentDeleted', (comment) ->
+        Comment.destroyAll comment.id
+        sideComments.removeComment comment.sectionId, comment.id
+
 Template.blogShowBody.rendered = ->
 
   # Hide draft posts from crawlers
