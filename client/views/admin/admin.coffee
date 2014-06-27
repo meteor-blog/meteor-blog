@@ -55,8 +55,8 @@ Template.blogAdminStatusColumn.events
   'click .for-unpublish': (e, tpl) ->
     e.preventDefault()
     @update
-    published: false
-    publishedAt: null
+      published: false
+      publishedAt: null
 
 Template.blogAdminDeleteColumn.events
 
