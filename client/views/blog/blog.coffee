@@ -4,13 +4,22 @@ getComment = (id)->
 Template.blogShow.rendered = ->
 
   # Add SideComments
-  Meteor.call 'showSideComments', (err, show) =>
-    if show
+  Meteor.call 'sideCommentsSettings', (err, settings) =>
+    # check if useSideComments config is true (default is null)
+    if settings.useSideComments
       SideComments = require 'side-comments'
-      commentUser =
-        name: Meteor.user().username
-        avatarUrl: 'http://f.cl.ly/items/0s1a0q1y2Z2k2I193k1y/default-user.png'
-        id: Meteor.userId()
+
+      # cehck if config allows anonymous commenters (default is null)
+      if settings.allowAnonymous and !Meteor.user()
+        commentUser =
+          name: 'Anonymous'
+          avatarUrl: 'http://f.cl.ly/items/0s1a0q1y2Z2k2I193k1y/default-user.png'
+          id: Meteor.userId()
+      else
+        commentUser =
+          name: Meteor.user().username
+          avatarUrl: 'http://f.cl.ly/items/0s1a0q1y2Z2k2I193k1y/default-user.png'
+          id: Meteor.userId()
       existingComments = []
       @data.comments.forEach((section)->
         existingComments.push(

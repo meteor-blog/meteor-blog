@@ -7,6 +7,7 @@ Blog =
     adminRole: null
     adminGroup: null
     comments:
+      allowAnonymous: null
       useSideComments: null
     rss:
       title: ''
@@ -75,6 +76,6 @@ Meteor.startup ->
 
       true
 
-    showSideComments: () ->
-      console.log Blog.settings.comments.useSideComments
-      Blog.settings.comments.useSideComments
+    sideCommentsSettings: () ->
+      useSideComments: Blog.settings.comments.useSideComments
+      allowAnonymous: Blog.settings.comments.allowAnonymous
