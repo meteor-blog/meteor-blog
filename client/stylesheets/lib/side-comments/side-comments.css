@@ -1,5 +1,7 @@
 /* Overwrite meteor-blog CSS that is conflicting */
-#commentable-area .side-comment .comments li .author-avatar img {
+#commentable-area .side-comment .comments-wrapper .author-avatar img {
+  border: none;
+  border-radius: 0;
   margin: 0;
   max-width: none;
 }
