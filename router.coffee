@@ -80,6 +80,8 @@ Router.map ->
     notFoundTemplate: 'blogNotFound'
 
     onBeforeAction: ->
+      Session.set('slug', @params.slug)
+
       if Blog.settings.blogShowTemplate
         @template = Blog.settings.blogShowTemplate
 
