@@ -1,3 +1,10 @@
+/* Overwrite meteor-blog CSS that is conflicting */
+#commentable-area .side-comment .comments li .author-avatar img {
+  margin: 0;
+  max-width: none;
+}
+/* End Overwrite */
+
 @-webkit-keyframes fadein {
   from {
     opacity: 0;
