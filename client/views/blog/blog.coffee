@@ -63,8 +63,9 @@ Template.blogShow.rendered = ->
               comment: 'Please login to post comments'
 
       sideComments.on 'commentDeleted', (comment) ->
-        Comment.destroyAll comment.id
-        sideComments.removeComment comment.sectionId, comment.id
+        if Meteor.user()
+          Comment.destroyAll comment.id
+          sideComments.removeComment comment.sectionId, comment.id
 
 Template.blogShowBody.rendered = ->
 
