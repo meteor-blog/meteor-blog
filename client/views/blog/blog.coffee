@@ -4,31 +4,33 @@ getComment = (id)->
 Template.blogShow.rendered = ->
 
   # Add SideComments
-  SideComments = require 'side-comments'
-  commentUser =
-    name: Meteor.user().username
-    avatarUrl: 'http://f.cl.ly/items/0s1a0q1y2Z2k2I193k1y/default-user.png'
-    id: Meteor.userId()
-  existingComments = []
-  @data.comments.forEach((section)->
-    existingComments.push(
-      sectionId: section.sectionId.toString()
-      comments: section.comments
-    )
-  )
-  sideComments = new SideComments '#commentable-area', commentUser, existingComments
-  sideComments.on 'commentPosted', (comment) ->
-    attrs =
-      authorAvatarUrl: comment.authorAvatarUrl
-      authorName: comment.authorName
-      comment: comment.comment
-    if getComment(comment.sectionId)
-      newComment = getComment(comment.sectionId)
-      newComment.comments.push attrs
-      newComment.update comments: newComment.comments
-    else
-      Comment.create slug: Session.get('slug'), sectionId: comment.sectionId, comments: [attrs]
-    sideComments.insertComment(comment)
+  Meteor.call 'showSideComments', (err, show) =>
+    if show
+      SideComments = require 'side-comments'
+      commentUser =
+        name: Meteor.user().username
+        avatarUrl: 'http://f.cl.ly/items/0s1a0q1y2Z2k2I193k1y/default-user.png'
+        id: Meteor.userId()
+      existingComments = []
+      @data.comments.forEach((section)->
+        existingComments.push(
+          sectionId: section.sectionId.toString()
+          comments: section.comments
+        )
+      )
+      sideComments = new SideComments '#commentable-area', commentUser, existingComments
+      sideComments.on 'commentPosted', (comment) ->
+        attrs =
+          authorAvatarUrl: comment.authorAvatarUrl
+          authorName: comment.authorName
+          comment: comment.comment
+        if getComment(comment.sectionId)
+          newComment = getComment(comment.sectionId)
+          newComment.comments.push attrs
+          newComment.update comments: newComment.comments
+        else
+          Comment.create slug: Session.get('slug'), sectionId: comment.sectionId, comments: [attrs]
+        sideComments.insertComment(comment)
 
 Template.blogShowBody.rendered = ->
 
