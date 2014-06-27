@@ -61,14 +61,6 @@
   {{/if}}
 </template>
 
-<template name="blogAdminCommentColumn">
-  {{#if commentable}}
-    <a class="for-nocomments" href="#">No Comments</a> | <span class="selected">Comments</span>
-  {{else}}
-    <span class="selected">No Comments</span> | <a class="for-comments" href="#">Comments</a>
-  {{/if}}
-</template>
-
 <template name="blogAdminEditColumn">
   <a href="{{pathFor 'blogAdminEdit'}}"><i class="fa fa-edit"></i></a>
 </template>
