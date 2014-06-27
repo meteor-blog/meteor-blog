@@ -55,9 +55,17 @@
 
 <template name="blogAdminStatusColumn">
   {{#if published}}
-    <a class="for-unpublish" href="#">Draft</a> | <span class="selected">Published</span> 
+    <a class="for-unpublish" href="#">Draft</a> | <span class="selected">Published</span>
   {{else}}
     <span class="selected">Draft</span> | <a class="for-publish" href="#">Published</a>
+  {{/if}}
+</template>
+
+<template name="blogAdminCommentColumn">
+  {{#if commentable}}
+    <a class="for-nocomments" href="#">No Comments</a> | <span class="selected">Comments</span>
+  {{else}}
+    <span class="selected">No Comments</span> | <a class="for-comments" href="#">Comments</a>
   {{/if}}
 </template>
 
