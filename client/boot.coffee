@@ -12,6 +12,9 @@ Blog =
     blogAdminEditTemplate: 'blogAdminEdit'
     pageSize: 20
     excerptFunction: null
+    comments:
+      allowAnonymous: null
+      useSideComments: null
 
 
   config: (appConfig) ->
