@@ -4,68 +4,68 @@ getComment = (id)->
 Template.blogShow.rendered = ->
 
   # Add SideComments
-  Meteor.call 'sideCommentsSettings', (err, settings) =>
-    # check if useSideComments config is true (default is null)
-    if settings.useSideComments
-      SideComments = require 'side-comments'
+  settings = Blog.settings.comments
+  # check if useSideComments config is true (default is null)
+  if settings.useSideComments
+    SideComments = require 'side-comments'
 
-      # check if config allows anonymous commenters (default is null)
-      if settings.allowAnonymous and !Meteor.user()
-        commentUser =
-          name: 'Anonymous'
-          avatarUrl: 'http://f.cl.ly/items/0s1a0q1y2Z2k2I193k1y/default-user.png'
-          id: 0
-      else if Meteor.user()
-        commentUser =
-          name: Meteor.user().username
-          avatarUrl: 'http://f.cl.ly/items/0s1a0q1y2Z2k2I193k1y/default-user.png'
-          id: Meteor.userId()
+    # check if config allows anonymous commenters (default is null)
+    if settings.allowAnonymous and !Meteor.user()
+      commentUser =
+        name: 'Anonymous'
+        avatarUrl: 'http://f.cl.ly/items/0s1a0q1y2Z2k2I193k1y/default-user.png'
+        id: 0
+    else if Meteor.user()
+      commentUser =
+        name: Meteor.user().username
+        avatarUrl: 'http://f.cl.ly/items/0s1a0q1y2Z2k2I193k1y/default-user.png'
+        id: Meteor.userId()
+    else
+      commentUser =
+        name: 'Login to Comment'
+        avatarUrl: 'http://f.cl.ly/items/0s1a0q1y2Z2k2I193k1y/default-user.png'
+        id: 0
+
+    # load existing comments
+    existingComments = []
+    @data.comments.forEach((comment)->
+      comment.comment.id = comment._id
+      if existingComments[comment.sectionId - 1]
+        existingComments[comment.sectionId - 1].comments.push comment.comment
       else
-        commentUser =
-          name: 'Login to Comment'
-          avatarUrl: 'http://f.cl.ly/items/0s1a0q1y2Z2k2I193k1y/default-user.png'
-          id: 0
+        existingComments[comment.sectionId - 1] =
+          sectionId: comment.sectionId.toString()
+          comments: [comment.comment]
+    )
 
-      # load existing comments
-      existingComments = []
-      @data.comments.forEach((comment)->
-        comment.comment.id = comment._id
-        if existingComments[comment.sectionId - 1]
-          existingComments[comment.sectionId - 1].comments.push comment.comment
-        else
-          existingComments[comment.sectionId - 1] =
-            sectionId: comment.sectionId.toString()
-            comments: [comment.comment]
-      )
+    # add side comments
+    sideComments = new SideComments '#commentable-area', commentUser, existingComments
 
-      # add side comments
-      sideComments = new SideComments '#commentable-area', commentUser, existingComments
-
-      # side comments events
-      sideComments.on 'commentPosted', (comment) ->
-        if settings.allowAnonymous or Meteor.user()
-          attrs =
-            slug: Session.get('slug')
+    # side comments events
+    sideComments.on 'commentPosted', (comment) ->
+      if settings.allowAnonymous or Meteor.user()
+        attrs =
+          slug: Session.get('slug')
+          sectionId: comment.sectionId
+          comment:
+            authorAvatarUrl: comment.authorAvatarUrl
+            authorName: comment.authorName
+            authorId: comment.authorId
+            comment: comment.comment
+        commentId = Comment.create attrs
+        comment.id = commentId
+        sideComments.insertComment(comment)
+      else
+          comment.id = -1
+          sideComments.insertComment
             sectionId: comment.sectionId
-            comment:
-              authorAvatarUrl: comment.authorAvatarUrl
-              authorName: comment.authorName
-              authorId: comment.authorId
-              comment: comment.comment
-          commentId = Comment.create attrs
-          comment.id = commentId
-          sideComments.insertComment(comment)
-        else
-            comment.id = -1
-            sideComments.insertComment
-              sectionId: comment.sectionId
-              authorName: comment.authorName
-              comment: 'Please login to post comments'
+            authorName: comment.authorName
+            comment: 'Please login to post comments'
 
-      sideComments.on 'commentDeleted', (comment) ->
-        if Meteor.user()
-          Comment.destroyAll comment.id
-          sideComments.removeComment comment.sectionId, comment.id
+    sideComments.on 'commentDeleted', (comment) ->
+      if Meteor.user()
+        Comment.destroyAll comment.id
+        sideComments.removeComment comment.sectionId, comment.id
 
 Template.blogShowBody.rendered = ->
 
