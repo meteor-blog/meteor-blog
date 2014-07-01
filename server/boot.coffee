@@ -47,6 +47,27 @@ Meteor.startup ->
     # Set version flag
     Config.create versions: ['0.4.0']
 
+  # add side comments
+  arr = Post.all()
+  i = 0
+  while i < arr.length
+    obj = arr[i++]
+    html = obj.body
+    para = /<p[^>]*>/g
+    classPattern = /class=[\"|\'].*[\"|\']/g
+    if html.indexOf('commentable-section') < 0
+      index = 0
+      html = html.replace(para, (ele) ->
+        if classPattern.test(ele)
+          newEle = ele.replace('class=\"', 'class=\"commentable-section')
+        else
+          newEle = ele.replace('>', ' class=\"commentable-section\">')
+        newEle = newEle.replace('>', " data-section-id=\"#{index}\">")
+        index++
+        return newEle
+      )
+      obj.update body: html
+
   ##############################################################################
   # Server-side methods
   #
