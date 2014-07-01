@@ -25,7 +25,10 @@ Package.on_use(function(api) {
   api.add_files([
     'client/stylesheets/lib/medium-editor.css',
     'client/stylesheets/lib/medium-themes/bootstrap.css',
+    'client/stylesheets/lib/side-comments/side-comments.css',
+    'client/stylesheets/lib/side-comments/default.css',
     'client/boot.coffee',
+    'client/compatibility/side-comments.js',
     'client/compatibility/medium-editor.js',
     'client/views/404.html',
     'client/views/admin/admin.less',
@@ -76,7 +79,8 @@ Package.on_use(function(api) {
   api.add_files([
     'router.coffee',
     'collections/author.coffee',
-    'collections/post.coffee'
+    'collections/post.coffee',
+    'collections/comment.coffee'
   ], both);
 });
 

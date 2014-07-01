@@ -12,6 +12,11 @@ Blog =
     blogAdminEditTemplate: 'blogAdminEdit'
     pageSize: 20
     excerptFunction: null
+    comments:
+      allowAnonymous: null
+      useSideComments: null
+      defaultImg: 'http://f.cl.ly/items/0s1a0q1y2Z2k2I193k1y/default-user.png'
+      userImg: 'avatar'
 
 
   config: (appConfig) ->
