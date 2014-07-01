@@ -13,9 +13,13 @@ Template.blogShow.rendered = ->
     if settings.allowAnonymous and !Meteor.user()
       commentUser =
         name: 'Anonymous'
-        avatarUrl: 'http://f.cl.ly/items/0s1a0q1y2Z2k2I193k1y/default-user.png'
+        avatarUrl: Blog.settings.comments.defaultImg
         id: 0
     else if Meteor.user()
+      if Meteor.user().profile[Blog.settings.comments.userImg]
+        avatar = Meteor.user().profile[Blog.settings.comments.userImg]
+      else
+        avatar = Blog.settings.comments.defaultImg
       commentUser =
         name: Meteor.user().username
         avatarUrl: 'http://f.cl.ly/items/0s1a0q1y2Z2k2I193k1y/default-user.png'
@@ -23,7 +27,7 @@ Template.blogShow.rendered = ->
     else
       commentUser =
         name: 'Login to Comment'
-        avatarUrl: 'http://f.cl.ly/items/0s1a0q1y2Z2k2I193k1y/default-user.png'
+        avatarUrl: Blog.settings.comments.defaultImg
         id: 0
 
     # load existing comments
