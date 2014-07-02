@@ -9,17 +9,26 @@ prettyHtml = (html) ->
   )
 
 makeEditor = ->
-  new MediumEditor '.editable',
+  editor = new MediumEditor '.editable',
     placeholder: 'Start typing...'
     buttonLabels: 'fontawesome'
     buttons:
       ['bold', 'italic', 'underline', 'anchor', 'pre', 'header1', 'header2', 'orderedlist', 'unorderedlist', 'quote', 'image']
 
+  $(@find '.editable').mediumInsert
+    editor: editor
+    enabled: true
+    addons:
+      images: {}
+      embeds: {}
+
+  editor
+
 Template.visualEditor.rendered = ->
-  @editor = makeEditor()
+  @editor = makeEditor.call @
 
 Template.previewEditor.rendered = ->
-  @editor = makeEditor()
+  @editor = makeEditor.call @
   $editable = @$('.editable')
   $html = @$('.html-editor')
 
@@ -43,6 +52,10 @@ setEditMode = (mode) ->
   $(".#{mode}-toggle").addClass('selected')
 
 Template.blogAdminEdit.events
+  'click .mediumInsert-action': (e, tpl) ->
+    # Don't let the medium insert plugin submit the form
+    e.preventDefault()
+    e.stopPropagation()
 
   'click .visual-toggle': ->
     post = getPost()
