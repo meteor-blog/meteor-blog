@@ -15,11 +15,15 @@ Blog =
     comments:
       allowAnonymous: null
       useSideComments: null
-      defaultImg: 'http://f.cl.ly/items/0s1a0q1y2Z2k2I193k1y/default-user.png'
+      defaultImg: '/packages/blog/public/default-user.png'
       userImg: 'avatar'
 
 
   config: (appConfig) ->
+    # No deep extend in underscore :-(
+    if appConfig.comments
+      @settings.comments = _.extend(@settings.comments, appConfig.comments)
+      delete appConfig.comments
     @settings = _.extend(@settings, appConfig)
 
 @Blog = Blog

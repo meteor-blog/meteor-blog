@@ -43,6 +43,14 @@ Package.on_use(function(api) {
   ], 'client');
 
   /**
+   * Static assets for client
+   */
+
+  api.add_files([
+    'public/default-user.png'
+  ], 'client', { isAsset: true });
+
+  /**
    * Files for server
    */
 

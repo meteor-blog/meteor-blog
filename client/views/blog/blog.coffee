@@ -18,7 +18,7 @@ Template.blogShow.rendered = ->
     else if Meteor.user()
       # check username
       name = if Meteor.user().username then Meteor.user().username else Meteor.user().emails[0].address
-      if Meteor.user().profile[settings.userImg]
+      if Meteor.user().profile?[settings.userImg]
         avatar = Meteor.user().profile[settings.userImg]
       else
         avatar = settings.defaultImg
@@ -36,10 +36,10 @@ Template.blogShow.rendered = ->
     existingComments = []
     @data.comments.forEach((comment)->
       comment.comment.id = comment._id
-      if existingComments[comment.sectionId - 1]
-        existingComments[comment.sectionId - 1].comments.push comment.comment
+      if existingComments[comment.sectionId]
+        existingComments[comment.sectionId].comments.push comment.comment
       else
-        existingComments[comment.sectionId - 1] =
+        existingComments[comment.sectionId] =
           sectionId: comment.sectionId.toString()
           comments: [comment.comment]
     )

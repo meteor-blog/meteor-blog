@@ -11,6 +11,7 @@ prettyHtml = (html) ->
 makeEditor = ->
   new MediumEditor '.editable',
     placeholder: 'Start typing...'
+    buttonLabels: 'fontawesome'
     buttons:
       ['bold', 'italic', 'underline', 'anchor', 'pre', 'header1', 'header2', 'orderedlist', 'unorderedlist', 'quote', 'image']
 
