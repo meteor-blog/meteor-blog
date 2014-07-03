@@ -80,6 +80,8 @@ Router.map ->
     notFoundTemplate: 'blogNotFound'
 
     onBeforeAction: ->
+      Session.set('slug', @params.slug)
+
       if Blog.settings.blogShowTemplate
         @template = Blog.settings.blogShowTemplate
 
@@ -96,13 +98,18 @@ Router.map ->
         else
           Template[@template].rendered = pkgFunc
 
+    action: ->
+      @render() if @ready()
+
     waitOn: -> [
       Meteor.subscribe 'singlePostBySlug', @params.slug
+      Meteor.subscribe 'commentsBySlug', @params.slug
       Meteor.subscribe 'authors'
     ]
 
     data: ->
-      Post.first slug: @params.slug
+      post: Post.first slug: @params.slug
+      comments: Comment.find(slug: @params.slug).fetch()
 
   #
   # Blog Admin Index

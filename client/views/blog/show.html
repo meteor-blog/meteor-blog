@@ -2,7 +2,7 @@
   <div id="meteor-blog" class="blog-single">
     <div class="container">
       <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div id="commentable-area" class="col-xs-10 col-sm-11 col-md-8 col-md-offset-2">
           {{> blogShowBody}}
         </div>
       </div>
@@ -12,13 +12,13 @@
 
 <template name="blogShowBody">
   <article class="post">
-    <h2>{{title}}</h2>
+    <h2>{{post.title}}</h2>
     <div class="post-meta">
-      By {{authorName}} on {{blogFormatDate publishedAt}}
+      By {{post.authorName}} on {{blogFormatDate post.publishedAt}}
       {{> blogTags }}
     </div>
     <div class="the-content">
-      {{{html}}}
+      {{{post.html}}}
     </div>
   </article>
   <div class="blog-back-link pull-left">

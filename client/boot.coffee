@@ -12,9 +12,18 @@ Blog =
     blogAdminEditTemplate: 'blogAdminEdit'
     pageSize: 20
     excerptFunction: null
+    comments:
+      allowAnonymous: null
+      useSideComments: null
+      defaultImg: '/packages/blog/public/default-user.png'
+      userImg: 'avatar'
 
 
   config: (appConfig) ->
+    # No deep extend in underscore :-(
+    if appConfig.comments
+      @settings.comments = _.extend(@settings.comments, appConfig.comments)
+      delete appConfig.comments
     @settings = _.extend(@settings, appConfig)
 
 @Blog = Blog
