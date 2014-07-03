@@ -8,10 +8,6 @@ formatHtml = (html) ->
     "#{match}\n"
   )
 
-Template.blogAdminEdit.rendered = ->
-  Session.set('editorTemplate', 'visualEditor')
-  Session.set('currentPost', getPost())
-
 Template.visualEditor.rendered = ->
   @editor = new MediumEditor '.editable',
     placeholder: 'Start typing...'
