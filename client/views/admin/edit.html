@@ -29,11 +29,11 @@
                 <div class="col-md-12">
                   <label>Body</label>
                   <div class="edit-mode">
-                    <a href="#" class="visual-toggle">Visual</a>
+                    <a href="#" class="selected visual-toggle">Visual</a>
                     -
                     <a href="#" class="html-toggle">HTML</a>
                     -
-                    <a href="#" class="visual-html-toggle">Visual | HTML</a>
+                    <a href="#" class="preview-toggle">Preview</a>
                   </div>
                   {{#with editor}}
                     {{> UI.dynamic template=this.template data=this.post}}
@@ -65,7 +65,7 @@
   <textarea class="html-editor col-xs-12">{{{body}}}</textarea>
 </template>
 
-<template name="duoEditor">
+<template name="previewEditor">
   <div class="editable col-sm-6" tabindex="3">
     {{{body}}}
   </div>

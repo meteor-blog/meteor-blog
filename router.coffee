@@ -146,8 +146,9 @@ Router.map ->
       Meteor.call 'isBlogAuthorized', (err, authorized) =>
         if not authorized
           return @redirect('/blog')
-        else
-          Session.set 'postId', @params.id
+
+    onRun: ->
+      Session.set 'postId', @params.id
 
     waitOn: -> [
       Meteor.subscribe 'singlePostById', @params.id

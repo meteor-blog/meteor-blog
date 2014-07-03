@@ -1,9 +1,9 @@
 getPost = ->
-  Post.first Session.get('postId')
+  (Post.first Session.get('postId')) or {}
 
-# add new lines after block elements (visual)
-formateHtml = (html) ->
-  block = /\<\/(address|article|aside|audio|blockquote|canvas|dd|div|dl|fieldset|figcaption|figure|footer|form|h1|h2|h3|h4|h5|h6|header|hgroup|hr|noscript|ol|output|p|pre|section|table|tfoot|ul|video)\>(?!\n)/gmi
+# Add new lines after block elements (visual)
+formatHtml = (html) ->
+  block = /\<\/(address|article|aside|audio|blockquote|canvas|dd|div|dl|fieldset|figcaption|figure|footer|form|h1|h2|h3|h4|h5|h6|header|hgroup|hr|noscript|ol|li|output|p|pre|section|table|tfoot|ul|video)\>(?!\n)/gmi
   html.replace(block, (match) ->
     "#{match}\n"
   )
@@ -18,7 +18,7 @@ Template.visualEditor.rendered = ->
     buttons:
       ['bold', 'italic', 'underline', 'anchor', 'pre', 'header1', 'header2', 'orderedlist', 'unorderedlist', 'quote', 'image']
 
-Template.duoEditor.rendered = ->
+Template.previewEditor.rendered = ->
   @editor = new MediumEditor '.editable',
     placeholder: 'Start typing...'
     buttons:
@@ -32,7 +32,7 @@ Template.duoEditor.rendered = ->
 
 Template.blogAdminEdit.helpers
   post: ->
-    getPost() or {}
+    getPost()
 
   editor: ->
     template: Session.get('editorTemplate')
@@ -42,28 +42,32 @@ Template.blogAdminEdit.events
 
   'click .visual-toggle': ->
     post = getPost()
-    post.body = $('.html-editor').val().trim()
+    post.body = $('.html-editor').val()?.trim()
     Session.set('currentPost', post)
     Session.set('editorTemplate', 'visualEditor')
+    $('.edit-mode a').removeClass('selected')
     $('.visual-toggle').addClass('selected')
 
   'click .html-toggle': ->
     post = getPost()
-    post.body = formateHtml($('.editable').html().trim())
+    post.body = formatHtml($('.editable').html()?.trim())
     Session.set('currentPost', post)
     Session.set('editorTemplate', 'htmlEditor')
+    $('.edit-mode a').removeClass('selected')
     $('.html-toggle').addClass('selected')
 
-  'click .visual-html-toggle': ->
+  'click .preview-toggle': ->
     if $('.editable').get(0)
       post = getPost()
-      post.body = formateHtml($('.editable').html().trim())
+      post.body = formatHtml($('.editable').html()?.trim())
     else
       post = getPost()
-      post.body = $('.html-editor').val().trim()
+      post.body = $('.html-editor').val()?.trim()
 
     Session.set('currentPost', post)
-    Session.set('editorTemplate', 'duoEditor')
+    Session.set('editorTemplate', 'previewEditor')
+    $('.edit-mode a').removeClass('selected')
+    $('.preview-toggle').addClass('selected')
 
   'keyup .html-editor': ->
     $('.editable').html($('.html-editor').val())
@@ -98,7 +102,7 @@ Template.blogAdminEdit.events
       body: body
       updatedAt: new Date()
 
-    if getPost()
+    if getPost().id
       post = getPost().update attrs
       if post.errors
         return alert(_(post.errors[0]).values()[0])
