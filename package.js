@@ -79,6 +79,8 @@ Package.on_use(function(api) {
     'accounts-base',
     'minimongoid',
     'moment',
+    'collectionFS',
+    'cfs-gridfs',
     'roles'
   ], both);
 
@@ -90,7 +92,8 @@ Package.on_use(function(api) {
     'router.coffee',
     'collections/author.coffee',
     'collections/post.coffee',
-    'collections/comment.coffee'
+    'collections/comment.coffee',
+    'collections/files.coffee'
   ], both);
 });
 

@@ -19,7 +19,12 @@ makeEditor = ->
     editor: editor
     enabled: true
     addons:
-      images: {}
+      images:
+        uploadFile: ($el, file, self) ->
+          Images.insert file, (err, res) ->
+            url = "#{FS.HTTP.uploadUrl}/images/#{res._id}"
+            self.uploadCompleted { responseText: url }, $el
+
       embeds: {}
 
   editor

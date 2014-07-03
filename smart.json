@@ -11,6 +11,8 @@
     "moment": {},
     "roles": {},
     "marked": {},
+    "collectionFS": {},
+    "cfs-gridfs": {},
     "reactive-table": {}
   }
 }
