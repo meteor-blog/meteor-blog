@@ -13,11 +13,11 @@ Blog =
     pageSize: 20
     excerptFunction: null
     comments:
-      allowAnonymous: null
-      useSideComments: null
+      allowAnonymous: false
+      useSideComments: false
       defaultImg: '/packages/blog/public/default-user.png'
       userImg: 'avatar'
-
+      disqusShortname: null
 
   config: (appConfig) ->
     # No deep extend in underscore :-(

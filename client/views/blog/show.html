@@ -28,4 +28,13 @@
     <a target="_blank" class="btn-facebook fb-share" href="#"><i class="fa fa-facebook"></i>Share on Facebook </a>
     <a class="btn-twitter tw-share" href="#"><i class="fa fa-twitter"></i>Share on Twitter </a>
   </div>
+  {{> disqus post}}
+</template>
+
+<template name="disqus">
+  {{#if useDisqus}}
+    <div id="disqus_thread"></div>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  {{/if}}
 </template>
