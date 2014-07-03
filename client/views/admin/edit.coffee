@@ -2,28 +2,30 @@ getPost = ->
   (Post.first Session.get('postId')) or {}
 
 # Add new lines after block elements (visual)
-formatHtml = (html) ->
+prettyHtml = (html) ->
   block = /\<\/(address|article|aside|audio|blockquote|canvas|dd|div|dl|fieldset|figcaption|figure|footer|form|h1|h2|h3|h4|h5|h6|header|hgroup|hr|noscript|ol|li|output|p|pre|section|table|tfoot|ul|video)\>(?!\n)/gmi
   html.replace(block, (match) ->
     "#{match}\n"
   )
 
-Template.visualEditor.rendered = ->
-  @editor = new MediumEditor '.editable',
+makeEditor = ->
+  new MediumEditor '.editable',
     placeholder: 'Start typing...'
     buttons:
       ['bold', 'italic', 'underline', 'anchor', 'pre', 'header1', 'header2', 'orderedlist', 'unorderedlist', 'quote', 'image']
+
+Template.visualEditor.rendered = ->
+  @editor = makeEditor()
 
 Template.previewEditor.rendered = ->
-  @editor = new MediumEditor '.editable',
-    placeholder: 'Start typing...'
-    buttons:
-      ['bold', 'italic', 'underline', 'anchor', 'pre', 'header1', 'header2', 'orderedlist', 'unorderedlist', 'quote', 'image']
+  @editor = makeEditor()
+  $editable = @$('.editable')
+  $html = @$('.html-editor')
 
-  $('.html-editor').height($('.editable').height())
-  $('.editable').on('input', ->
-    $('.html-editor').val($('.editable').html().trim())
-    $('.html-editor').height($('.editable').height())
+  $html.height($editable.height())
+  $editable.on('input', ->
+    $html.val($editable.html().trim())
+    $html.height($editable.height())
   )
 
 Template.blogAdminEdit.helpers
@@ -34,43 +36,44 @@ Template.blogAdminEdit.helpers
     template: Session.get('editorTemplate')
     post: Session.get('currentPost')
 
+setEditMode = (mode) ->
+  Session.set('editorTemplate', "#{mode}Editor")
+  $('.edit-mode a').removeClass('selected')
+  $(".#{mode}-toggle").addClass('selected')
+
 Template.blogAdminEdit.events
 
   'click .visual-toggle': ->
     post = getPost()
     post.body = $('.html-editor').val()?.trim()
     Session.set('currentPost', post)
-    Session.set('editorTemplate', 'visualEditor')
-    $('.edit-mode a').removeClass('selected')
-    $('.visual-toggle').addClass('selected')
+    setEditMode 'visual'
 
   'click .html-toggle': ->
     post = getPost()
-    post.body = formatHtml($('.editable').html()?.trim())
+    post.body = prettyHtml($('.editable').html()?.trim())
     Session.set('currentPost', post)
-    Session.set('editorTemplate', 'htmlEditor')
-    $('.edit-mode a').removeClass('selected')
-    $('.html-toggle').addClass('selected')
+    setEditMode 'html'
 
   'click .preview-toggle': ->
     if $('.editable').get(0)
       post = getPost()
-      post.body = formatHtml($('.editable').html()?.trim())
+      post.body = prettyHtml($('.editable').html()?.trim())
     else
       post = getPost()
       post.body = $('.html-editor').val()?.trim()
 
     Session.set('currentPost', post)
-    Session.set('editorTemplate', 'previewEditor')
-    $('.edit-mode a').removeClass('selected')
-    $('.preview-toggle').addClass('selected')
+    setEditMode 'preview'
 
-  'keyup .html-editor': ->
-    $('.editable').html($('.html-editor').val())
-    $('.html-editor').height($('.editable').height())
+  'keyup .html-editor': (e, tpl) ->
+    $editable = tpl.$('.editable')
+    $html = tpl.$('.html-editor')
+
+    $editable.html($html.val())
+    $html.height($editable.height())
 
   'blur [name=title]': (e, tpl) ->
-    e.preventDefault()
     slug = tpl.$('[name=slug]')
     title = $(e.currentTarget).val()
 
