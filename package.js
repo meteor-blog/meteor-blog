@@ -81,6 +81,7 @@ Package.on_use(function(api) {
     'moment',
     'collectionFS',
     'cfs-gridfs',
+    'fileCollection',
     'roles'
   ], both);
 

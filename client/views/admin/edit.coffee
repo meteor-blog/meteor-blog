@@ -20,10 +20,27 @@ makeEditor = ->
     enabled: true
     addons:
       images:
-        uploadFile: ($el, file, self) ->
-          Images.insert file, (err, res) ->
-            url = "#{FS.HTTP.uploadUrl}/images/#{res._id}"
-            self.uploadCompleted { responseText: url }, $el
+        uploadFile: ($placeholder, file, that) ->
+          id = Files.insert
+            _id: Random.id()
+            contentType: 'image/jpeg'
+
+          $.ajax
+            type: "post"
+            url: "/fs/#{id}"
+            xhr: ->
+              xhr = new XMLHttpRequest()
+              xhr.upload.onprogress = that.updateProgressBar
+              xhr
+
+            cache: false
+            contentType: false
+            complete: (jqxhr) ->
+              that.uploadCompleted { responseText: "/fs/#{id}" }, $placeholder
+              return
+
+            processData: false
+            data: that.options.formatData(file)
 
       embeds: {}
 
