@@ -56,9 +56,14 @@
   padding: 10px 0;
 }
 .tt-suggestion {
-  font-size: 16px;
-  padding: 5px 10px;
+  font-size: 14px;
   width: 100%;
+}
+.tt-suggestion > p {
+  display: block;
+  line-height: 1;
+  margin: 2px 0;
+  padding: 10px;
 }
 .tt-suggestion:hover {
   background-color: #5bc0de;
