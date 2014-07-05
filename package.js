@@ -32,7 +32,7 @@ Package.on_use(function(api) {
     'client/compatibility/side-comments.js',
     'client/compatibility/medium-editor.js',
     'client/compatibility/bootstrap-tagsinput.js',
-    'client/compatibility/typeahead.bundle.js',
+    'client/compatibility/typeahead.jquery.js',
     'client/views/404.html',
     'client/views/admin/admin.less',
     'client/views/admin/admin.html',
