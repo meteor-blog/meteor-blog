@@ -3,6 +3,27 @@
 getPost = ->
   (Post.first Session.get('postId')) or {}
 
+getTags = ->
+  _.reduce(Post.all(), (datums, post) ->
+    _.each post.tags, (tag) ->
+      if !_.contains datums, tag
+        datums.push tag
+    datums
+  , [])
+
+# Find tags using typeahead
+substringMatcher = (strs) ->
+  (q, cb) ->
+    matches = []
+    pattern = new RegExp q, 'i'
+
+    _.each strs, (ele) ->
+      if pattern.test ele
+        matches.push
+          val: ele
+
+    cb matches
+
 # Add new lines after block elements for HTML mode
 prettyHtml = (html) ->
   block = /\<\/(address|article|aside|audio|blockquote|canvas|dd|div|dl|fieldset|figcaption|figure|footer|form|h1|h2|h3|h4|h5|h6|header|hgroup|hr|noscript|ol|li|output|p|pre|section|table|tfoot|ul|video)\>(?!\n)/gmi
@@ -73,6 +94,20 @@ Template.previewEditor.rendered = ->
   $editable.on 'input', ->
     $html.val prettyHtml(editor.scrubbed())
     $html.height $editable.height()
+
+Template.blogAdminEdit.rendered = ->
+  $('input[data-role="tagsinput"]').tagsinput()
+  $('input[data-role="tagsinput"]').tagsinput('input').typeahead(
+    highlight: true,
+    hint: false
+  ,
+    name: 'tags'
+    displayKey: 'val'
+    source: substringMatcher getTags()
+  ).bind('typeahead:selected', $.proxy (obj, datum) ->
+    this.tagsinput('add', datum.val)
+    this.tagsinput('input').typeahead('val', '')
+  , $('input[data-role="tagsinput"]'))
 
 Template.blogAdminEdit.helpers
   post: ->
