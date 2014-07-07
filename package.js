@@ -82,8 +82,6 @@ Package.on_use(function(api) {
     'accounts-base',
     'minimongoid',
     'moment',
-    'collectionFS',
-    'cfs-gridfs',
     'fileCollection',
     'roles'
   ], both);
