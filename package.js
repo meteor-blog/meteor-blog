@@ -49,7 +49,10 @@ Package.on_use(function(api) {
    */
 
   api.add_files([
-    'public/default-user.png'
+    'public/default-user.png',
+    'client/stylesheets/images/remove.png',
+    'client/stylesheets/images/resize-bigger.png',
+    'client/stylesheets/images/resize-smaller.png'
   ], 'client', { isAsset: true });
 
   /**
