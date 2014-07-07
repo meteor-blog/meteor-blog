@@ -52,16 +52,26 @@ makeEditor = ->
   editor
 
 Template.visualEditor.rendered = ->
-  makeEditor.call @
+  Meteor.setTimeout =>
+    makeEditor.call @
+  , 250
+
+Template.htmlEditor.rendered = ->
+  Meteor.setTimeout =>
+    makeEditor.call @
+  , 250
 
 Template.previewEditor.rendered = ->
-  editor = makeEditor.call @
+  editor = undefined
+  Meteor.setTimeout =>
+    editor = makeEditor.call @
+  , 250
   $editable = @$('.editable')
   $html = @$('.html-editor')
 
   $html.height $editable.height()
   $editable.on 'input', ->
-    $html.val editor.scrubbed()
+    $html.val prettyHtml(editor.scrubbed())
     $html.height $editable.height()
 
 Template.blogAdminEdit.helpers
@@ -141,10 +151,10 @@ Template.blogAdminEdit.events
     else
       body = $('.html-editor', form).val().trim()
 
-    slug = $('[name=slug]', form).val()
-
     if not body
       return alert 'Blog body is required'
+
+    slug = $('[name=slug]', form).val()
 
     attrs =
       title: $('[name=title]', form).val()
