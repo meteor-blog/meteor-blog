@@ -34,12 +34,13 @@ Template.blogShow.rendered = ->
 
     # load existing comments
     existingComments = []
-    @data.comments.forEach((comment)->
+    @data.comments.forEach((comment) ->
       comment.comment.id = comment._id
-      if existingComments[comment.sectionId]
-        existingComments[comment.sectionId].comments.push comment.comment
+      sec = _(existingComments).findWhere(sectionId: comment.sectionId.toString())
+      if sec
+        sec.comments.push comment.comment
       else
-        existingComments[comment.sectionId] =
+        existingComments.push
           sectionId: comment.sectionId.toString()
           comments: [comment.comment]
     )

@@ -139,13 +139,15 @@ Template.blogAdminEdit.events
   'submit form': (e, tpl) ->
     e.preventDefault()
     form = $(e.currentTarget)
+    $editable = $('.editable', form)
 
     # Make paragraphs commentable
-    $('.editable', form).find('p').each(->
-      $(this).addClass('commentable-section').attr('data-section-id', $(this).index() + 1)
-    )
+    i = $editable.find('p[data-section-id]').length + 1
+    $editable.find('p:not([data-section-id])').each ->
+      $(this).addClass('commentable-section').attr('data-section-id', i)
+      i++
 
-    if $('.editable', form).get(0)
+    if $editable.get(0)
       editor = makeEditor.call tpl
       body = editor.scrubbed()
     else
