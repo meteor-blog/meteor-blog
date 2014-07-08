@@ -35,17 +35,11 @@ Meteor.startup ->
       obj = arr[i++]
       obj.update({ excerpt: Post.excerpt(obj.body) })
 
-  # If no version flag
-  if not Config.where(versions: '0.4.0').length
-    arr = Post.all()
-    i = 0
-    # Convert blog post markdown to HTML
-    while i < arr.length
-      obj = arr[i++]
-      html = marked obj.body
-      obj.update body: html
-    # Set version flag
-    Config.create versions: ['0.4.0']
+  # Set version flag
+  if not Config.first()
+    Config.create versions: ['0.5.0']
+  else
+    Config.first().push versions: '0.5.0'
 
   # Add side comments
   arr = Post.all()
