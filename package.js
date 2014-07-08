@@ -23,13 +23,15 @@ Package.on_use(function(api) {
    */
 
   api.add_files([
-    'client/stylesheets/lib/medium-editor.css',
-    'client/stylesheets/lib/medium-themes/bootstrap.css',
     'client/stylesheets/lib/side-comments/side-comments.css',
     'client/stylesheets/lib/side-comments/default.css',
+    'client/stylesheets/lib/medium-editor.css',
+    'client/stylesheets/lib/medium-themes/bootstrap.css',
+    'client/stylesheets/lib/medium-editor-insert-plugin.css',
     'client/boot.coffee',
     'client/compatibility/side-comments.js',
     'client/compatibility/medium-editor.js',
+    'client/compatibility/medium-editor-insert-plugin.all.js',
     'client/views/404.html',
     'client/views/admin/admin.less',
     'client/views/admin/admin.html',
@@ -47,7 +49,10 @@ Package.on_use(function(api) {
    */
 
   api.add_files([
-    'public/default-user.png'
+    'public/default-user.png',
+    'client/stylesheets/images/remove.png',
+    'client/stylesheets/images/resize-bigger.png',
+    'client/stylesheets/images/resize-smaller.png'
   ], 'client', { isAsset: true });
 
   /**
@@ -77,6 +82,7 @@ Package.on_use(function(api) {
     'accounts-base',
     'minimongoid',
     'moment',
+    'fileCollection',
     'roles'
   ], both);
 
@@ -88,7 +94,8 @@ Package.on_use(function(api) {
     'router.coffee',
     'collections/author.coffee',
     'collections/post.coffee',
-    'collections/comment.coffee'
+    'collections/comment.coffee',
+    'collections/files.coffee'
   ], both);
 });
 
