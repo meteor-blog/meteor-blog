@@ -1,9 +1,12 @@
 getComment = (id)->
   Comment.first slug: Session.get('slug'), sectionId: id
 
-Template.blogShow.rendered = ->
+Template.blogShowBody.rendered = ->
 
-  # Add SideComments
+  #
+  # SIDECOMMENTS.JS
+  #
+
   settings = Blog.settings.comments
   # check if useSideComments config is true (default is null)
   if settings.useSideComments
@@ -74,7 +77,7 @@ Template.blogShow.rendered = ->
         Comment.destroyAll comment.id
         sideComments.removeComment comment.sectionId, comment.id
 
-Template.blogShowBody.rendered = ->
+  ####
 
   # Hide draft posts from crawlers
   if not @data.published
