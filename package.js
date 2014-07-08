@@ -28,10 +28,13 @@ Package.on_use(function(api) {
     'client/stylesheets/lib/medium-editor.css',
     'client/stylesheets/lib/medium-themes/bootstrap.css',
     'client/stylesheets/lib/medium-editor-insert-plugin.css',
+    'client/stylesheets/lib/bootstrap-tagsinput.css',
     'client/boot.coffee',
     'client/compatibility/side-comments.js',
     'client/compatibility/medium-editor.js',
     'client/compatibility/medium-editor-insert-plugin.all.js',
+    'client/compatibility/bootstrap-tagsinput.js',
+    'client/compatibility/typeahead.jquery.js',
     'client/views/404.html',
     'client/views/admin/admin.less',
     'client/views/admin/admin.html',
@@ -95,6 +98,7 @@ Package.on_use(function(api) {
     'collections/author.coffee',
     'collections/post.coffee',
     'collections/comment.coffee',
+    'collections/tag.coffee',
     'collections/files.coffee'
   ], both);
 });
