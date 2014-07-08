@@ -26,14 +26,14 @@ prettyHtml = (html) ->
 MediumEditor.prototype.scrubbed = ->
   @serialize()['element-0'].value
 
-makeEditor = ->
+makeEditor = (tpl) ->
   editor = new MediumEditor '.editable',
     placeholder: 'Start typing...'
     buttonLabels: 'fontawesome'
     buttons:
       ['bold', 'italic', 'underline', 'anchor', 'pre', 'header1', 'header2', 'orderedlist', 'unorderedlist', 'quote', 'image']
 
-  $(@find '.editable').mediumInsert
+  $(tpl.find '.editable').mediumInsert
     editor: editor
     enabled: true
     addons:
@@ -66,18 +66,19 @@ makeEditor = ->
 
 Template.visualEditor.rendered = ->
   Meteor.setTimeout =>
-    makeEditor.call @
+    makeEditor @
   , 250
 
 Template.htmlEditor.rendered = ->
   Meteor.setTimeout =>
-    makeEditor.call @
+    makeEditor @
+    @$('.html-editor').height(@$('.editable').height())
   , 250
 
 Template.previewEditor.rendered = ->
   editor = undefined
   Meteor.setTimeout =>
-    editor = makeEditor.call @
+    editor = makeEditor @
   , 250
   $editable = @$('.editable')
   $html = @$('.html-editor')
@@ -135,7 +136,7 @@ Template.blogAdminEdit.events
     if Session.get('editorTemplate') is 'htmlEditor'
       return
     post = getPost()
-    editor = makeEditor.call tpl
+    editor = makeEditor tpl
     post.body = prettyHtml editor.scrubbed()
     Session.set('currentPost', post)
     setEditMode 'html'
@@ -143,7 +144,7 @@ Template.blogAdminEdit.events
   'click .preview-toggle': (e, tpl) ->
     if $('.editable').get(0)
       post = getPost()
-      editor = makeEditor.call tpl
+      editor = makeEditor tpl
       post.body = prettyHtml editor.scrubbed()
     else
       post = getPost()
@@ -178,7 +179,7 @@ Template.blogAdminEdit.events
       i++
 
     if $editable.get(0)
-      editor = makeEditor.call tpl
+      editor = makeEditor tpl
       body = editor.scrubbed()
     else
       body = $('.html-editor', form).val().trim()
