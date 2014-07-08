@@ -12,13 +12,13 @@
 
 <template name="blogShowBody">
   <article class="post">
-    <h2>{{post.title}}</h2>
+    <h2>{{title}}</h2>
     <div class="post-meta">
-      By {{post.authorName}} on {{blogFormatDate post.publishedAt}}
+      By {{authorName}} on {{blogFormatDate publishedAt}}
       {{> blogTags }}
     </div>
     <div class="the-content">
-      {{{post.html}}}
+      {{{html}}}
     </div>
   </article>
   <div class="blog-back-link pull-left">
@@ -28,7 +28,7 @@
     <a target="_blank" class="btn-facebook fb-share" href="#"><i class="fa fa-facebook"></i>Share on Facebook </a>
     <a class="btn-twitter tw-share" href="#"><i class="fa fa-twitter"></i>Share on Twitter </a>
   </div>
-  {{> disqus post}}
+  {{> disqus this}}
 </template>
 
 <template name="disqus">

@@ -108,8 +108,7 @@ Router.map ->
     ]
 
     data: ->
-      post: Post.first slug: @params.slug
-      comments: Comment.find(slug: @params.slug).fetch()
+      Post.first slug: @params.slug
 
   #
   # Blog Admin Index

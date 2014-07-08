@@ -34,7 +34,7 @@ Template.blogShow.rendered = ->
 
     # load existing comments
     existingComments = []
-    @data.comments.forEach((comment) ->
+    Comment.where(slug: Session.get('slug')).forEach((comment) ->
       comment.comment.id = comment._id
       sec = _(existingComments).findWhere(sectionId: comment.sectionId.toString())
       if sec
@@ -77,7 +77,7 @@ Template.blogShow.rendered = ->
 Template.blogShowBody.rendered = ->
 
   # Hide draft posts from crawlers
-  if not @data.post.published
+  if not @data.published
     $('<meta>', { name: 'robots', content: 'noindex,nofollow' }).appendTo 'head'
 
   $('meta[property^="og:"]').remove()
@@ -90,10 +90,10 @@ Template.blogShowBody.rendered = ->
   $('<meta>', { property: 'og:type', content: 'article' }).appendTo 'head'
   $('<meta>', { property: 'og:site_name', content: location.hostname }).appendTo 'head'
   $('<meta>', { property: 'og:url', content: location.origin + location.pathname }).appendTo 'head'
-  $('<meta>', { property: 'og:title', content: @data.post.title }).appendTo 'head'
-  $('<meta>', { property: 'og:description', content: @data.post.excerpt }).appendTo 'head'
+  $('<meta>', { property: 'og:title', content: @data.title }).appendTo 'head'
+  $('<meta>', { property: 'og:description', content: @data.excerpt }).appendTo 'head'
 
-  img = @data.post.thumbnail()
+  img = @data.thumbnail()
   if img
     if not /^http(s?):\/\/+/.test(img)
       img = location.origin + img
@@ -107,7 +107,7 @@ Template.blogShowBody.rendered = ->
   # What should go here?
   #$('<meta>', { property: 'twitter:site', content: '' }).appendTo 'head'
 
-  author = @data.post.author()
+  author = @data.author()
   if author.profile and author.profile.twitter
     $('<meta>', { property: 'twitter:creator', content: author.profile.twitter }).appendTo 'head'
 
@@ -115,8 +115,8 @@ Template.blogShowBody.rendered = ->
     $('<link>', { href: author.profile.profileUrl, rel: 'author' }).appendTo 'head'
 
   $('<meta>', { property: 'twitter:url', content: location.origin + location.pathname }).appendTo 'head'
-  $('<meta>', { property: 'twitter:title', content: @data.post.title }).appendTo 'head'
-  $('<meta>', { property: 'twitter:description', content: @data.post.excerpt }).appendTo 'head'
+  $('<meta>', { property: 'twitter:title', content: @data.title }).appendTo 'head'
+  $('<meta>', { property: 'twitter:description', content: @data.excerpt }).appendTo 'head'
   $('<meta>', { property: 'twitter:image:src', content: img }).appendTo 'head'
 
   #
@@ -125,7 +125,7 @@ Template.blogShowBody.rendered = ->
 
   base = "https://twitter.com/intent/tweet"
   url = encodeURIComponent location.origin + location.pathname
-  text = encodeURIComponent @data.post.title
+  text = encodeURIComponent @data.title
   href = base + "?url=" + url + "&text=" + text
 
   if author.profile and author.profile.twitter
@@ -139,8 +139,8 @@ Template.blogShowBody.rendered = ->
 
   base = "https://www.facebook.com/sharer/sharer.php"
   url = encodeURIComponent location.origin + location.pathname
-  title = encodeURIComponent @data.post.title
-  summary = encodeURIComponent @data.post.excerpt
+  title = encodeURIComponent @data.title
+  summary = encodeURIComponent @data.excerpt
   href = base + "?s=100&p[url]=" + url + "&p[title]=" + title + "&p[summary]=" + summary
 
   if img
