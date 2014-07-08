@@ -2,11 +2,23 @@
 layout: default
 username: Differential
 repo: meteor-blog
-version: 0.4.4
+version: 0.5.0
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
+
+### v0.5.0
+
+_NOTE: `0.5.0` is compatible with Meteor `0.8.2` only. Also, the `0.4.0` migration is taken out, so if you are running `0.3.0` of this package, you must upgrade to `0.4.0` first and then upgrade to `0.5.0`._
+
+* Changes to blog editor
+  * Allow basic image uploading and storage in _gridFS_ ([#57](https://github.com/Differential/meteor-blog/issues/57))
+  * Add HTML mode to blog editor ([#61](https://github.com/Differential/meteor-blog/pull/61))
+  * Add tag autocomplete to blog editor ([#62](https://github.com/Differential/meteor-blog/pull/62))
+* Add commenting capabilities
+  * Allow user to configure a [DISQUS](http://disqus.com) ID to enable DISQUS comments
+  * Add [SideComments.js](http://aroc.github.io/side-comments-demo/) (experimental!) ([#60](https://github.com/Differential/meteor-blog/pull/60))
 
 ### v0.4.4
 

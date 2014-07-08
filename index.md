@@ -2,7 +2,7 @@
 layout: default
 username: Differential
 repo: meteor-blog
-version: 0.4.4
+version: 0.5.0
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
@@ -19,8 +19,8 @@ vote with your [Github issues](https://github.com/Differential/meteor-blog/issue
 
 * <s>Basic markdown editor</s>
 * <s>URL's based on slug from title (but be editable)</s>
-* Easily add images
-* Allow for comments (or at least a comment plugin)
+* <s>Easily add images</s> to S3 or Cloud Files
+* <s>Allow for comments (or at least a comment plugin)</s>
 * <s>Ability to create categories/tags</s>
 * Widget to embed recent posts on another page
 * <s>Customize how posts are displayed on main blog home</s>
@@ -69,6 +69,35 @@ to add these roles somehow:
 
 If your app uses [fast-render](https://github.com/arunoda/meteor-fast-render),
 the blog pages will render using fast-render automatically.
+
+### Comments
+
+**DISQUS**
+
+This package supports [DISQUS](http://disqus.com) comments. Configure your
+DISQUS short name in the client and comments will render below all your blog
+posts.
+
+{% highlight coffeescript %}
+if Meteor.isClient
+  Blog.config
+    disqusShortname: 'myshortname'
+{% endhighlight %}
+
+**SideComments.js**
+
+This package has experimental integration with [SideComments.js](http://aroc.github.io/side-comments-demo/).
+Enable side comments in your blog settings. Currently, side comments uses the
+Meteor accounts for your Meteor site as comment users, which is probably not
+what you want. You can also allow anonymous comments, which lets anyone type in
+anything without even a name. Also, probably not what you want.
+
+{% highlight coffeescript %}
+if Meteor.isClient
+  Blog.config
+    useSideComments: true # default is 'false'
+    allowAnonymous: true # default is 'false'
+{% endhighlight %}
 
 ### Bootstrap Templates
 
