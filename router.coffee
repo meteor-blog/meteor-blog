@@ -51,6 +51,8 @@ Router.map ->
   @route 'blogTagged',
     path: '/blog/tag/:tag'
 
+    template: 'blogIndex'
+
     onBeforeAction: ->
       if Blog.settings.blogIndexTemplate
         @template = Blog.settings.blogIndexTemplate
@@ -79,9 +81,10 @@ Router.map ->
 
     notFoundTemplate: 'blogNotFound'
 
-    onBeforeAction: ->
+    onRun: ->
       Session.set('slug', @params.slug)
 
+    onBeforeAction: ->
       if Blog.settings.blogShowTemplate
         @template = Blog.settings.blogShowTemplate
 

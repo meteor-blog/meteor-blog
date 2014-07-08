@@ -5,11 +5,10 @@
 
 Blog =
   settings:
-    blogIndexTemplate: 'blogIndex'
-    blogShowTemplate: 'blogShow'
-    blogAdminTemplate: 'blogAdmin'
-    blogAdminNewTemplate:'blogAdminNew'
-    blogAdminEditTemplate: 'blogAdminEdit'
+    blogIndexTemplate: null
+    blogShowTemplate: null
+    blogAdminTemplate: null
+    blogAdminEditTemplate: null
     pageSize: 20
     excerptFunction: null
     comments:
