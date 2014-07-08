@@ -35,6 +35,7 @@ Package.on_use(function(api) {
     'client/compatibility/medium-editor-insert-plugin.all.js',
     'client/compatibility/bootstrap-tagsinput.js',
     'client/compatibility/typeahead.jquery.js',
+    'client/compatibility/beautify-html.js',
     'client/views/404.html',
     'client/views/admin/admin.less',
     'client/views/admin/admin.html',
@@ -73,7 +74,7 @@ Package.on_use(function(api) {
    * Packages for server
    */
 
-  Npm.depends({rss: '0.0.4'});
+  Npm.depends({ rss: '0.0.4' });
 
   /**
    * Packages for server and client

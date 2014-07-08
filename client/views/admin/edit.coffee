@@ -16,12 +16,12 @@ substringMatcher = (strs) ->
 
     cb matches
 
-# Add new lines after block elements for HTML mode
+# Pretty up HTML for HTML mode
 prettyHtml = (html) ->
-  block = /\<\/(address|article|aside|audio|blockquote|canvas|dd|div|dl|fieldset|figcaption|figure|footer|form|h1|h2|h3|h4|h5|h6|header|hgroup|hr|noscript|ol|li|output|p|pre|section|table|tfoot|ul|video)\>(?!\n)/gmi
-  html.replace(block, (match) ->
-    "#{match}\n"
-  )
+  html_beautify html,
+    preserve_newlines: false
+    indent_size: 2
+    wrap_line_length: 0
 
 MediumEditor.prototype.scrubbed = ->
   @serialize()['element-0'].value
