@@ -60,7 +60,7 @@ makeEditor = (tpl) ->
             processData: false
             data: that.options.formatData(file)
 
-      embeds: {}
+      #embeds: {}
 
   editor
 
