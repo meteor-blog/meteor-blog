@@ -32,9 +32,6 @@
                     <a href="#" class="selected visual-toggle">Visual</a>
                     -
                     <a href="#" class="html-toggle">HTML</a>
-                    <!---
-                    <a href="#" class="preview-toggle">Preview</a>
-                    -->
                   </div>
                   {{#with editor}}
                     {{> UI.dynamic template=this.template data=this.post}}
@@ -67,11 +64,4 @@
   <div class="editable" hidden>
     {{{body}}}
   </div>
-</template>
-
-<template name="previewEditor">
-  <div class="editable col-sm-6" tabindex="3">
-    {{{body}}}
-  </div>
-  <textarea class="html-editor col-xs-12 col-sm-6">{{{body}}}</textarea>
 </template>

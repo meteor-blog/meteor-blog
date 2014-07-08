@@ -75,19 +75,6 @@ Template.htmlEditor.rendered = ->
     @$('.html-editor').height(@$('.editable').height())
   , 250
 
-Template.previewEditor.rendered = ->
-  editor = undefined
-  Meteor.setTimeout =>
-    editor = makeEditor @
-  , 250
-  $editable = @$('.editable')
-  $html = @$('.html-editor')
-
-  $html.height $editable.height()
-  $editable.on 'input', ->
-    $html.val prettyHtml(editor.scrubbed())
-    $html.height $editable.height()
-
 Template.blogAdminEdit.rendered = ->
   Meteor.setTimeout =>
     # waitOn, why u no like me?
@@ -140,18 +127,6 @@ Template.blogAdminEdit.events
     post.body = prettyHtml editor.scrubbed()
     Session.set('currentPost', post)
     setEditMode 'html'
-
-  'click .preview-toggle': (e, tpl) ->
-    if $('.editable').get(0)
-      post = getPost()
-      editor = makeEditor tpl
-      post.body = prettyHtml editor.scrubbed()
-    else
-      post = getPost()
-      post.body = $('.html-editor').val()?.trim()
-
-    Session.set('currentPost', post)
-    setEditMode 'preview'
 
   'keyup .html-editor': (e, tpl) ->
     $editable = tpl.$('.editable')
