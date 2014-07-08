@@ -98,6 +98,7 @@ Package.on_use(function(api) {
     'collections/author.coffee',
     'collections/post.coffee',
     'collections/comment.coffee',
+    'collections/tag.coffee',
     'collections/files.coffee'
   ], both);
 });

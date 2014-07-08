@@ -47,7 +47,7 @@ Meteor.startup ->
     # Set version flag
     Config.create versions: ['0.4.0']
 
-  # add side comments
+  # Add side comments
   arr = Post.all()
   i = 0
   while i < arr.length
@@ -67,6 +67,11 @@ Meteor.startup ->
         return newEle
       )
       obj.update body: html
+
+  # Ensure tags collection is non-empty
+  if Tag.count() == 0
+    Tag.create
+      tags: ['meteor']
 
   ##############################################################################
   # Server-side methods

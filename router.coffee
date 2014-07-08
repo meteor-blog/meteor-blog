@@ -162,6 +162,7 @@ Router.map ->
     waitOn: -> [
       Meteor.subscribe 'singlePostById', @params.id
       Meteor.subscribe 'authors'
+      Meteor.subscribe 'postTags'
     ]
 
     data: ->

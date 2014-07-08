@@ -3,14 +3,6 @@
 getPost = ->
   (Post.first Session.get('postId')) or {}
 
-getTags = ->
-  _.reduce(Post.all(), (datums, post) ->
-    _.each post.tags, (tag) ->
-      if !_.contains datums, tag
-        datums.push tag
-    datums
-  , [])
-
 # Find tags using typeahead
 substringMatcher = (strs) ->
   (q, cb) ->
@@ -96,18 +88,21 @@ Template.previewEditor.rendered = ->
     $html.height $editable.height()
 
 Template.blogAdminEdit.rendered = ->
-  $('input[data-role="tagsinput"]').tagsinput()
-  $('input[data-role="tagsinput"]').tagsinput('input').typeahead(
-    highlight: true,
-    hint: false
-  ,
-    name: 'tags'
-    displayKey: 'val'
-    source: substringMatcher getTags()
-  ).bind('typeahead:selected', $.proxy (obj, datum) ->
-    this.tagsinput('add', datum.val)
-    this.tagsinput('input').typeahead('val', '')
-  , $('input[data-role="tagsinput"]'))
+  Meteor.setTimeout =>
+    # waitOn, why u no like me?
+    @$('input[data-role="tagsinput"]').tagsinput()
+    @$('input[data-role="tagsinput"]').tagsinput('input').typeahead(
+      highlight: true,
+      hint: false
+    ,
+      name: 'tags'
+      displayKey: 'val'
+      source: substringMatcher Tag.first().tags
+    ).bind('typeahead:selected', $.proxy (obj, datum) ->
+      this.tagsinput('add', datum.val)
+      this.tagsinput('input').typeahead('val', '')
+    , $('input[data-role="tagsinput"]'))
+  , 250
 
 Template.blogAdminEdit.helpers
   post: ->
