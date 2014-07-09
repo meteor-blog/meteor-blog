@@ -5,16 +5,24 @@
 
 Blog =
   settings:
-    blogIndexTemplate: 'blogIndex'
-    blogShowTemplate: 'blogShow'
-    blogAdminTemplate: 'blogAdmin'
-    blogAdminNewTemplate:'blogAdminNew'
-    blogAdminEditTemplate: 'blogAdminEdit'
+    blogIndexTemplate: null
+    blogShowTemplate: null
+    blogAdminTemplate: null
+    blogAdminEditTemplate: null
     pageSize: 20
     excerptFunction: null
-
+    comments:
+      allowAnonymous: false
+      useSideComments: false
+      defaultImg: '/packages/blog/public/default-user.png'
+      userImg: 'avatar'
+      disqusShortname: null
 
   config: (appConfig) ->
+    # No deep extend in underscore :-(
+    if appConfig.comments
+      @settings.comments = _.extend(@settings.comments, appConfig.comments)
+      delete appConfig.comments
     @settings = _.extend(@settings, appConfig)
 
 @Blog = Blog

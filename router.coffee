@@ -22,10 +22,11 @@ Router.map ->
   @route 'blogIndex',
     path: '/blog'
 
-    onRun: ->
+    onBeforeAction: ->
       if Blog.settings.blogIndexTemplate
         @template = Blog.settings.blogIndexTemplate
 
+    onRun: ->
       if not Session.get('postLimit') and Blog.settings.pageSize
         Session.set 'postLimit', Blog.settings.pageSize
 
@@ -50,7 +51,9 @@ Router.map ->
   @route 'blogTagged',
     path: '/blog/tag/:tag'
 
-    onRun: ->
+    template: 'blogIndex'
+
+    onBeforeAction: ->
       if Blog.settings.blogIndexTemplate
         @template = Blog.settings.blogIndexTemplate
 
@@ -79,6 +82,9 @@ Router.map ->
     notFoundTemplate: 'blogNotFound'
 
     onRun: ->
+      Session.set('slug', @params.slug)
+
+    onBeforeAction: ->
       if Blog.settings.blogShowTemplate
         @template = Blog.settings.blogShowTemplate
 
@@ -95,8 +101,12 @@ Router.map ->
         else
           Template[@template].rendered = pkgFunc
 
+    action: ->
+      @render() if @ready()
+
     waitOn: -> [
       Meteor.subscribe 'singlePostBySlug', @params.slug
+      Meteor.subscribe 'commentsBySlug', @params.slug
       Meteor.subscribe 'authors'
     ]
 
@@ -110,11 +120,10 @@ Router.map ->
   @route 'blogAdmin',
     path: '/admin/blog'
 
-    onRun: ->
+    onBeforeAction: (pause) ->
       if Blog.settings.blogAdminTemplate
         @template = Blog.settings.blogAdminTemplate
 
-    onBeforeAction: (pause) ->
       if Meteor.loggingIn()
         return pause()
 
@@ -136,23 +145,26 @@ Router.map ->
   @route 'blogAdminEdit',
     path: '/admin/blog/edit/:id'
 
-    onRun: ->
+    onBeforeAction: (pause) ->
       if Blog.settings.blogAdminEditTemplate
         @template = Blog.settings.blogAdminEditTemplate
 
-    onBeforeAction: (pause) ->
       if Meteor.loggingIn()
         return pause()
 
       Meteor.call 'isBlogAuthorized', (err, authorized) =>
         if not authorized
           return @redirect('/blog')
-        else
-          Session.set 'postId', @params.id
+
+    onRun: ->
+      Session.set 'postId', @params.id
+      Session.set('editorTemplate', 'visualEditor')
+      Session.set('currentPost', Post.first(@params.id))
 
     waitOn: -> [
       Meteor.subscribe 'singlePostById', @params.id
       Meteor.subscribe 'authors'
+      Meteor.subscribe 'postTags'
     ]
 
     data: ->
