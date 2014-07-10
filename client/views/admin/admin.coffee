@@ -16,12 +16,13 @@ Template.blogAdmin.helpers
   table: ->
     rowsPerPage: 20
     showFilter: false
+    showNavigation: 'auto'
     useFontAwesome: true
     fields: [
       { key: 'title', label: 'Title', tmpl: Template.blogAdminTitleColumn }
       { key: 'userId', label: 'Author', tmpl: Template.blogAdminAuthorColumn }
-      { key: 'updatedAt', label: 'Updated At', tmpl: Template.blogAdminUpdatedColumn, sort: 'descending' }
-      { key: 'publishedAt', label: 'Published At', tmpl: Template.blogAdminPublishedColumn }
+      { key: 'updatedAt', label: 'Updated At', tmpl: Template.blogAdminUpdatedColumn, sort: 'descending', sortByValue: true }
+      { key: 'publishedAt', label: 'Published At', tmpl: Template.blogAdminPublishedColumn, sortByValue: true }
       { key: 'published', label: 'Status', tmpl: Template.blogAdminStatusColumn }
       { key: 'id', label: 'Edit', tmpl: Template.blogAdminEditColumn }
       { key: 'id', label: 'Delete', tmpl: Template.blogAdminDeleteColumn }
