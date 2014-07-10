@@ -65,32 +65,26 @@ makeEditor = (tpl) ->
   editor
 
 Template.visualEditor.rendered = ->
-  Meteor.setTimeout =>
-    makeEditor @
-  , 250
+  makeEditor @
 
 Template.htmlEditor.rendered = ->
-  Meteor.setTimeout =>
-    makeEditor @
-    @$('.html-editor').height(@$('.editable').height())
-  , 250
+  makeEditor @
+  @$('.html-editor').height(@$('.editable').height())
 
 Template.blogAdminEdit.rendered = ->
-  Meteor.setTimeout =>
-    # waitOn, why u no like me?
-    @$('input[data-role="tagsinput"]').tagsinput()
-    @$('input[data-role="tagsinput"]').tagsinput('input').typeahead(
-      highlight: true,
-      hint: false
-    ,
-      name: 'tags'
-      displayKey: 'val'
-      source: substringMatcher Tag.first().tags
-    ).bind('typeahead:selected', $.proxy (obj, datum) ->
-      this.tagsinput('add', datum.val)
-      this.tagsinput('input').typeahead('val', '')
-    , $('input[data-role="tagsinput"]'))
-  , 250
+  # waitOn, why u no like me?
+  @$('input[data-role="tagsinput"]').tagsinput()
+  @$('input[data-role="tagsinput"]').tagsinput('input').typeahead(
+    highlight: true,
+    hint: false
+  ,
+    name: 'tags'
+    displayKey: 'val'
+    source: substringMatcher Tag.first().tags
+  ).bind('typeahead:selected', $.proxy (obj, datum) ->
+    this.tagsinput('add', datum.val)
+    this.tagsinput('input').typeahead('val', '')
+  , $('input[data-role="tagsinput"]'))
 
 Template.blogAdminEdit.helpers
   post: ->

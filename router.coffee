@@ -156,6 +156,9 @@ Router.map ->
         if not authorized
           return @redirect('/blog')
 
+    action: ->
+      @render() if @ready()
+
     onRun: ->
       Session.set 'postId', @params.id
       Session.set('editorTemplate', 'visualEditor')
