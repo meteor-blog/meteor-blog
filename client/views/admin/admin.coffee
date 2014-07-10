@@ -1,6 +1,5 @@
 Template.blogAdmin.rendered = ->
   $(@find '.reactive-table').addClass 'table-bordered'
-  $(@find '.updatedAt').click().click()
 
 Template.blogAdmin.helpers
 
@@ -21,7 +20,7 @@ Template.blogAdmin.helpers
     fields: [
       { key: 'title', label: 'Title', tmpl: Template.blogAdminTitleColumn }
       { key: 'userId', label: 'Author', tmpl: Template.blogAdminAuthorColumn }
-      { key: 'updatedAt', label: 'Updated At', tmpl: Template.blogAdminUpdatedColumn }
+      { key: 'updatedAt', label: 'Updated At', tmpl: Template.blogAdminUpdatedColumn, sort: 'descending' }
       { key: 'publishedAt', label: 'Published At', tmpl: Template.blogAdminPublishedColumn }
       { key: 'published', label: 'Status', tmpl: Template.blogAdminStatusColumn }
       { key: 'id', label: 'Edit', tmpl: Template.blogAdminEditColumn }
