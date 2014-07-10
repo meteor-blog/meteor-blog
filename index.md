@@ -74,9 +74,11 @@ the blog pages will render using fast-render automatically.
 
 **DISQUS**
 
+{% assign dq = '{{> disqus this}}' %}
 This package supports [DISQUS](http://disqus.com) comments. Configure your
 DISQUS short name in the client and comments will render below all your blog
-posts.
+posts. If you use your own `blogShowTemplate` template, include `{{ dq }}` to
+display comments.
 
 {% highlight coffeescript %}
 if Meteor.isClient
