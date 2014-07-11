@@ -1,5 +1,6 @@
 if Meteor.isClient
   Router.onBeforeAction 'loading'
+  Router.onBeforeAction 'dataNotFound'
 
 Router.map ->
 
@@ -155,6 +156,9 @@ Router.map ->
       Meteor.call 'isBlogAuthorized', (err, authorized) =>
         if not authorized
           return @redirect('/blog')
+
+    action: ->
+      @render() if @ready()
 
     onRun: ->
       Session.set 'postId', @params.id

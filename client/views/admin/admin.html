@@ -20,11 +20,7 @@
           {{#if posts}}
             {{> reactiveTable collection=posts settings=table}}
           {{else}}
-            <table class="table table-striped table-bordered">
-              <tr><td>
-                <a href="#" class="for-new-blog">Create the first blog</a>
-              </td></tr>
-            </table>
+            <a href="#" class="for-new-blog">Create the first blog</a>
           {{/if}}
         </div>
       </div>
