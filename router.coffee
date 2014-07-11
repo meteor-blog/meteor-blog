@@ -1,5 +1,6 @@
 if Meteor.isClient
   Router.onBeforeAction 'loading'
+  Router.onBeforeAction 'dataNotFound'
 
 Router.map ->
 
