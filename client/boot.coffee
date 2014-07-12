@@ -7,6 +7,7 @@ Blog =
   settings:
     blogIndexTemplate: null
     blogShowTemplate: null
+    blogNotFoundTemplate: null
     blogAdminTemplate: null
     blogAdminEditTemplate: null
     pageSize: 20
