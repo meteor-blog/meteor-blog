@@ -79,13 +79,14 @@ Router.map ->
 
   @route 'blogShow',
     path: '/blog/:slug'
-
     notFoundTemplate: 'blogNotFound'
 
     onRun: ->
       Session.set('slug', @params.slug)
 
     onBeforeAction: ->
+      if Blog.settings.blogNotFoundTemplate
+        @notFoundTemplate = Blog.settings.blogNotFoundTemplate
       if Blog.settings.blogShowTemplate
         @template = Blog.settings.blogShowTemplate
 

@@ -1,3 +1,9 @@
+Template.blogIndex.rendered = ->
+  # Page Title
+  document.title = "Blog"
+  if Blog.settings.title
+    document.title += " | #{Blog.settings.title}"
+
 getComment = (id)->
   Comment.first slug: Session.get('slug'), sectionId: id
 
@@ -78,6 +84,11 @@ Template.blogShowBody.rendered = ->
         sideComments.removeComment comment.sectionId, comment.id
 
   ####
+
+  # Page Title
+  document.title = "#{@data.title}"
+  if Blog.settings.title
+    document.title += " | #{Blog.settings.title}"
 
   # Hide draft posts from crawlers
   if not @data.published
