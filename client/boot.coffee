@@ -5,6 +5,7 @@
 
 Blog =
   settings:
+    title: ''
     blogIndexTemplate: null
     blogShowTemplate: null
     blogNotFoundTemplate: null
