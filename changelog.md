@@ -19,6 +19,7 @@ _NOTE: `0.5.0` is only compatible with Meteor `0.8.2` and higher. Also, the `0.4
 * Add commenting capabilities
   * Allow user to configure a [DISQUS](http://disqus.com) ID to enable DISQUS comments
   * Add [SideComments.js](http://aroc.github.io/side-comments-demo/) (experimental!) ([#60](https://github.com/Differential/meteor-blog/pull/60))
+* Allow user to provide custom `notFoundTemplate` ([#65](https://github.com/Differential/meteor-blog/pull/65))
 
 ### v0.4.4
 
