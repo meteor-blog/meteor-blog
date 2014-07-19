@@ -83,7 +83,8 @@ display comments.
 {% highlight coffeescript %}
 if Meteor.isClient
   Blog.config
-    disqusShortname: 'myshortname'
+    comments:
+      disqusShortname: 'myshortname'
 {% endhighlight %}
 
 **SideComments.js**
@@ -97,8 +98,9 @@ anything without even a name. Also, probably not what you want.
 {% highlight coffeescript %}
 if Meteor.isClient
   Blog.config
-    useSideComments: true # default is 'false'
-    allowAnonymous: true # default is 'false'
+    comments:
+      useSideComments: true # default is 'false'
+      allowAnonymous: true # default is 'false'
 {% endhighlight %}
 
 ### Bootstrap Templates
