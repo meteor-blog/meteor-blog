@@ -77,10 +77,10 @@ class @Post extends Minimongoid
 
 Post._collection.allow
   insert: (userId, item) ->
-    Meteor.call 'isBlogAuthorized'
+    Meteor.call 'isBlogAuthorized', item
 
   update: (userId, item, fields) ->
-    Meteor.call 'isBlogAuthorized'
+    Meteor.call 'isBlogAuthorized', item
 
   remove: (userId, item) ->
-    Meteor.call 'isBlogAuthorized'
+    Meteor.call 'isBlogAuthorized', item

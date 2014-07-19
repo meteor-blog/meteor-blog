@@ -45,6 +45,17 @@ Meteor.publish 'posts', (limit) ->
     sort: publishedAt: -1
     limit: limit
 
+Meteor.publish 'postForAdmin', ->
+  sel = {}
+
+  # If author role is set, and user is author, only return user's posts
+  if Blog.settings.authorRole and Roles.userIsInRole(@userId, Blog.settings.authorRole)
+    sel = userId: @userId
+
+  Post.find sel,
+    fields: body: 0
+    sort: publishedAt: -1
+
 Meteor.publish 'taggedPosts', (tag) ->
   check tag, String
 

@@ -6,6 +6,8 @@ Blog =
   settings:
     adminRole: null
     adminGroup: null
+    authorRole: null
+    authorGroup: null
     rss:
       title: ''
       description: ''
@@ -81,14 +83,55 @@ Meteor.startup ->
       if not Meteor.user()
         return false
 
-      # If role AND group is passed
-      if Blog.settings.adminRole and Blog.settings.adminGroup
-        if not Roles.userIsInRole(Meteor.user(), Blog.settings.adminRole, Blog.settings.adminGroup)
-          return false
+      # If no roles are set, allow all
+      if not Blog.settings.adminRole and not Blog.settings.authorRole
+        return true
 
-      # If only role is passed
-      else if Blog.settings.adminRole
-        if not Roles.userIsInRole(Meteor.user(), Blog.settings.adminRole)
-          return false
+      # If admin role is set
+      if Blog.settings.adminRole
+        # And if admin group is set
+        if Blog.settings.adminGroup
+          # And if user is admin
+          if Roles.userIsInRole(@userId, Blog.settings.adminRole, Blog.settings.adminGroup)
+            # Then they can do anything
+            return true
 
-      true
+        # If only admin role is set, and if user is admin
+        else if Roles.userIsInRole(@userId, Blog.settings.adminRole)
+          # Then they can do anything
+          return true
+ 
+ 
+      # If author role is set
+      if Blog.settings.authorRole
+ 
+        # Get the post
+        if _.isObject arguments[0]
+          post = arguments[0]
+        else if _.isNumber(arguments[0]) or _.isString(arguments[0])
+          post = Post.first arguments[0]
+        else
+          post = null
+
+        # And if author group is set
+        if Blog.settings.authorGroup
+          # And if user is author
+          if Roles.userIsInRole(@userId, Blog.settings.authorRole, Blog.settings.authorGroup)
+            if post
+              # And if user is author of this post
+              if Meteor.userId() is post.userId
+                return true
+            else
+              return true
+
+        # If only author role is passed, and if user is author
+        else if Roles.userIsInRole(@userId, Blog.settings.authorRole)
+          if post
+            # And if user is author of this post
+            if Meteor.userId() is post.userId
+              return true
+          else
+            return true
+
+ 
+      false

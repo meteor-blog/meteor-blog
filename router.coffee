@@ -134,7 +134,7 @@ Router.map ->
           return @redirect('/blog')
 
     waitOn: ->
-      [ Meteor.subscribe 'posts'
+      [ Meteor.subscribe 'postForAdmin'
         Meteor.subscribe 'authors' ]
 
     data: ->
@@ -154,7 +154,7 @@ Router.map ->
       if Meteor.loggingIn()
         return pause()
 
-      Meteor.call 'isBlogAuthorized', (err, authorized) =>
+      Meteor.call 'isBlogAuthorized', @params.id, (err, authorized) =>
         if not authorized
           return @redirect('/blog')
 
