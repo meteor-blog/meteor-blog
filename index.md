@@ -27,7 +27,7 @@ vote with your [Github issues](https://github.com/Differential/meteor-blog/issue
 * <s>Use Google+ attributions for SEO</s>
 * Other SEO best practices (<s> OpenGraph, Twitter Cards, share buttons</s>)
 * <s>Pagination</s>
-* Multiple roles (<s>admin</s>/author/etc)
+* <s>Multiple roles (admin/author)</s>
 * <s>RSS</s>
 
 ### Quick Start
@@ -49,17 +49,23 @@ You will get routes for:
 
 ### Roles
 
-By default, any logged-in user can administer the blog. To ensure that only
-select users can edit the blog, specify an `adminRole` in the blog config:
+By default, _any_ logged-in user can administer the blog. To ensure that only
+select users can edit the blog, the package supports two roles:
+
+* `adminRole` - Can create, and modify or delete any post.
+* `authorRole` - Can create, and modify or delete only my own posts.
+
+To enable either or both roles, specify values in the blog config:
 
 {% highlight coffeescript %}
 if Meteor.isServer
   Blog.config
     adminRole: 'blogAdmin'
+    authorRole: 'blogAuthor'
 {% endhighlight %}
 
-Then, you need to give blog admin users that role. Currently, you're on your own
-to add these roles somehow:
+Then, you need to give blog users that role. Currently, you're on your own to
+add these roles somehow:
 
 * Add these directly to admin users in the database (`"roles": ["blogAdmin"]`), or
 * Roll your own admin page using the methods provided by [meteor-roles](https://atmosphere.meteor.com/package/roles), or
