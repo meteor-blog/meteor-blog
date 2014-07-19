@@ -1,3 +1,8 @@
+
+#
+# Public Publications
+#
+
 Meteor.publish 'commentsBySlug', (slug) ->
   check slug, String
 
@@ -7,6 +12,37 @@ Meteor.publish 'singlePostBySlug', (slug) ->
   check slug, String
 
   Post.find slug: slug
+
+Meteor.publish 'posts', (limit) ->
+  check limit, Match.Optional(Number)
+
+  Post.find {},
+    fields: body: 0
+    sort: publishedAt: -1
+    limit: limit
+
+Meteor.publish 'taggedPosts', (tag) ->
+  check tag, String
+
+  Post.find {tags: tag},
+    fields: body: 0
+    sort: publishedAt: -1
+
+Meteor.publish 'authors', ->
+  ids = _.pluck Post.all fields: id: 1, 'id'
+
+  Author.find
+    id: $in: ids
+  ,
+    fields:
+      profile: 1
+      username: 1
+      emails: 1
+
+
+#
+# Admin Publications
+#
 
 Meteor.publish 'singlePostById', (id) ->
   check id, String
@@ -37,14 +73,6 @@ Meteor.publish 'postTags', ->
   @ready()
   @onStop -> handle.stop()
 
-Meteor.publish 'posts', (limit) ->
-  check limit, Match.Optional(Number)
-
-  Post.find {},
-    fields: body: 0
-    sort: publishedAt: -1
-    limit: limit
-
 Meteor.publish 'postForAdmin', ->
   sel = {}
 
@@ -55,21 +83,3 @@ Meteor.publish 'postForAdmin', ->
   Post.find sel,
     fields: body: 0
     sort: publishedAt: -1
-
-Meteor.publish 'taggedPosts', (tag) ->
-  check tag, String
-
-  Post.find {tags: tag},
-    fields: body: 0
-    sort: publishedAt: -1
-
-Meteor.publish 'authors', ->
-  ids = _.pluck Post.all fields: id: 1, 'id'
-
-  Author.find
-    id: $in: ids
-  ,
-    fields:
-      profile: 1
-      username: 1
-      emails: 1
