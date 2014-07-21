@@ -15,7 +15,8 @@ Package.on_use(function(api) {
     'templating',
     'ui',
     'less',
-    'reactive-table'
+    'reactive-table',
+    'shareit'
   ], 'client');
 
   /**
