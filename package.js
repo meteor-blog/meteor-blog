@@ -38,6 +38,8 @@ Package.on_use(function(api) {
     'client/compatibility/typeahead.jquery.js',
     'client/compatibility/beautify-html.js',
     'client/views/404.html',
+    'client/views/dynamic.html',
+    'client/views/dynamic.coffee',
     'client/views/admin/admin.less',
     'client/views/admin/admin.html',
     'client/views/admin/admin.coffee',
