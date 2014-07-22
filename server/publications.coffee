@@ -47,9 +47,15 @@ Meteor.publish 'authors', ->
 Meteor.publish 'singlePostById', (id) ->
   check id, String
 
+  if not @userId
+    return @ready()
+
   Post.find _id: id
 
 Meteor.publish 'postTags', ->
+  if not @userId
+    return @ready()
+
   initializing = true
   tags = Tag.first().tags
 
@@ -74,6 +80,9 @@ Meteor.publish 'postTags', ->
   @onStop -> handle.stop()
 
 Meteor.publish 'postForAdmin', ->
+  if not @userId
+    return @ready()
+
   sel = {}
 
   # If author role is set, and user is author, only return user's posts
