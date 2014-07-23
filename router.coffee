@@ -22,10 +22,7 @@ Router.map ->
 
   @route 'blogIndex',
     path: '/blog'
-
-    onBeforeAction: ->
-      if Blog.settings.blogIndexTemplate
-        @template = Blog.settings.blogIndexTemplate
+    template: 'dynamic'
 
     onRun: ->
       if not Session.get('postLimit') and Blog.settings.pageSize
@@ -51,12 +48,7 @@ Router.map ->
 
   @route 'blogTagged',
     path: '/blog/tag/:tag'
-
-    template: 'blogIndex'
-
-    onBeforeAction: ->
-      if Blog.settings.blogIndexTemplate
-        @template = Blog.settings.blogIndexTemplate
+    template: 'dynamic'
 
     waitOn: -> [
       Meteor.subscribe 'taggedPosts', @params.tag
@@ -79,6 +71,7 @@ Router.map ->
 
   @route 'blogShow',
     path: '/blog/:slug'
+    template: 'dynamic'
     notFoundTemplate: 'blogNotFound'
 
     onRun: ->
@@ -87,21 +80,21 @@ Router.map ->
     onBeforeAction: ->
       if Blog.settings.blogNotFoundTemplate
         @notFoundTemplate = Blog.settings.blogNotFoundTemplate
+
       if Blog.settings.blogShowTemplate
-        @template = Blog.settings.blogShowTemplate
+        tpl = Blog.settings.blogShowTemplate
 
         # If the user has a custom template, and not using the helper, then
-        # maintain the package Javascript so that OpenGraph tags and share
-        # buttons still work.
+        # maintain the package Javascript.
         pkgFunc = Template.blogShowBody.rendered
-        userFunc = Template[@template].rendered
+        userFunc = Template[tpl].rendered
 
         if userFunc
-          Template[@template].rendered = ->
+          Template[tpl].rendered = ->
             pkgFunc.call(@)
             userFunc.call(@)
         else
-          Template[@template].rendered = pkgFunc
+          Template[tpl].rendered = pkgFunc
 
     action: ->
       @render() if @ready()
@@ -121,11 +114,9 @@ Router.map ->
 
   @route 'blogAdmin',
     path: '/admin/blog'
+    template: 'dynamic'
 
     onBeforeAction: (pause) ->
-      if Blog.settings.blogAdminTemplate
-        @template = Blog.settings.blogAdminTemplate
-
       if Meteor.loggingIn()
         return pause()
 
@@ -134,7 +125,7 @@ Router.map ->
           return @redirect('/blog')
 
     waitOn: ->
-      [ Meteor.subscribe 'posts'
+      [ Meteor.subscribe 'postForAdmin'
         Meteor.subscribe 'authors' ]
 
     data: ->
@@ -146,15 +137,13 @@ Router.map ->
 
   @route 'blogAdminEdit',
     path: '/admin/blog/edit/:id'
+    template: 'dynamic'
 
     onBeforeAction: (pause) ->
-      if Blog.settings.blogAdminEditTemplate
-        @template = Blog.settings.blogAdminEditTemplate
-
       if Meteor.loggingIn()
         return pause()
 
-      Meteor.call 'isBlogAuthorized', (err, authorized) =>
+      Meteor.call 'isBlogAuthorized', @params.id, (err, authorized) =>
         if not authorized
           return @redirect('/blog')
 

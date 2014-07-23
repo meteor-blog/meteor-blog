@@ -6,6 +6,8 @@ Blog =
   settings:
     adminRole: null
     adminGroup: null
+    authorRole: null
+    authorGroup: null
     rss:
       title: ''
       description: ''
@@ -66,29 +68,3 @@ Meteor.startup ->
   if Tag.count() == 0
     Tag.create
       tags: ['meteor']
-
-  ##############################################################################
-  # Server-side methods
-  #
-
-  Meteor.methods
-    doesBlogExist: (slug) ->
-      check slug, String
-
-      !! Post.first slug: slug
-
-    isBlogAuthorized: () ->
-      if not Meteor.user()
-        return false
-
-      # If role AND group is passed
-      if Blog.settings.adminRole and Blog.settings.adminGroup
-        if not Roles.userIsInRole(Meteor.user(), Blog.settings.adminRole, Blog.settings.adminGroup)
-          return false
-
-      # If only role is passed
-      else if Blog.settings.adminRole
-        if not Roles.userIsInRole(Meteor.user(), Blog.settings.adminRole)
-          return false
-
-      true

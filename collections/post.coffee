@@ -75,12 +75,86 @@ class @Post extends Minimongoid
 
     'Mystery blogger'
 
+
+#
+# Server Methods
+#
+
+if Meteor.isServer
+  Meteor.methods
+    doesBlogExist: (slug) ->
+      check slug, String
+
+      !! Post.first slug: slug
+
+    isBlogAuthorized: () ->
+      if not Meteor.user()
+        return false
+
+      # If no roles are set, allow all
+      if not Blog.settings.adminRole and not Blog.settings.authorRole
+        return true
+
+      # If admin role is set
+      if Blog.settings.adminRole
+        # And if admin group is set
+        if Blog.settings.adminGroup
+          # And if user is admin
+          if Roles.userIsInRole(@userId, Blog.settings.adminRole, Blog.settings.adminGroup)
+            # Then they can do anything
+            return true
+
+        # If only admin role is set, and if user is admin
+        else if Roles.userIsInRole(@userId, Blog.settings.adminRole)
+          # Then they can do anything
+          return true
+ 
+ 
+      # If author role is set
+      if Blog.settings.authorRole
+ 
+        # Get the post
+        if _.isObject arguments[0]
+          post = arguments[0]
+        else if _.isNumber(arguments[0]) or _.isString(arguments[0])
+          post = Post.first arguments[0]
+        else
+          post = null
+
+        # And if author group is set
+        if Blog.settings.authorGroup
+          # And if user is author
+          if Roles.userIsInRole(@userId, Blog.settings.authorRole, Blog.settings.authorGroup)
+            if post
+              # And if user is author of this post
+              if Meteor.userId() is post.userId
+                return true
+            else
+              return true
+
+        # If only author role is passed, and if user is author
+        else if Roles.userIsInRole(@userId, Blog.settings.authorRole)
+          if post
+            # And if user is author of this post
+            if Meteor.userId() is post.userId
+              return true
+          else
+            return true
+
+ 
+      false
+
+
+#
+# Authorization
+#
+
 Post._collection.allow
   insert: (userId, item) ->
-    Meteor.call 'isBlogAuthorized'
+    Meteor.call 'isBlogAuthorized', item
 
   update: (userId, item, fields) ->
-    Meteor.call 'isBlogAuthorized'
+    Meteor.call 'isBlogAuthorized', item
 
   remove: (userId, item) ->
-    Meteor.call 'isBlogAuthorized'
+    Meteor.call 'isBlogAuthorized', item
