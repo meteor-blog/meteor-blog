@@ -65,6 +65,12 @@ makeEditor = (tpl) ->
   editor
 
 Template.visualEditor.rendered = ->
+  # Syntax Highlighting
+  if Blog.settings.syntaxHighlighting
+    hljs.configure({userBR: true})
+    $('pre').each (i, block) ->
+      hljs.highlightBlock(block)
+      
   makeEditor @
 
 Template.htmlEditor.rendered = ->
