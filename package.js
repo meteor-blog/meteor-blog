@@ -37,6 +37,7 @@ Package.on_use(function(api) {
     'client/compatibility/bootstrap-tagsinput.js',
     'client/compatibility/typeahead.jquery.js',
     'client/compatibility/beautify-html.js',
+    'client/compatibility/highlight.pack.js',
     'client/views/404.html',
     'client/views/dynamic.html',
     'client/views/dynamic.coffee',
