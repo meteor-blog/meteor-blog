@@ -14,7 +14,7 @@ Blog =
     pageSize: 20
     excerptFunction: null
     syntaxHighlighting: false
-    syntaxHighlightingTheme: null
+    syntaxHighlightingTheme: 'github'
     comments:
       allowAnonymous: false
       useSideComments: false
