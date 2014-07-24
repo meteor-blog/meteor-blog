@@ -71,11 +71,6 @@ add these roles somehow:
 * Roll your own admin page using the methods provided by [meteor-roles](https://atmosphere.meteor.com/package/roles), or
 * Use an accounts admin package like [accounts-admin-ui-bootstrap-3](https://atmosphere.meteor.com/package/accounts-admin-ui-bootstrap-3).
 
-### Fast Render
-
-If your app uses [fast-render](https://github.com/arunoda/meteor-fast-render),
-the blog pages will render using fast-render automatically.
-
 ### Comments
 
 **DISQUS**
@@ -231,6 +226,13 @@ if Meteor.isClient
     syntaxHighlighting: true # default is false
     syntaxHighlightingTheme: 'atelier-dune.dark' # default is 'github'
 {% endhighlight %}
+
+### Social Sharing
+
+{% assign shit = '{{> shareit}}' %}
+This package depends on the [`shareit` package](https://atmospherejs.com/package/shareit)
+for powering social sharing.  If you use your own `blogShowTemplate` template,
+include `{{ shit }}` to display share buttons.
 
 ### RSS
 
