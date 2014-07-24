@@ -1,6 +1,10 @@
 if Meteor.isClient
   Router.onBeforeAction 'loading'
-  Router.onBeforeAction 'dataNotFound'
+  Router.onBeforeAction (pause) ->
+    if @_dataValue is null or typeof @_dataValue is 'undefined'
+      return
+
+    Router.hooks.dataNotFound.call @, pause
 
 Router.map ->
 
