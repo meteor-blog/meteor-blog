@@ -94,6 +94,13 @@ Template.blogShowBody.rendered = ->
   if not @data.published
     $('<meta>', { name: 'robots', content: 'noindex,nofollow' }).appendTo 'head'
 
+  # Syntax Highlighting
+  if Blog.settings.syntaxHighlighting
+    hljs.configure({userBR: true})
+    $('pre').each (i, block) ->
+      hljs.highlightBlock(block)
+
+
 Template.disqus.rendered = ->
 
   if Blog.settings.comments.disqusShortname
