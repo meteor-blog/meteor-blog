@@ -45,7 +45,7 @@ Meteor.startup ->
 
   if Blog.settings.syntaxHighlightingTheme
     $('<link>',
-      href: 'http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/' + Blog.settings.syntaxHighlightingTheme + '.min.css'
+      href: '//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/' + Blog.settings.syntaxHighlightingTheme + '.min.css'
       rel: 'stylesheet'
     ).appendTo 'head'
 
