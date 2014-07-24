@@ -40,11 +40,8 @@ Router.map ->
     fastRender: true
 
     data: ->
-      posts: Post.where
-        published: true
-      ,
-        sort:
-          publishedAt: -1
+      posts: Post.where {},
+        sort: publishedAt: -1
 
   #
   # Blog Tag
@@ -63,11 +60,9 @@ Router.map ->
 
     data: ->
       posts: Post.where
-        published: true
         tags: @params.tag
       ,
-        sort:
-          publishedAt: -1
+        sort: publishedAt: -1
 
   #
   # Show Blog
