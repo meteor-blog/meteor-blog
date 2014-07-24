@@ -2,13 +2,13 @@
 layout: default
 username: Differential
 repo: meteor-blog
-version: 0.5.1
+version: 0.5.2
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
 
-### v0.5.1
+### v0.5.2
 
 * Support syntax highlighting ([#76](https://github.com/Differential/meteor-blog/pull/76))
 * Add `author` role ([#72](https://github.com/Differential/meteor-blog/issues/72))
