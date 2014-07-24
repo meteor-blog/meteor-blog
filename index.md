@@ -220,9 +220,10 @@ use your own template, include the `{{ bp }}` helper to display the button.
 ### Code Highlighting
 
 If you fancy a coding blog, the blog package supports syntax highlighting using
-(highlight.js)[http://highlightjs.org/]. If enabled, any content within `<pre>`
+[highlight.js](http://highlightjs.org/). If enabled, any content within `<pre>`
 tags will get modified for syntax highlighting. You can specify any
-`highlight.js` style file. Example config:
+[`highlight.js` style file](https://github.com/isagalaev/highlight.js/tree/master/src/styles).
+Example config:
 
 {% highlight coffeescript %}
 if Meteor.isClient
