@@ -68,7 +68,16 @@ Template.visualEditor.rendered = ->
   # Syntax Highlighting
   if Blog.settings.syntaxHighlighting
     hljs.configure({userBR: true})
-    $('pre').each (i, block) ->
+
+    br2nl = (i, html) ->
+      html
+        # medium-editor leaves <br>'s in <pre> tags, which screws up
+        # highlight.js. Replace them with actual newlines.
+        .replace(/<br>/g, "\n")
+        # Strip out highlight.js tags so we don't create them multiple times
+        .replace(/<[^>]+>/g, '')
+
+    @$('pre').html(br2nl).each (i, block) ->
       hljs.highlightBlock(block)
       
   makeEditor @
@@ -78,7 +87,6 @@ Template.htmlEditor.rendered = ->
   @$('.html-editor').height(@$('.editable').height())
 
 Template.blogAdminEdit.rendered = ->
-  # waitOn, why u no like me?
   @$('input[data-role="tagsinput"]').tagsinput()
   @$('input[data-role="tagsinput"]').tagsinput('input').typeahead(
     highlight: true,
