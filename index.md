@@ -2,7 +2,7 @@
 layout: default
 username: Differential
 repo: meteor-blog
-version: 0.5.0
+version: 0.5.1
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
@@ -105,8 +105,8 @@ anything without even a name. Also, probably not what you want.
 if Meteor.isClient
   Blog.config
     comments:
-      useSideComments: true # default is 'false'
-      allowAnonymous: true # default is 'false'
+      useSideComments: true # default is false
+      allowAnonymous: true # default is false
 {% endhighlight %}
 
 ### Bootstrap Templates
@@ -216,6 +216,20 @@ if Meteor.isClient
 {% assign bp = '{{blogPager}}' %}
 The default `blogIndexTemplate` template displays a `Load More` button. If you
 use your own template, include the `{{ bp }}` helper to display the button.
+
+### Code Highlighting
+
+If you fancy a coding blog, the blog package supports syntax highlighting using
+(highlight.js)[http://highlightjs.org/]. If enabled, any content within `<pre>`
+tags will get modified for syntax highlighting. You can specify any
+`highlight.js` style file. Example config:
+
+{% highlight coffeescript %}
+if Meteor.isClient
+  Blog.config
+    syntaxHighlighting: true # default is false
+    syntaxHighlightingTheme: 'atelier-dune.dark' # default is 'github'
+{% endhighlight %}
 
 ### RSS
 

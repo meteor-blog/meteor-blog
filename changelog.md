@@ -2,11 +2,18 @@
 layout: default
 username: Differential
 repo: meteor-blog
-version: 0.5.0
+version: 0.5.1
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
+
+### v0.5.1
+
+* Support syntax highlighting ([#76](https://github.com/Differential/meteor-blog/pull/76))
+* Add `author` role ([#72](https://github.com/Differential/meteor-blog/issues/72))
+* Remove social sharing code and add `shareit` package as a dependency
+* Refactor template overriding code to use `UI.dynamic`
 
 ### v0.5.0
 
