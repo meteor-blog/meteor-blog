@@ -29,6 +29,13 @@ Blog =
       delete appConfig.comments
     @settings = _.extend(@settings, appConfig)
 
+    if @settings.syntaxHighlightingTheme
+      $('<link>',
+        href: '//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/' + @settings.syntaxHighlightingTheme + '.min.css'
+        rel: 'stylesheet'
+      ).appendTo 'head'
+
+
 @Blog = Blog
 
 
@@ -42,12 +49,6 @@ Meteor.startup ->
     href: '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css'
     rel: 'stylesheet'
   ).appendTo 'head'
-
-  if Blog.settings.syntaxHighlightingTheme
-    $('<link>',
-      href: '//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/' + Blog.settings.syntaxHighlightingTheme + '.min.css'
-      rel: 'stylesheet'
-    ).appendTo 'head'
 
   # Listen for any 'Load More' clicks
   $('body').on 'click', '.load-more', (e) ->
