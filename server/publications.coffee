@@ -16,7 +16,7 @@ Meteor.publish 'singlePostBySlug', (slug) ->
 Meteor.publish 'posts', (limit) ->
   check limit, Match.Optional(Number)
 
-  Post.find {},
+  Post.find { published: true },
     fields: body: 0
     sort: publishedAt: -1
     limit: limit
@@ -24,7 +24,10 @@ Meteor.publish 'posts', (limit) ->
 Meteor.publish 'taggedPosts', (tag) ->
   check tag, String
 
-  Post.find {tags: tag},
+  Post.find
+    published: true
+    tags: tag
+  ,
     fields: body: 0
     sort: publishedAt: -1
 

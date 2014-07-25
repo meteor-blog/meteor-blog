@@ -94,6 +94,7 @@ Template.blogShowBody.rendered = ->
   if not @data.published
     $('<meta>', { name: 'robots', content: 'noindex,nofollow' }).appendTo 'head'
 
+
 Template.disqus.rendered = ->
 
   if Blog.settings.comments.disqusShortname

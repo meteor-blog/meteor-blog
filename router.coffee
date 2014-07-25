@@ -1,6 +1,10 @@
 if Meteor.isClient
   Router.onBeforeAction 'loading'
-  Router.onBeforeAction 'dataNotFound'
+  Router.onBeforeAction (pause) ->
+    if @_dataValue is null or typeof @_dataValue is 'undefined'
+      return
+
+    Router.hooks.dataNotFound.call @, pause
 
 Router.map ->
 
@@ -36,11 +40,8 @@ Router.map ->
     fastRender: true
 
     data: ->
-      posts: Post.where
-        published: true
-      ,
-        sort:
-          publishedAt: -1
+      posts: Post.where {},
+        sort: publishedAt: -1
 
   #
   # Blog Tag
@@ -59,11 +60,9 @@ Router.map ->
 
     data: ->
       posts: Post.where
-        published: true
         tags: @params.tag
       ,
-        sort:
-          publishedAt: -1
+        sort: publishedAt: -1
 
   #
   # Show Blog
