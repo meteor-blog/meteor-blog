@@ -87,7 +87,9 @@ Template.htmlEditor.rendered = ->
   @$('.html-editor').height(@$('.editable').height())
 
 Template.blogAdminEdit.rendered = ->
-  @$('input[data-role="tagsinput"]').tagsinput()
+  @$('input[data-role="tagsinput"]').tagsinput(
+    confirmKeys: [13, 44, 9]
+  )
   @$('input[data-role="tagsinput"]').tagsinput('input').typeahead(
     highlight: true,
     hint: false
