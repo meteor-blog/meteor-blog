@@ -1,5 +1,9 @@
-Deps.autorun ->
-  Meteor.subscribe 'posts', 3
+Template.blogLatest.rendered = ->
+  num = if @data?.num then @data.num else 3
+
+  Deps.autorun ->
+    Meteor.subscribe 'posts', num
+
 
 Template.blogLatest.helpers
   latest: ->
