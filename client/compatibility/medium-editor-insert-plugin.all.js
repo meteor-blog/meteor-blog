@@ -1,5 +1,5 @@
 /*!
- * medium-editor-insert-plugin v0.2.4 - jQuery insert plugin for MediumEditor
+ * medium-editor-insert-plugin v0.2.6 - jQuery insert plugin for MediumEditor
  *
  * Addon Initialization
  *
@@ -136,8 +136,10 @@
       */
 
       return this.each(function () {
+        $(this).addClass('medium-editor-insert-plugin');
 
-        $('p', this).bind('dragover drop', function (e) {
+        var blocks = 'p, h1, h2, h3, h4, h5, h6, ol, ul, blockquote';
+        $(this).on('dragover drop', blocks, function (e) {
           e.preventDefault();
           return false;
         });
@@ -311,7 +313,8 @@
 
         i = that.getMaxId() +1;
 
-        $el.children('p').each(function () {
+        var blocks = 'p, h1, h2, h3, h4, h5, h6, ol, ul, blockquote';
+        $el.children(blocks).each(function () {
           if ($(this).next().hasClass('mediumInsert') === false) {
             $(this).after(insertBlock);
             $(this).next('.mediumInsert').attr('id', 'mediumInsert-'+ i);
@@ -424,7 +427,9 @@
         $('.mediumInsert-buttonsOptions', this).hide();
       });
 
-      $el.on('click', '.mediumInsert-buttons .mediumInsert-action', function () {
+      $el.on('click', '.mediumInsert-buttons .mediumInsert-action', function (e) {
+        e.preventDefault();
+
         var addon = $(this).data('addon'),
             action = $(this).data('action'),
             $placeholder = $(this).parents('.mediumInsert-buttons').siblings('.mediumInsert-placeholder');
@@ -442,7 +447,7 @@
 }(jQuery));
 
 /*!
- * medium-editor-insert-plugin v0.2.4 - jQuery insert plugin for MediumEditor
+ * medium-editor-insert-plugin v0.2.6 - jQuery insert plugin for MediumEditor
  *
  * Images Addon
  *
@@ -660,7 +665,7 @@
 
       $progress.remove();
 
-      $.fn.mediumInsert.insert.$el.keyup();
+      $placeholder.closest('[data-medium-element]').trigger('keyup').trigger('input');
     },
 
     /**
@@ -766,6 +771,7 @@
         $(this).parent().mouseleave().mouseleave();
 
         $.fn.mediumInsert.insert.deselect();
+        $(this).closest('[data-medium-element]').trigger('keyup').trigger('input');
       });
 
       this.$el.on('click', '.mediumInsert-imageResizeBigger', function () {
@@ -773,6 +779,7 @@
         $(this).parent().mouseleave().mouseleave();
 
         $.fn.mediumInsert.insert.deselect();
+        $(this).closest('[data-medium-element]').trigger('keyup').trigger('input');
       });
 
       this.$el.on('click', '.mediumInsert-imageRemove', function () {
@@ -786,6 +793,7 @@
         that.deleteFile(img, that);
 
         $.fn.mediumInsert.insert.deselect();
+        $(this).closest('[data-medium-element]').trigger('keyup').trigger('input');
       });
     },
 
@@ -857,6 +865,8 @@
           $(e.originalEvent.target.parentNode).remove();
           dropSuccessful = false;
           dropSort = false;
+
+          $(this).closest('[data-medium-element]').trigger('keyup').trigger('input');
         }
       });
 
@@ -897,6 +907,8 @@
 
         dropSort = true;
         dropSortIndex = null;
+
+        $(this).closest('[data-medium-element]').trigger('keyup').trigger('input');
       });
 
       this.$el.on('drop', '.mediumInsert', function (e) {
@@ -930,7 +942,7 @@
 }(jQuery));
 
 /*!
- * medium-editor-insert-plugin v0.2.4 - jQuery insert plugin for MediumEditor
+ * medium-editor-insert-plugin v0.2.6 - jQuery insert plugin for MediumEditor
  *
  * Maps Addon
  *
@@ -978,7 +990,137 @@
 }(jQuery));
 
 /*!
- * medium-editor-insert-plugin v0.2.4 - jQuery insert plugin for MediumEditor
+ * medium-editor-insert-plugin v0.2.6 - jQuery insert plugin for MediumEditor
+ *
+ * Tables Addon
+ *
+ * https://github.com/orthes/medium-editor-insert-plugin
+ *
+ * Copyright (c) 2014 Vexus2 (https://github.com/vexus2)
+ * Released under the MIT license
+ */
+
+(function ($) {
+
+  $.fn.mediumInsert.registerAddon('tables', {
+
+    /**
+    * Table default options
+    */
+
+    default: {
+      defaultRows: 2,
+      defaultCols: 2
+    },
+
+    /**
+     * Tables initial function
+     * @return {void}
+     */
+    init : function (options) {
+      this.options = $.extend(this.default, options);
+      this.$el = $.fn.mediumInsert.insert.$el;
+      this.setTableButtonEvents();
+    },
+
+    insertButton : function (buttonLabels) {
+      var label = 'Table';
+      if (buttonLabels == 'fontawesome' || typeof buttonLabels === 'object' && !!(buttonLabels.fontawesome)) {
+        label = '<i class="fa fa-table"></i>';
+      }
+      return '<button data-addon="tables" data-action="add" class="medium-editor-action medium-editor-action-image mediumInsert-action">' + label + '</button>';
+    },
+
+    /**
+     * Add table to $placeholder
+     * @param {element} $placeholder $placeholder to add embed to
+     * @return {void}
+     */
+    add : function ($placeholder) {
+      $.fn.mediumInsert.insert.deselect();
+
+      var formHtml = '<div class="medium-editor-toolbar-form-anchor mediumInsert-tableDemoBox"><table><tr><td></td><td><label>cols:<input type="text" value="' + this.options.defaultCols + '" class="mediumInsert-tableCols" /></label></td></tr><tr><td><label>rows:<input type="text" value="' + this.options.defaultRows + '" class="mediumInsert-tableRows" /></label></td><td><table class="mediumInsert-demoTable"></table></td></tr><tr><td></td><td><label><button class="mediumInsert-tableReadyButton">insert</button></label></td></tr></table></</div>';
+      $(formHtml).appendTo($placeholder.prev());
+      this.updateDemoTable();
+
+      setTimeout(function () {
+        $placeholder.prev().find('input').focus();
+      }, 50);
+
+      $.fn.mediumInsert.insert.deselect();
+      this.currentPlaceholder = $placeholder;
+    },
+
+    setTableButtonEvents : function () {
+      var that = this;
+
+      $(document).on('keyup',
+                     'input.mediumInsert-tableRows, input.mediumInsert-tableCols',
+                     function() { that.updateDemoTable(); });
+
+      $(document).on('click', function(e) {
+        if ($(e.target).parents('.mediumInsert-buttons').length === 0) {
+          that.removeToolbar();
+        }
+      });
+
+      $(document).on('click', 'button.mediumInsert-tableReadyButton', function() {
+        that.setEnterActionEvents();
+        that.removeToolbar();
+      });
+    },
+
+    getDimensions : function () {
+      return {
+        rows: parseFloat($('input.mediumInsert-tableRows').val()) || 1,
+        cols: parseFloat($('input.mediumInsert-tableCols').val()) || 1
+      };
+    },
+
+    buildTable : function (table) {
+      var i, j, $row,
+        dimensions = this.getDimensions(),
+        $table = $(table);
+
+      for (i = 0; i < dimensions.rows; i++) {
+        $row = $('<tr>');
+        for (j = 0; j < dimensions.cols; j++) {
+          $row.append('<td>');
+        }
+        $table.append($row);
+      }
+    },
+
+    updateDemoTable : function () {
+      var $demoTable = $('table.mediumInsert-demoTable');
+
+      $demoTable.empty();
+      this.buildTable($demoTable);
+    },
+
+    setEnterActionEvents : function () {
+      var that = this;
+      if ($.fn.mediumInsert.settings.enabled === false) {
+        return false;
+      }
+
+      var $table = $('<table class="mediumInsert-table">');
+      that.buildTable($table);
+
+      that.currentPlaceholder.parent().after($table);
+      that.currentPlaceholder.closest('[data-medium-element]').trigger('keyup').trigger('input');
+    },
+
+    removeToolbar : function () {
+      $(".mediumInsert-tableDemoBox").remove();
+    }
+
+  });
+
+}(jQuery));
+
+/*!
+ * medium-editor-insert-plugin v0.2.6 - jQuery insert plugin for MediumEditor
  *
  * Embeds Addon
  *
@@ -993,10 +1135,19 @@
   $.fn.mediumInsert.registerAddon('embeds', {
 
     /**
+    * Embed default options
+    */
+
+    default: {
+      urlPlaceholder: 'type or paste url here'
+    },
+
+    /**
      * Embeds initial function
      * @return {void}
      */
-    init : function () {
+    init : function (options) {
+      this.options = $.extend(this.default, options);
       this.$el = $.fn.mediumInsert.insert.$el;
       this.setEmbedButtonEvents();
     },
@@ -1018,7 +1169,7 @@
       $.fn.mediumInsert.insert.deselect();
 
 
-      var formHtml = '<div class="medium-editor-toolbar-form-anchor mediumInsert-embedsWire" style="display: block;"><input type="text" value="" placeholder="type or paste url here" class="mediumInsert-embedsText"></div>';
+      var formHtml = '<div class="medium-editor-toolbar-form-anchor mediumInsert-embedsWire" style="display: block;"><input type="text" value="" placeholder="' + this.options.urlPlaceholder + '" class="mediumInsert-embedsText"></div>';
       $(formHtml).appendTo($placeholder.prev());
       setTimeout(function () {
         $placeholder.prev().find('input').focus();
@@ -1062,6 +1213,8 @@
       } else {
         embed_tag = $('<div class="mediumInsert-embeds"></div>').append(embed_tag);
         that.currentPlaceholder.parent().append(embed_tag);
+
+        that.currentPlaceholder.closest('[data-medium-element]').trigger('keyup').trigger('input');
       }
     },
 

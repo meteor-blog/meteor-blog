@@ -77,7 +77,8 @@ Template.visualEditor.rendered = ->
         # Strip out highlight.js tags so we don't create them multiple times
         .replace(/<[^>]+>/g, '')
 
-    @$('pre').html(br2nl).each (i, block) ->
+    # Remove 'hljs' class we don't create it multiple times
+    @$('pre').removeClass('hljs').html(br2nl).each (i, block) ->
       hljs.highlightBlock(block)
       
   makeEditor @
