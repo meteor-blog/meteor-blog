@@ -1,0 +1,26 @@
+<template name="blogLatest">
+  <div id="blog-latest-widget">
+    <div class="blog-latest-title">
+      <span>Latest Posts</span>
+    </div>
+    <ul class="blog-latest-posts">
+      {{#each latest}}
+        <li>
+          <a href="{{pathFor 'blogShow'}}">
+            <div class="blog-meta">
+              <div class="blog-title">
+                {{{title}}}
+              </div>
+              <div class="blog-date">
+                <time datetime="{{publishedAt}}">{{date publishedAt}}</time>
+              </div>
+            </div>
+          </a>
+        </li>
+      {{else}}
+        <li>Loading...</li>
+      {{/each}}
+    </ul>
+    <a href="{{pathFor 'blogIndex'}}">View all posts&nbsp; &rsaquo;</a>
+  </div>
+</template>

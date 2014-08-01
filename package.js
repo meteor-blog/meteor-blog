@@ -49,7 +49,9 @@ Package.on_use(function(api) {
     'client/views/blog/blog.less',
     'client/views/blog/blog.html',
     'client/views/blog/show.html',
-    'client/views/blog/blog.coffee'
+    'client/views/blog/blog.coffee',
+    'client/views/widget/latest.html',
+    'client/views/widget/latest.coffee'
   ], 'client');
 
   /**
@@ -86,6 +88,7 @@ Package.on_use(function(api) {
 
   api.use([
     'coffeescript',
+    'deps',
     'iron-router',
     'accounts-base',
     'minimongoid',
