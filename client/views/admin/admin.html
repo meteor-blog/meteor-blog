@@ -43,7 +43,7 @@
 
 <template name="blogAdminPublishedColumn">
   {{#if published}}
-    {{blogFormatDate publishedAt}}
+    {{blogFormatDate createdAt}}
   {{else}}
     <i class="fa fa-ban"></i>
   {{/if}}
