@@ -32,10 +32,12 @@ Router.map ->
       if not Session.get('postLimit') and Blog.settings.pageSize
         Session.set 'postLimit', Blog.settings.pageSize
 
-    waitOn: -> [
-      Meteor.subscribe 'posts', Session.get('postLimit')
-      Meteor.subscribe 'authors'
-    ]
+    waitOn: ->
+      if (typeof Session isnt 'undefined')
+        [
+          Meteor.subscribe 'posts', Session.get('postLimit')
+          Meteor.subscribe 'authors'
+        ]
 
     fastRender: true
 
