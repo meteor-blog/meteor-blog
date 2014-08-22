@@ -2,11 +2,18 @@
 layout: default
 username: Differential
 repo: meteor-blog
-version: 0.5.2
+version: 0.5.3
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
+
+### v0.5.3
+
+* Fix bugs ([#81](https://github.com/Differential/meteor-blog/issues/81), [#78](https://github.com/Differential/meteor-blog/issues/78), [#85](https://github.com/Differential/meteor-blog/issues/85))
+* Improve UX where saving tags on posts was unclear
+* Add template helper to display latest posts
+* Upgrade `medium-editor`, `medium-editor-insert-plugin` libs
 
 ### v0.5.2
 
