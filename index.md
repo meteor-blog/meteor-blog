@@ -234,6 +234,26 @@ This package depends on the [`shareit` package](https://atmospherejs.com/package
 for powering social sharing.  If you use your own `blogShowTemplate` template,
 include `{{ shit }}` to display share buttons.
 
+### Recent Posts Helper
+
+You can include a basic snippet of HTML displaying recent blog posts (e.g. on
+your home page). Insert the inclusion helper where you want the recent posts to
+appear.
+
+{% assign bl = '{{> blogLatest}}' %}
+{% highlight html %}
+{{bl}}
+{% endhighlight %}
+
+Or you can specify the # of posts to show:
+
+{% assign blnum = '{{> blogLatest num=5}}' %}
+{% highlight html %}
+{{blnum}}
+{% endhighlight %}
+
+There are classes in the template for styling.
+
 ### RSS
 
 An RSS feed is automatically generated at `/rss/posts`. To set the title and
