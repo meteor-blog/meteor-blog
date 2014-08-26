@@ -3,6 +3,7 @@ Package.describe({
 });
 
 Package.on_use(function(api) {
+  api.versionsFrom('METEOR@0.9.0');
 
   var both = ['client', 'server'];
 
@@ -15,8 +16,8 @@ Package.on_use(function(api) {
     'templating',
     'ui',
     'less',
-    'reactive-table',
-    'shareit'
+    'aslagle:reactive-table',
+    'joshowens:shareit'
   ], 'client');
 
   /**
@@ -89,11 +90,11 @@ Package.on_use(function(api) {
   api.use([
     'coffeescript',
     'deps',
-    'iron-router',
+    'cmather:iron-router',
     'accounts-base',
-    'minimongoid',
-    'moment',
-    'fileCollection',
+    'mrt:minimongoid',
+    'mrt:moment',
+    'fileCollection', /**NEEDS FIXED!**/
     'roles'
   ], both);
 
