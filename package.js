@@ -1,8 +1,10 @@
 Package.describe({
-  summary: "A package that provides a blog at /blog"
+  summary: 'A package that provides a blog at /blog',
+  git: 'https://github.com/Differential/meteor-blog',
+  version: '0.5.3'
 });
 
-Package.on_use(function(api) {
+Package.onUse(function(api) {
   api.versionsFrom('METEOR@0.9.0');
 
   var both = ['client', 'server'];
@@ -24,7 +26,7 @@ Package.on_use(function(api) {
    * Files for client
    */
 
-  api.add_files([
+  api.addFiles([
     'client/stylesheets/lib/side-comments/side-comments.css',
     'client/stylesheets/lib/side-comments/default.css',
     'client/stylesheets/lib/medium-editor.css',
@@ -59,7 +61,7 @@ Package.on_use(function(api) {
    * Static assets for client
    */
 
-  api.add_files([
+  api.addFiles([
     'public/default-user.png',
     'client/stylesheets/images/remove.png',
     'client/stylesheets/images/resize-bigger.png',
@@ -70,7 +72,7 @@ Package.on_use(function(api) {
    * Files for server
    */
 
-  api.add_files([
+  api.addFiles([
     'collections/config.coffee',
     'server/boot.coffee',
     'server/rss.coffee',
@@ -102,7 +104,7 @@ Package.on_use(function(api) {
    * Files for server and client
    */
 
-  api.add_files([
+  api.addFiles([
     'router.coffee',
     'collections/author.coffee',
     'collections/post.coffee',
@@ -112,11 +114,11 @@ Package.on_use(function(api) {
   ], both);
 });
 
-Package.on_test(function (api) {
+Package.onTest(function (api) {
   api.use('blog', ['client', 'server']);
   api.use('tinytest', ['client', 'server']);
   api.use('test-helpers', ['client', 'server']);
   api.use('coffeescript', ['client', 'server']);
 
-  api.add_files('test/server/rss.coffee', 'server');
+  api.addFiles('test/server/rss.coffee', 'server');
 });
