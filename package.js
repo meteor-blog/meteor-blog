@@ -124,5 +124,5 @@ Package.onTest(function (api) {
   api.use('test-helpers', ['client', 'server']);
   api.use('coffeescript', ['client', 'server']);
 
-  api.add_files('test/server/rss.coffee', 'server');
+  api.addFiles('test/server/rss.coffee', 'server');
 });
