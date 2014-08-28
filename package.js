@@ -93,7 +93,7 @@ Package.onUse(function(api) {
   api.use([
     'coffeescript',
     'deps',
-    'iron:router',
+    'iron:router@0.9.1',
     'accounts-base',
     'mrt:minimongoid@0.8.8',
     'mrt:moment@2.8.1',
