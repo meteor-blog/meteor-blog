@@ -1,6 +1,6 @@
 Package.describe({
   summary: "A package that provides a blog at /blog",
-  version: "0.5.3",
+  version: "0.5.4",
   name: "ryw:blog",
   git: "https://github.com/Differential/meteor-blog.git"
 });
@@ -19,8 +19,8 @@ Package.onUse(function(api) {
     'templating',
     'ui',
     'less',
-    'aslagle:reactive-table',
-    'joshowens:shareit'
+    'aslagle:reactive-table@0.4.0',
+    'joshowens:shareit@0.1.0'
   ], 'client');
 
   /**
@@ -95,10 +95,10 @@ Package.onUse(function(api) {
     'deps',
     'iron:router',
     'accounts-base',
-    'mrt:minimongoid',
-    'mrt:moment',
-    'mrt:filecollection',
-    'alanning:roles'
+    'mrt:minimongoid@0.8.8',
+    'mrt:moment@2.8.1',
+    'mrt:filecollection@0.2.3',
+    'alanning:roles@1.2.12'
   ], both);
 
   /**
