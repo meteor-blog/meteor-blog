@@ -2,11 +2,15 @@
 layout: default
 username: Differential
 repo: meteor-blog
-version: 0.5.4
+version: 0.5.5
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
+
+### v0.5.5
+
+* Fix bug where post body was not showing up in editor
 
 ### v0.5.4
 
