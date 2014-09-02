@@ -129,10 +129,6 @@
       "1.0.3"
     ],
     [
-      "mrt:filecollection",
-      "0.2.3"
-    ],
-    [
       "mrt:just-i18n",
       "0.3.0"
     ],
@@ -203,6 +199,10 @@
     [
       "underscore",
       "1.0.0"
+    ],
+    [
+      "vsivsi:file-collection",
+      "0.3.0"
     ],
     [
       "webapp",

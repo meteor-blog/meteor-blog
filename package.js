@@ -97,7 +97,7 @@ Package.onUse(function(api) {
     'accounts-base',
     'mrt:minimongoid@0.8.8',
     'mrt:moment@2.8.1',
-    'mrt:filecollection@0.2.3',
+    'vsivsi:file-collection@0.3.0',
     'alanning:roles@1.2.12'
   ], both);
 
