@@ -98,6 +98,9 @@ Router.map ->
           Template[tpl].rendered = pkgFunc
 
     action: ->
+      if @ready() and not @data()
+        Router.go 'blogNotFound', slug: @params.slug
+        return
       @render() if @ready()
 
     waitOn: -> [
@@ -170,3 +173,11 @@ Router.map ->
 
     data: ->
       true
+
+  #
+  # Post Not Found
+  #
+
+  @route 'blogNotFound',
+    path: '/blog/notfound/:slug'
+    template: 'blogNotFound'
