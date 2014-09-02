@@ -121,6 +121,9 @@ Router.map ->
       if Meteor.loggingIn()
         return pause()
 
+      Deps.autorun () ->
+        Router.go 'blogIndex' if not Meteor.userId()
+
       Meteor.call 'isBlogAuthorized', (err, authorized) =>
         if not authorized
           return @redirect('/blog')
@@ -144,6 +147,9 @@ Router.map ->
       if Meteor.loggingIn()
         return pause()
 
+      Deps.autorun () ->
+        Router.go 'blogIndex' if not Meteor.userId()
+        
       Meteor.call 'isBlogAuthorized', @params.id, (err, authorized) =>
         if not authorized
           return @redirect('/blog')
