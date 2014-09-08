@@ -51,7 +51,7 @@ Meteor.startup ->
   ).appendTo 'head'
 
   # Listen for any 'Load More' clicks
-  $('body').on 'click', '.load-more', (e) ->
+  $('body').on 'click', '.blog-load-more', (e) ->
     e.preventDefault()
     if Session.get 'postLimit'
       Session.set 'postLimit', Session.get('postLimit') + Blog.settings.pageSize
@@ -80,4 +80,4 @@ UI.registerHelper "joinTags", (list) ->
 
 UI.registerHelper "blogPager", ->
   if Post.count() is Session.get 'postLimit'
-    return new Spacebars.SafeString '<a class="load-more btn" href="#">Load More</a>'
+    return new Spacebars.SafeString '<a class="blog-load-more btn" href="#">Load More</a>'
