@@ -2,11 +2,19 @@
 layout: default
 username: Differential
 repo: meteor-blog
-version: 0.5.5
+version: 0.5.6
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
+
+### v0.5.6
+
+* Fix copy-and-paste bug broken in `0.5.5`
+* Add prefix to `load-more` pager class to avoid potential conflicts ([#99](https://github.com/Differential/meteor-blog/issues/99))
+* Fix CSS on mobile screens ([#98](https://github.com/Differential/meteor-blog/pull/98))
+* Fix 404/notFound templates after upgrade
+* Redirect user back to blog index upon logout ([#95](https://github.com/Differential/meteor-blog/pull/95))
 
 ### v0.5.5
 
