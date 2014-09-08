@@ -109,7 +109,7 @@ Template.blogAdminEdit.helpers
 
   editor: ->
     template: Session.get('editorTemplate')
-    post: Session.get('currentPost')
+    post: Session.get('currentPost') || getPost()
 
 setEditMode = (mode) ->
   Session.set('editorTemplate', "#{mode}Editor")

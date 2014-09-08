@@ -34,7 +34,7 @@
                     <a href="#" class="html-toggle">HTML</a>
                   </div>
                   {{#with editor}}
-                    {{> UI.dynamic template=this.template data=post}}
+                    {{> UI.dynamic template=this.template data=this.post}}
                   {{/with}}
                   <button type="submit" class="btn btn-default">
                     <i class="fa fa-save"></i> Save
