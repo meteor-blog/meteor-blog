@@ -2,11 +2,15 @@
 layout: default
 username: Differential
 repo: meteor-blog
-version: 0.5.6
+version: 0.5.7
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
+
+### v0.5.7
+
+* Fix blank body bug (`0.5.5`), copy-and-paste bug (`0.5.6`) for good?
 
 ### v0.5.6
 
