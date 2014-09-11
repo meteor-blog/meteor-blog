@@ -24,9 +24,11 @@ prettyHtml = (html) ->
     wrap_line_length: 0
   ).replace(/\n/g, "\n\n")
 
+# Help return medium editor's contents
 MediumEditor.prototype.scrubbed = ->
   @serialize()['element-0'].value
 
+# Set up the medium editor with image upload
 makeEditor = (tpl) ->
   editor = new MediumEditor '.editable',
     placeholder: 'Start typing...'
@@ -65,6 +67,30 @@ makeEditor = (tpl) ->
 
   editor
 
+# Toggle between visual and HTML mode
+setEditMode = (tpl, mode) ->
+  tpl.$('.editable').toggle()
+  tpl.$('.html-editor').toggle()
+  tpl.$('.edit-mode a').removeClass 'selected'
+  tpl.$(".#{mode}-toggle").addClass 'selected'
+
+# Highlight code blocks
+highlightSyntax = (tpl) ->
+  if Blog.settings.syntaxHighlighting
+    hljs.configure userBR: true
+
+    br2nl = (i, html) ->
+      html
+        # medium-editor leaves <br>'s in <pre> tags, which screws up
+        # highlight.js. Replace them with actual newlines.
+        .replace(/<br>/g, "\n")
+        # Strip out highlight.js tags so we don't create them multiple times
+        .replace(/<[^>]+>/g, '')
+
+    # Remove 'hljs' class we don't create it multiple times
+    tpl.$('pre').removeClass('hljs').html(br2nl).each (i, block) ->
+      hljs.highlightBlock(block)
+
 Template.blogAdminEdit.rendered = ->
   # Tags
   @$('input[data-role="tagsinput"]').tagsinput
@@ -82,34 +108,12 @@ Template.blogAdminEdit.rendered = ->
     this.tagsinput('input').typeahead('val', '')
   , $('input[data-role="tagsinput"]'))
 
-  # Syntax highlighting
-  if Blog.settings.syntaxHighlighting
-    hljs.configure({userBR: true})
-
-    br2nl = (i, html) ->
-      html
-        # medium-editor leaves <br>'s in <pre> tags, which screws up
-        # highlight.js. Replace them with actual newlines.
-        .replace(/<br>/g, "\n")
-        # Strip out highlight.js tags so we don't create them multiple times
-        .replace(/<[^>]+>/g, '')
-
-    # Remove 'hljs' class we don't create it multiple times
-    @$('pre').removeClass('hljs').html(br2nl).each (i, block) ->
-      hljs.highlightBlock(block)
-
   # Medium editor
   makeEditor @
 
 Template.blogAdminEdit.helpers
   post: ->
     getPost()
-
-setEditMode = (tpl, mode) ->
-  tpl.$('.editable').toggle()
-  tpl.$('.html-editor').toggle()
-  tpl.$('.edit-mode a').removeClass 'selected'
-  tpl.$(".#{mode}-toggle").addClass 'selected'
 
 Template.blogAdminEdit.events
   'click .mediumInsert-action': (e, tpl) ->
@@ -126,6 +130,7 @@ Template.blogAdminEdit.events
 
     post = getPost()
     post.body = $html.val()?.trim()
+    highlightSyntax tpl
     setEditMode tpl, 'visual'
 
   'click .html-toggle': (e, tpl) ->
@@ -164,6 +169,9 @@ Template.blogAdminEdit.events
     $editable.find('p:not([data-section-id])').each ->
       $(this).addClass('commentable-section').attr('data-section-id', i)
       i++
+
+    # Highlight code blocks
+    highlightSyntax tpl
 
     if $editable.get(0)
       editor = makeEditor tpl
