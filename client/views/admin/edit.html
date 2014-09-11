@@ -33,9 +33,10 @@
                     -
                     <a href="#" class="html-toggle">HTML</a>
                   </div>
-                  {{#with editor}}
-                    {{> UI.dynamic template=this.template data=this.post}}
-                  {{/with}}
+                  <textarea hidden class="html-editor col-xs-12">{{{body}}}</textarea>
+                  <div class="editable" tabindex="3">
+                    {{{body}}}
+                  </div>
                   <button type="submit" class="btn btn-default">
                     <i class="fa fa-save"></i> Save
                   </button>
@@ -50,18 +51,5 @@
         </div>
       </div>
     </div>
-  </div>
-</template>
-
-<template name="visualEditor">
-  <div class="editable" tabindex="3">
-    {{{body}}}
-  </div>
-</template>
-
-<template name="htmlEditor">
-  <textarea class="html-editor col-xs-12">{{{body}}}</textarea>
-  <div class="editable" hidden>
-    {{{body}}}
   </div>
 </template>

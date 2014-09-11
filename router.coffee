@@ -159,8 +159,6 @@ Router.map ->
 
     onRun: ->
       Session.set 'postId', @params.id
-      Session.set('editorTemplate', 'visualEditor')
-      Session.set('currentPost', Post.first(@params.id))
 
     waitOn: -> [
       Meteor.subscribe 'singlePostById', @params.id
