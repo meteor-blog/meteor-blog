@@ -19,13 +19,10 @@ if Meteor.isServer
       userId
     remove: (userId, file) ->
       # Only owners can delete
-      if file.metadata and file.metadata.userId and file.metadata.userId is userId
-        return true
-      false
+      return file.metadata and file.metadata.userId and file.metadata.userId is userId
     write: ->
       # Anyone can POST a file
       true
     read: (userId, file) ->
       # Anyone can GET a file
       true
-
