@@ -22,10 +22,10 @@ vote with your [Github issues](https://github.com/Differential/meteor-blog/issue
 * <s>Easily add images</s> to S3 or Cloud Files
 * <s>Allow for comments (or at least a comment plugin)</s>
 * <s>Ability to create categories/tags</s>
-* Widget to embed recent posts on another page
+* <s>Widget to embed recent posts on another page</s>
 * <s>Customize how posts are displayed on main blog home</s>
 * <s>Use Google+ attributions for SEO</s>
-* Other SEO best practices (<s> OpenGraph, Twitter Cards, share buttons</s>)
+* <s>SEO best practices (OpenGraph, Twitter Cards, share buttons)</s>
 * <s>Pagination</s>
 * <s>Multiple roles (admin/author)</s>
 * <s>RSS</s>
@@ -33,7 +33,7 @@ vote with your [Github issues](https://github.com/Differential/meteor-blog/issue
 ### Quick Start
 
 ```
-mrt add blog
+meteor add ryw:blog
 ```
 
 You will get routes for:
@@ -111,7 +111,7 @@ templates. If you use these default templates, you must add the meteor
 `bootstrap-3` package.
 
 ```
-mrt add bootstrap-3
+meteor add mrt:bootstrap-3
 ```
 
 ### Custom Templates
