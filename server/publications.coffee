@@ -32,7 +32,7 @@ Meteor.publish 'taggedPosts', (tag) ->
     sort: publishedAt: -1
 
 Meteor.publish 'authors', ->
-  ids = _.uniq(_.pluck(Post.all(fields: userId: 1, 'userId')))
+  ids = _.uniq(_.pluck(Post.all(fields: userId: 1), 'userId'))
 
   Author.find
     id: $in: ids
