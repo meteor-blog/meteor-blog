@@ -2,7 +2,7 @@
   "dependencies": [
     [
       "accounts-base",
-      "1.0.1"
+      "1.1.1"
     ],
     [
       "alanning:roles",
@@ -10,11 +10,15 @@
     ],
     [
       "application-configuration",
-      "1.0.1"
+      "1.0.2"
     ],
     [
       "aslagle:reactive-table",
       "0.4.0"
+    ],
+    [
+      "base64",
+      "1.0.0"
     ],
     [
       "binary-heap",
@@ -22,10 +26,14 @@
     ],
     [
       "blaze",
-      "2.0.0"
+      "2.0.1"
     ],
     [
       "blaze-tools",
+      "1.0.0"
+    ],
+    [
+      "boilerplate-generator",
       "1.0.0"
     ],
     [
@@ -34,23 +42,23 @@
     ],
     [
       "check",
-      "1.0.0"
+      "1.0.1"
     ],
     [
       "coffeescript",
-      "1.0.2"
-    ],
-    [
-      "ddp",
-      "1.0.8"
-    ],
-    [
-      "deps",
       "1.0.3"
     ],
     [
+      "ddp",
+      "1.0.9"
+    ],
+    [
+      "deps",
+      "1.0.4"
+    ],
+    [
       "ejson",
-      "1.0.1"
+      "1.0.3"
     ],
     [
       "follower-livedata",
@@ -62,11 +70,11 @@
     ],
     [
       "html-tools",
-      "1.0.0"
+      "1.0.1"
     ],
     [
       "htmljs",
-      "1.0.0"
+      "1.0.1"
     ],
     [
       "id-map",
@@ -102,7 +110,11 @@
     ],
     [
       "less",
-      "1.0.7"
+      "1.0.9"
+    ],
+    [
+      "livedata",
+      "1.0.10"
     ],
     [
       "localstorage",
@@ -110,23 +122,35 @@
     ],
     [
       "logging",
-      "1.0.2"
-    ],
-    [
-      "meteor",
       "1.0.3"
     ],
     [
+      "meteor",
+      "1.1.1"
+    ],
+    [
+      "meteorhacks:fast-render",
+      "1.1.2"
+    ],
+    [
+      "meteorhacks:subs-manager",
+      "1.1.0"
+    ],
+    [
       "minifiers",
-      "1.0.2"
+      "1.1.0"
     ],
     [
       "minimongo",
-      "1.0.2"
+      "1.0.3"
     ],
     [
       "mongo",
-      "1.0.4"
+      "1.0.6"
+    ],
+    [
+      "mongo-livedata",
+      "1.0.5"
     ],
     [
       "mrt:just-i18n",
@@ -158,11 +182,11 @@
     ],
     [
       "reactive-dict",
-      "1.0.2"
+      "1.0.3"
     ],
     [
       "reactive-var",
-      "1.0.1"
+      "1.0.2"
     ],
     [
       "retry",
@@ -170,7 +194,7 @@
     ],
     [
       "routepolicy",
-      "1.0.0"
+      "1.0.1"
     ],
     [
       "service-configuration",
@@ -178,11 +202,11 @@
     ],
     [
       "session",
-      "1.0.1"
+      "1.0.2"
     ],
     [
       "spacebars",
-      "1.0.1"
+      "1.0.2"
     ],
     [
       "spacebars-compiler",
@@ -194,7 +218,7 @@
     ],
     [
       "templating",
-      "1.0.5"
+      "1.0.7"
     ],
     [
       "tracker",
@@ -202,7 +226,7 @@
     ],
     [
       "ui",
-      "1.0.2"
+      "1.0.3"
     ],
     [
       "underscore",
@@ -214,10 +238,14 @@
     ],
     [
       "webapp",
-      "1.0.3"
+      "1.1.2"
+    ],
+    [
+      "webapp-hashing",
+      "1.0.0"
     ]
   ],
   "pluginDependencies": [],
-  "toolVersion": "meteor-tool@1.0.28",
+  "toolVersion": "meteor-tool@1.0.32",
   "format": "1.0"
 }
