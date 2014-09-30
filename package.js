@@ -98,7 +98,9 @@ Package.onUse(function(api) {
     'mrt:minimongoid@0.8.8',
     'mrt:moment@2.8.1',
     'vsivsi:file-collection@0.3.0',
-    'alanning:roles@1.2.12'
+    'alanning:roles@1.2.12',
+    'meteorhacks:fast-render',
+    'meteorhacks:subs-manager'
   ], both);
 
   /**
@@ -121,5 +123,5 @@ Package.onTest(function (api) {
   api.use('test-helpers', ['client', 'server']);
   api.use('coffeescript', ['client', 'server']);
 
-  api.add_files('test/server/rss.coffee', 'server');
+  api.addFiles('test/server/rss.coffee', 'server');
 });
