@@ -117,6 +117,10 @@
       "1.0.9"
     ],
     [
+      "livedata",
+      "1.0.10"
+    ],
+    [
       "localstorage",
       "1.0.0"
     ],
@@ -129,6 +133,14 @@
       "1.1.1"
     ],
     [
+      "meteorhacks:fast-render",
+      "1.1.2"
+    ],
+    [
+      "meteorhacks:subs-manager",
+      "1.1.0"
+    ],
+    [
       "minifiers",
       "1.1.0"
     ],
@@ -139,6 +151,10 @@
     [
       "mongo",
       "1.0.6"
+    ],
+    [
+      "mongo-livedata",
+      "1.0.5"
     ],
     [
       "mrt:just-i18n",

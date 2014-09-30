@@ -1,3 +1,9 @@
+subs = new SubsManager(
+  # maximum number of cache subscriptions
+  cacheLimit: 10,
+  # any subscription will be expire after 5 minute, if it's not subscribed again
+  expireIn: 5
+)
 if Meteor.isClient
   Router.onBeforeAction 'loading'
   Router.onBeforeAction (pause) ->
@@ -35,8 +41,8 @@ Router.map ->
     waitOn: ->
       if (typeof Session isnt 'undefined')
         [
-          Meteor.subscribe 'posts', Session.get('postLimit')
-          Meteor.subscribe 'authors'
+          subs.subscribe 'posts', Session.get('postLimit')
+          subs.subscribe 'authors'
         ]
 
     fastRender: true
@@ -54,8 +60,8 @@ Router.map ->
     template: 'dynamic'
 
     waitOn: -> [
-      Meteor.subscribe 'taggedPosts', @params.tag
-      Meteor.subscribe 'authors'
+      subs.subscribe 'taggedPosts', @params.tag
+      subs.subscribe 'authors'
     ]
 
     fastRender: true
@@ -101,9 +107,9 @@ Router.map ->
       @render() if @ready()
 
     waitOn: -> [
-      Meteor.subscribe 'singlePostBySlug', @params.slug
-      Meteor.subscribe 'commentsBySlug', @params.slug
-      Meteor.subscribe 'authors'
+      subs.subscribe 'singlePostBySlug', @params.slug
+      subs.subscribe 'commentsBySlug', @params.slug
+      subs.subscribe 'authors'
     ]
 
     data: ->
