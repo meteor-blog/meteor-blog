@@ -1,7 +1,8 @@
 Package.describe({
-  summary: 'A package that provides a blog at /blog',
-  git: 'https://github.com/Differential/meteor-blog',
-  version: '0.5.3'
+  summary: "A package that provides a blog at /blog",
+  version: "0.5.7",
+  name: "ryw:blog",
+  git: "https://github.com/Differential/meteor-blog.git"
 });
 
 Package.onUse(function(api) {
@@ -18,8 +19,8 @@ Package.onUse(function(api) {
     'templating',
     'ui',
     'less',
-    'aslagle:reactive-table',
-    'joshowens:shareit'
+    'aslagle:reactive-table@0.4.0',
+    'joshowens:shareit@0.1.0'
   ], 'client');
 
   /**
@@ -92,12 +93,12 @@ Package.onUse(function(api) {
   api.use([
     'coffeescript',
     'deps',
-    'cmather:iron-router',
+    'iron:router@0.9.1',
     'accounts-base',
-    'mrt:minimongoid',
-    'mrt:moment',
-    'fileCollection', /**NEEDS FIXED!**/
-    'roles'
+    'mrt:minimongoid@0.8.8',
+    'mrt:moment@2.8.1',
+    'vsivsi:file-collection@0.3.0',
+    'alanning:roles@1.2.12'
   ], both);
 
   /**
@@ -115,7 +116,7 @@ Package.onUse(function(api) {
 });
 
 Package.onTest(function (api) {
-  api.use('blog', ['client', 'server']);
+  api.use("ryw:blog", ['client', 'server']);
   api.use('tinytest', ['client', 'server']);
   api.use('test-helpers', ['client', 'server']);
   api.use('coffeescript', ['client', 'server']);

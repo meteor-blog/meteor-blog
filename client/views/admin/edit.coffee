@@ -18,14 +18,17 @@ substringMatcher = (strs) ->
 
 # Pretty up HTML for HTML mode
 prettyHtml = (html) ->
-  html_beautify html,
+  html_beautify(html,
     preserve_newlines: false
     indent_size: 2
     wrap_line_length: 0
+  ).replace(/\n/g, "\n\n")
 
+# Help return medium editor's contents
 MediumEditor.prototype.scrubbed = ->
   @serialize()['element-0'].value
 
+# Set up the medium editor with image upload
 makeEditor = (tpl) ->
   editor = new MediumEditor '.editable',
     placeholder: 'Start typing...'
@@ -64,10 +67,17 @@ makeEditor = (tpl) ->
 
   editor
 
-Template.visualEditor.rendered = ->
-  # Syntax Highlighting
+# Toggle between visual and HTML mode
+setEditMode = (tpl, mode) ->
+  tpl.$('.editable').toggle()
+  tpl.$('.html-editor').toggle()
+  tpl.$('.edit-mode a').removeClass 'selected'
+  tpl.$(".#{mode}-toggle").addClass 'selected'
+
+# Highlight code blocks
+highlightSyntax = (tpl) ->
   if Blog.settings.syntaxHighlighting
-    hljs.configure({userBR: true})
+    hljs.configure userBR: true
 
     br2nl = (i, html) ->
       html
@@ -78,19 +88,14 @@ Template.visualEditor.rendered = ->
         .replace(/<[^>]+>/g, '')
 
     # Remove 'hljs' class we don't create it multiple times
-    @$('pre').removeClass('hljs').html(br2nl).each (i, block) ->
+    tpl.$('pre').removeClass('hljs').html(br2nl).each (i, block) ->
       hljs.highlightBlock(block)
-      
-  makeEditor @
-
-Template.htmlEditor.rendered = ->
-  makeEditor @
-  @$('.html-editor').height(@$('.editable').height())
 
 Template.blogAdminEdit.rendered = ->
-  @$('input[data-role="tagsinput"]').tagsinput(
+  # Tags
+  @$('input[data-role="tagsinput"]').tagsinput
     confirmKeys: [13, 44, 9]
-  )
+
   @$('input[data-role="tagsinput"]').tagsinput('input').typeahead(
     highlight: true,
     hint: false
@@ -103,18 +108,12 @@ Template.blogAdminEdit.rendered = ->
     this.tagsinput('input').typeahead('val', '')
   , $('input[data-role="tagsinput"]'))
 
+  # Medium editor
+  makeEditor @
+
 Template.blogAdminEdit.helpers
   post: ->
     getPost()
-
-  editor: ->
-    template: Session.get('editorTemplate')
-    post: Session.get('currentPost')
-
-setEditMode = (mode) ->
-  Session.set('editorTemplate', "#{mode}Editor")
-  $('.edit-mode a').removeClass('selected')
-  $(".#{mode}-toggle").addClass('selected')
 
 Template.blogAdminEdit.events
   'click .mediumInsert-action': (e, tpl) ->
@@ -122,22 +121,29 @@ Template.blogAdminEdit.events
     e.preventDefault()
     e.stopPropagation()
 
-  'click .visual-toggle': ->
-    if Session.get('editorTemplate') is 'visualEditor'
+  'click .visual-toggle': (e, tpl) ->
+    $editable = tpl.$('.editable')
+    $html = tpl.$('.html-editor')
+
+    if $editable.is(':visible')
       return
+
     post = getPost()
-    post.body = $('.html-editor').val()?.trim()
-    Session.set('currentPost', post)
-    setEditMode 'visual'
+    post.body = $html.val()?.trim()
+    highlightSyntax tpl
+    setEditMode tpl, 'visual'
 
   'click .html-toggle': (e, tpl) ->
-    if Session.get('editorTemplate') is 'htmlEditor'
+    $editable = tpl.$('.editable')
+    $html = tpl.$('.html-editor')
+
+    if $html.is(':visible')
       return
-    post = getPost()
+
     editor = makeEditor tpl
-    post.body = prettyHtml editor.scrubbed()
-    Session.set('currentPost', post)
-    setEditMode 'html'
+    $html.val prettyHtml(editor.scrubbed())
+    setEditMode tpl, 'html'
+    $html.height($editable.height())
 
   'keyup .html-editor': (e, tpl) ->
     $editable = tpl.$('.editable')
@@ -163,6 +169,9 @@ Template.blogAdminEdit.events
     $editable.find('p:not([data-section-id])').each ->
       $(this).addClass('commentable-section').attr('data-section-id', i)
       i++
+
+    # Highlight code blocks
+    highlightSyntax tpl
 
     if $editable.get(0)
       editor = makeEditor tpl

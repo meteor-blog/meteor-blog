@@ -4,9 +4,6 @@ Template.blogIndex.rendered = ->
   if Blog.settings.title
     document.title += " | #{Blog.settings.title}"
 
-getComment = (id)->
-  Comment.first slug: Session.get('slug'), sectionId: id
-
 Template.blogShowBody.rendered = ->
 
   #

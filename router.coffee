@@ -1,7 +1,7 @@
 if Meteor.isClient
   Router.onBeforeAction 'loading'
   Router.onBeforeAction (pause) ->
-    if @_dataValue is null or typeof @_dataValue is 'undefined'
+    if not @_hasData()
       return
 
     Router.hooks.dataNotFound.call @, pause
@@ -121,6 +121,9 @@ Router.map ->
       if Meteor.loggingIn()
         return pause()
 
+      Deps.autorun () ->
+        Router.go 'blogIndex' if not Meteor.userId()
+
       Meteor.call 'isBlogAuthorized', (err, authorized) =>
         if not authorized
           return @redirect('/blog')
@@ -144,6 +147,9 @@ Router.map ->
       if Meteor.loggingIn()
         return pause()
 
+      Deps.autorun () ->
+        Router.go 'blogIndex' if not Meteor.userId()
+        
       Meteor.call 'isBlogAuthorized', @params.id, (err, authorized) =>
         if not authorized
           return @redirect('/blog')
@@ -153,8 +159,6 @@ Router.map ->
 
     onRun: ->
       Session.set 'postId', @params.id
-      Session.set('editorTemplate', 'visualEditor')
-      Session.set('currentPost', Post.first(@params.id))
 
     waitOn: -> [
       Meteor.subscribe 'singlePostById', @params.id

@@ -114,7 +114,7 @@ if Meteor.isServer
       if Blog.settings.authorRole
  
         # Get the post
-        check arguments[0], Match.OneOf(Object, Number, String)
+        check arguments[0], Match.Optional(Match.OneOf(Object, Number, String))
         
         if _.isObject arguments[0]
           post = arguments[0]
