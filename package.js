@@ -32,6 +32,7 @@ Package.onUse(function(api) {
     'client/stylesheets/lib/side-comments/default.css',
     'client/stylesheets/lib/medium-editor.css',
     'client/stylesheets/lib/medium-themes/bootstrap.css',
+    'client/stylesheets/lib/medium-editor-insert-plugin-frontend.css',
     'client/stylesheets/lib/medium-editor-insert-plugin.css',
     'client/stylesheets/lib/bootstrap-tagsinput.css',
     'client/boot.coffee',
