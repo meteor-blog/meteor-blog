@@ -19,8 +19,10 @@ Package.onUse(function(api) {
     'templating',
     'ui',
     'less',
+    'underscore',
     'aslagle:reactive-table@0.4.0',
-    'joshowens:shareit@0.1.0'
+    'joshowens:shareit@0.1.0',
+    'gfk:notifications@1.0.9'
   ], 'client');
 
   /**

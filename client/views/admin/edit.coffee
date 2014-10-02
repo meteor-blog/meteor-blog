@@ -1,3 +1,6 @@
+## METHODS
+
+
 # Return current post if we are editing one, or empty object if this is a new
 # post that has not been saved yet.
 getPost = ->
@@ -22,7 +25,7 @@ prettyHtml = (html) ->
     preserve_newlines: false
     indent_size: 2
     wrap_line_length: 0
-  ).replace(/\n/g, "\n\n")
+  )
 
 # Help return medium editor's contents
 MediumEditor.prototype.scrubbed = ->
@@ -87,9 +90,66 @@ highlightSyntax = (tpl) ->
         # Strip out highlight.js tags so we don't create them multiple times
         .replace(/<[^>]+>/g, '')
 
-    # Remove 'hljs' class we don't create it multiple times
+    # Remove 'hljs' class so we don't create it multiple times
     tpl.$('pre').removeClass('hljs').html(br2nl).each (i, block) ->
       hljs.highlightBlock(block)
+
+# Save
+save = (tpl, cb) ->
+  $form = tpl.$('form')
+  $editable = $('.editable', $form)
+
+  # Make paragraphs commentable
+  i = $editable.find('p[data-section-id]').length + 1
+  $editable.find('p:not([data-section-id])').each ->
+    $(this).addClass('commentable-section').attr('data-section-id', i)
+    i++
+
+  # Highlight code blocks
+  highlightSyntax tpl
+
+  if $editable.is(':visible')
+    editor = makeEditor tpl
+    body = editor.scrubbed()
+  else
+    body = $('.html-editor', $form).val().trim()
+
+  if not body
+    return cb(null, new Error 'Blog body is required')
+
+  slug = $('[name=slug]', $form).val()
+
+  attrs =
+    title: $('[name=title]', $form).val()
+    tags: $('[name=tags]', $form).val()
+    slug: slug
+    body: body
+    updatedAt: new Date()
+
+  if getPost().id
+    # Next line necessary for https://github.com/meteor/meteor/issues/1964
+    $editable.html ''
+    post = getPost().update attrs
+    if post.errors
+      return cb(null, new Error _(post.errors[0]).values()[0])
+    cb(null)
+
+  else
+    Meteor.call 'doesBlogExist', slug, (err, exists) ->
+      if not exists
+        attrs.userId = Meteor.userId()
+        # Next line necessary for https://github.com/meteor/meteor/issues/1964
+        $editable.html ''
+        post = Post.create attrs
+        if post.errors
+          return cb(null, new Error _(post.errors[0]).values()[0])
+        cb(null)
+      else
+        return cb(null, new Error 'Blog with this slug already exists')
+
+
+## TEMPLATE CODE
+
 
 Template.blogAdminEdit.rendered = ->
   # Tags
@@ -116,11 +176,12 @@ Template.blogAdminEdit.helpers
     getPost()
 
 Template.blogAdminEdit.events
+  # Don't let the medium insert plugin submit the form
   'click .mediumInsert-action': (e, tpl) ->
-    # Don't let the medium insert plugin submit the form
     e.preventDefault()
     e.stopPropagation()
 
+  # Toggle between VISUAL/HTML modes
   'click .visual-toggle': (e, tpl) ->
     $editable = tpl.$('.editable')
     $html = tpl.$('.html-editor')
@@ -145,12 +206,21 @@ Template.blogAdminEdit.events
     setEditMode tpl, 'html'
     $html.height($editable.height())
 
+  # Automatically change height on editor areas
   'keyup .html-editor': (e, tpl) ->
     $editable = tpl.$('.editable')
     $html = tpl.$('.html-editor')
 
     $editable.html($html.val())
     $html.height($editable.height())
+
+  # Autosave
+  'input .editable, keyup .html-editor': _.debounce (e, tpl) ->
+    save tpl, (res, err) ->
+      if err
+        return Notifications.error '', err.message
+      Notifications.success '', 'Saved'
+  , 5000
 
   'blur [name=title]': (e, tpl) ->
     slug = tpl.$('[name=slug]')
@@ -161,52 +231,7 @@ Template.blogAdminEdit.events
 
   'submit form': (e, tpl) ->
     e.preventDefault()
-    form = $(e.currentTarget)
-    $editable = $('.editable', form)
-
-    # Make paragraphs commentable
-    i = $editable.find('p[data-section-id]').length + 1
-    $editable.find('p:not([data-section-id])').each ->
-      $(this).addClass('commentable-section').attr('data-section-id', i)
-      i++
-
-    # Highlight code blocks
-    highlightSyntax tpl
-
-    if $editable.get(0)
-      editor = makeEditor tpl
-      body = editor.scrubbed()
-    else
-      body = $('.html-editor', form).val().trim()
-
-    if not body
-      return alert 'Blog body is required'
-
-    slug = $('[name=slug]', form).val()
-
-    attrs =
-      title: $('[name=title]', form).val()
-      tags: $('[name=tags]', form).val()
-      slug: slug
-      body: body
-      updatedAt: new Date()
-
-    if getPost().id
-      post = getPost().update attrs
-      if post.errors
-        return alert(_(post.errors[0]).values()[0])
-
+    save tpl, (res, err) ->
+      if err
+        return Notifications.error '', err.message
       Router.go 'blogAdmin'
-    else
-      Meteor.call 'doesBlogExist', slug, (err, exists) ->
-        if not exists
-          attrs.userId = Meteor.userId()
-          post = Post.create attrs
-
-          if post.errors
-            return alert(_(post.errors[0]).values()[0])
-
-          Router.go 'blogAdmin'
-
-        else
-          return alert 'Blog with this slug already exists'

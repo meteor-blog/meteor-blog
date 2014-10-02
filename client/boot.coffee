@@ -45,6 +45,7 @@ Blog =
 
 
 Meteor.startup ->
+  # Load Font Awesome
   $('<link>',
     href: '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css'
     rel: 'stylesheet'
@@ -55,6 +56,10 @@ Meteor.startup ->
     e.preventDefault()
     if Session.get 'postLimit'
       Session.set 'postLimit', Session.get('postLimit') + Blog.settings.pageSize
+
+  # Notifications package
+  _.extend Notifications.defaultOptions,
+    timeout: 5000
 
 ################################################################################
 # Register Global Helpers
