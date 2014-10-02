@@ -28,6 +28,7 @@ Meteor.startup ->
   #
 
   Post._collection._ensureIndex 'slug': 1
+  Comment._collection._ensureIndex 'slug': 1
 
   # Create 'excerpt' field if none
   if Post.where({ excerpt: { $exists: 0 }}).length
