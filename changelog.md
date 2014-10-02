@@ -2,11 +2,19 @@
 layout: default
 username: Differential
 repo: meteor-blog
-version: 0.5.7
+version: 0.5.8
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
+
+### v0.5.8
+
+* Autosave blog post after 5 seconds of inactivity ([#90](https://github.com/Differential/meteor-blog/issues/90))
+* Add [`fast-render`](https://atmospherejs.com/meteorhacks/fast-render) package by default ([#110](https://github.com/Differential/meteor-blog/pull/110))
+* Use [`subs-manager`](https://atmospherejs.com/meteorhacks/subs-manager) to improve subscription performance ([#110](https://github.com/Differential/meteor-blog/pull/110))
+* Fix bugs [#106](https://github.com/Differential/meteor-blog/pull/106), [#109](https://github.com/Differential/meteor-blog/issues/109)
+* Upgrade `medium-editor`, `medium-editor-insert-plugin` libs
 
 ### v0.5.7
 
