@@ -35,7 +35,7 @@ Meteor.publish 'authors', ->
   ids = _.uniq(_.pluck(Post.all(fields: userId: 1), 'userId'))
 
   Author.find
-    id: $in: ids
+    _id: $in: ids
   ,
     fields:
       profile: 1
