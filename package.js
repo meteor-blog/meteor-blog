@@ -102,8 +102,8 @@ Package.onUse(function(api) {
     'mrt:moment@2.8.1',
     'vsivsi:file-collection@0.3.2',
     'alanning:roles@1.2.12',
-    'meteorhacks:fast-render',
-    'meteorhacks:subs-manager'
+    'meteorhacks:fast-render@1.1.2',
+    'meteorhacks:subs-manager@1.1.0'
   ], both);
 
   /**
