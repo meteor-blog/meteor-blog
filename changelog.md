@@ -2,13 +2,13 @@
 layout: default
 username: Differential
 repo: meteor-blog
-version: 0.5.8
+version: 0.5.9
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
 
-### v0.5.8
+### v0.5.9
 
 * Autosave blog post after 5 seconds of inactivity ([#90](https://github.com/Differential/meteor-blog/issues/90))
 * Add [`fast-render`](https://atmospherejs.com/meteorhacks/fast-render) package by default ([#110](https://github.com/Differential/meteor-blog/pull/110))
