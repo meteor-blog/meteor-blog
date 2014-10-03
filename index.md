@@ -15,20 +15,24 @@ for a meteor-based blog.
 This blog is very much a work in progress. To help decide what gets add next,
 vote with your [Github issues](https://github.com/Differential/meteor-blog/issues)!
 
+### Features
+
+* Medium-style editor
+* Slug-based URLs (editable)
+* Add images
+* Support DISQUS comments
+* Blog post tags and tag view
+* Widget to embed recent posts on another (e.g. home) page
+* Customizable templates
+* SEO best practices (OpenGraph, Twitter Cards, share buttons, Google+ author attribution)
+* Pagination
+* Multiple roles (admin/author)
+* RSS feed
+
 ### Roadmap
 
-* <s>Basic markdown editor</s>
-* <s>URL's based on slug from title (but be editable)</s>
-* <s>Easily add images</s> to S3 or Cloud Files
-* <s>Allow for comments (or at least a comment plugin)</s>
-* <s>Ability to create categories/tags</s>
-* <s>Widget to embed recent posts on another page</s>
-* <s>Customize how posts are displayed on main blog home</s>
-* <s>Use Google+ attributions for SEO</s>
-* <s>SEO best practices (OpenGraph, Twitter Cards, share buttons)</s>
-* <s>Pagination</s>
-* <s>Multiple roles (admin/author)</s>
-* <s>RSS</s>
+* Customizable root path, including blog posts at website root
+* Customziable admin root path
 
 ### Quick Start
 
