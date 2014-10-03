@@ -183,21 +183,15 @@ Template.blogAdminEdit.events
 
   # Toggle between VISUAL/HTML modes
   'click .visual-toggle': (e, tpl) ->
-    $editable = tpl.$('.editable')
-    $html = tpl.$('.html-editor')
-
-    if $editable.is(':visible')
+    if tpl.$('.editable').is(':visible')
       return
 
-    post = getPost()
-    post.body = $html.val()?.trim()
     highlightSyntax tpl
     setEditMode tpl, 'visual'
 
   'click .html-toggle': (e, tpl) ->
     $editable = tpl.$('.editable')
     $html = tpl.$('.html-editor')
-
     if $html.is(':visible')
       return
 
@@ -206,12 +200,12 @@ Template.blogAdminEdit.events
     setEditMode tpl, 'html'
     $html.height($editable.height())
 
-  # Automatically change height on editor areas
+  # Copy HTML content to visual editor and autosize height
   'keyup .html-editor': (e, tpl) ->
     $editable = tpl.$('.editable')
     $html = tpl.$('.html-editor')
 
-    $editable.html($html.val())
+    $editable.html($html.val()?.trim())
     $html.height($editable.height())
 
   # Autosave
