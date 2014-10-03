@@ -25,6 +25,7 @@ vote with your [Github issues](https://github.com/Differential/meteor-blog/issue
 * Widget to embed recent posts on another (e.g. home) page
 * Customizable templates
 * SEO best practices (OpenGraph, Twitter Cards, share buttons, Google+ author attribution)
+* Autosave
 * Pagination
 * Multiple roles (admin/author)
 * RSS feed
