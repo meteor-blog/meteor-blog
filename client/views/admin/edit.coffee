@@ -156,10 +156,12 @@ Template.blogAdminEdit.rendered = ->
     Meteor.subscribe 'singlePostById', Session.get('postId')
 
   # Load initial post body, if any
-  post = getPost()
-  if post?.body
-    @$('.editable').html post.body
-    @$('.html-editor').html post.body
+  Meteor.setTimeout =>
+    post = getPost()
+    if post?.body
+      @$('.editable').html post.body
+      @$('.html-editor').html post.body
+  , 0
 
   # Tags
   @$('input[data-role="tagsinput"]').tagsinput
