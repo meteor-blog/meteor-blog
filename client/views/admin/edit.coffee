@@ -232,7 +232,7 @@ Template.blogAdminEdit.events
         IronLocation.set path, { replaceState: true, skipReactive: true }
 
       Notifications.success '', 'Saved'
-  , 5000
+  , 8000
 
   'blur [name=title]': (e, tpl) ->
     slug = tpl.$('[name=slug]')
