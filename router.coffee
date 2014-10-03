@@ -107,7 +107,7 @@ Router.map ->
       @render() if @ready()
 
     waitOn: -> [
-      subs.subscribe 'singlePostBySlug', @params.slug
+      Meteor.subscribe 'singlePostBySlug', @params.slug
       subs.subscribe 'commentsBySlug', @params.slug
       subs.subscribe 'authors'
     ]
