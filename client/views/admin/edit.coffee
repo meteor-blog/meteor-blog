@@ -4,7 +4,7 @@
 # Return current post if we are editing one, or empty object if this is a new
 # post that has not been saved yet.
 getPost = ->
-  (Post.first Session.get('postId')) or {}
+  (Post.first()) or {}
 
 # Find tags using typeahead
 substringMatcher = (strs) ->
@@ -127,23 +127,19 @@ save = (tpl, cb) ->
     updatedAt: new Date()
 
   if getPost().id
-    # Next line necessary for https://github.com/meteor/meteor/issues/1964
-    $editable.html ''
     post = getPost().update attrs
     if post.errors
       return cb(null, new Error _(post.errors[0]).values()[0])
-    cb(null)
+    cb null
 
   else
     Meteor.call 'doesBlogExist', slug, (err, exists) ->
       if not exists
         attrs.userId = Meteor.userId()
-        # Next line necessary for https://github.com/meteor/meteor/issues/1964
-        $editable.html ''
         post = Post.create attrs
         if post.errors
           return cb(null, new Error _(post.errors[0]).values()[0])
-        cb(null)
+        cb post.id
       else
         return cb(null, new Error 'Blog with this slug already exists')
 
@@ -152,6 +148,19 @@ save = (tpl, cb) ->
 
 
 Template.blogAdminEdit.rendered = ->
+
+  # Can't use reactive template vars for contenteditable :-(
+  # https://github.com/meteor/meteor/issues/1964
+
+  @autorun ->
+    Meteor.subscribe 'singlePostById', Session.get('postId')
+
+  # Load initial post body, if any
+  post = getPost()
+  if post?.body
+    @$('.editable').html post.body
+    @$('.html-editor').html post.body
+
   # Tags
   @$('input[data-role="tagsinput"]').tagsinput
     confirmKeys: [13, 44, 9]
@@ -210,9 +219,16 @@ Template.blogAdminEdit.events
 
   # Autosave
   'input .editable, keyup .html-editor': _.debounce (e, tpl) ->
-    save tpl, (res, err) ->
+    save tpl, (id, err) ->
       if err
         return Notifications.error '', err.message
+
+      if id
+        # If new blog post, subscribe to the new post and update URL
+        Session.set 'postId', id
+        path = Router.path 'blogAdminEdit', id: id
+        IronLocation.set path, { replaceState: true, skipReactive: true }
+
       Notifications.success '', 'Saved'
   , 5000
 
@@ -225,7 +241,7 @@ Template.blogAdminEdit.events
 
   'submit form': (e, tpl) ->
     e.preventDefault()
-    save tpl, (res, err) ->
+    save tpl, (id, err) ->
       if err
         return Notifications.error '', err.message
       Router.go 'blogAdmin'
