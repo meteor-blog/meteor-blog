@@ -35,6 +35,8 @@ MediumEditor.prototype.scrubbed = ->
 makeEditor = (tpl) ->
   editor = new MediumEditor '.editable',
     placeholder: 'Start typing...'
+    firstHeader: 'h1'
+    secondHeader: 'h2'
     buttonLabels: 'fontawesome'
     buttons:
       ['bold', 'italic', 'underline', 'anchor', 'pre', 'header1', 'header2', 'orderedlist', 'unorderedlist', 'quote', 'image']
