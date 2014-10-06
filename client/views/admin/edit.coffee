@@ -149,19 +149,22 @@ save = (tpl, cb) ->
 
 Template.blogAdminEdit.rendered = ->
 
-  # Can't use reactive template vars for contenteditable :-(
-  # https://github.com/meteor/meteor/issues/1964
-
-  @autorun ->
-    Meteor.subscribe 'singlePostById', Session.get('postId')
-
-  # Load initial post body, if any
-  Meteor.setTimeout =>
-    post = getPost()
-    if post?.body
-      @$('.editable').html post.body
-      @$('.html-editor').html post.body
-  , 0
+  # We can't use reactive template vars for contenteditable :-(
+  # (https://github.com/meteor/meteor/issues/1964). So we put the single-post
+  # subscription in an autorun. If we're loading an existing post, once its
+  # ready, we populate the contents via jQquery. The catch is, we only want to
+  # run it once because when we set the contents, we lose our cursor position
+  # (re: autosave).
+  runOnce = false
+  @autorun =>
+    sub = Meteor.subscribe 'singlePostById', Session.get('postId')
+    # Load post body initially, if any
+    if sub.ready() and not runOnce
+      runOnce = true
+      post = getPost()
+      if post?.body
+        @$('.editable').html post.body
+        @$('.html-editor').html post.body
 
   # Tags
   @$('input[data-role="tagsinput"]').tagsinput
