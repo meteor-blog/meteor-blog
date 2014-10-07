@@ -10,6 +10,8 @@ Package.onUse(function(api) {
 
   var both = ['client', 'server'];
 
+  api.addFiles( 
+     )
   /**
    * Packages for client
    */
@@ -19,7 +21,6 @@ Package.onUse(function(api) {
     'templating',
     'ui',
     'less',
-    'underscore',
     'aslagle:reactive-table@0.4.0',
     'joshowens:shareit@0.1.0',
     'gfk:notifications@1.0.9'
@@ -95,6 +96,7 @@ Package.onUse(function(api) {
    */
 
   api.use([
+    'underscore',
     'coffeescript',
     'deps',
     'iron:router@0.9.1',
@@ -117,7 +119,8 @@ Package.onUse(function(api) {
     'collections/post.coffee',
     'collections/comment.coffee',
     'collections/tag.coffee',
-    'collections/files.coffee'
+    'collections/files.coffee',
+    'lib/config.coffee'
   ], both);
 });
 
