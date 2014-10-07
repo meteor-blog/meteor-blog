@@ -19,82 +19,12 @@ substringMatcher = (strs) ->
 
     cb matches
 
-# Pretty up HTML for HTML mode
-prettyHtml = (html) ->
-  html_beautify(html,
-    preserve_newlines: false
-    indent_size: 2
-    wrap_line_length: 0
-  )
-
-# Help return medium editor's contents
-MediumEditor.prototype.scrubbed = ->
-  @serialize()['element-0'].value
-
-# Set up the medium editor with image upload
-makeEditor = (tpl) ->
-  editor = new MediumEditor '.editable',
-    placeholder: 'Start typing...'
-    firstHeader: 'h1'
-    secondHeader: 'h2'
-    buttonLabels: 'fontawesome'
-    buttons:
-      ['bold', 'italic', 'underline', 'anchor', 'pre', 'header1', 'header2', 'orderedlist', 'unorderedlist', 'quote', 'image']
-
-  $(tpl.find '.editable').mediumInsert
-    editor: editor
-    enabled: true
-    addons:
-      images:
-        uploadFile: ($placeholder, file, that) ->
-          id = Files.insert
-            _id: Random.id()
-            contentType: 'image/jpeg'
-
-          $.ajax
-            type: "post"
-            url: "/fs/#{id}"
-            xhr: ->
-              xhr = new XMLHttpRequest()
-              xhr.upload.onprogress = that.updateProgressBar
-              xhr
-
-            cache: false
-            contentType: false
-            complete: (jqxhr) ->
-              that.uploadCompleted { responseText: "/fs/#{id}" }, $placeholder
-              return
-
-            processData: false
-            data: that.options.formatData(file)
-
-      #embeds: {}
-
-  editor
-
 # Toggle between visual and HTML mode
 setEditMode = (tpl, mode) ->
   tpl.$('.editable').toggle()
   tpl.$('.html-editor').toggle()
   tpl.$('.edit-mode a').removeClass 'selected'
   tpl.$(".#{mode}-toggle").addClass 'selected'
-
-# Highlight code blocks
-highlightSyntax = (tpl) ->
-  if Blog.settings.syntaxHighlighting
-    hljs.configure userBR: true
-
-    br2nl = (i, html) ->
-      html
-        # medium-editor leaves <br>'s in <pre> tags, which screws up
-        # highlight.js. Replace them with actual newlines.
-        .replace(/<br>/g, "\n")
-        # Strip out highlight.js tags so we don't create them multiple times
-        .replace(/<[^>]+>/g, '')
-
-    # Remove 'hljs' class so we don't create it multiple times
-    tpl.$('pre').removeClass('hljs').html(br2nl).each (i, block) ->
-      hljs.highlightBlock(block)
 
 # Save
 save = (tpl, cb) ->
@@ -108,11 +38,10 @@ save = (tpl, cb) ->
     i++
 
   # Highlight code blocks
-  highlightSyntax tpl
+  tpl.editor.highlightSyntax()
 
   if $editable.is(':visible')
-    editor = makeEditor tpl
-    body = editor.scrubbed()
+    body = tpl.editor.contents()
   else
     body = $('.html-editor', $form).val().trim()
 
@@ -157,12 +86,12 @@ Template.blogAdminEdit.rendered = ->
   # ready, we populate the contents via jQquery. The catch is, we only want to
   # run it once because when we set the contents, we lose our cursor position
   # (re: autosave).
-  runOnce = false
+  ranOnce = false
   @autorun =>
     sub = Meteor.subscribe 'singlePostById', Session.get('postId')
     # Load post body initially, if any
-    if sub.ready() and not runOnce
-      runOnce = true
+    if sub.ready() and not ranOnce
+      ranOnce = true
       post = getPost()
       if post?.body
         @$('.editable').html post.body
@@ -185,24 +114,19 @@ Template.blogAdminEdit.rendered = ->
   , $('input[data-role="tagsinput"]'))
 
   # Medium editor
-  makeEditor @
+  @editor = BlogEditor.make @
 
 Template.blogAdminEdit.helpers
   post: ->
     getPost()
 
 Template.blogAdminEdit.events
-  # Don't let the medium insert plugin submit the form
-  'click .mediumInsert-action': (e, tpl) ->
-    e.preventDefault()
-    e.stopPropagation()
-
   # Toggle between VISUAL/HTML modes
   'click .visual-toggle': (e, tpl) ->
     if tpl.$('.editable').is(':visible')
       return
 
-    highlightSyntax tpl
+    tpl.editor.highlightSyntax()
     setEditMode tpl, 'visual'
 
   'click .html-toggle': (e, tpl) ->
@@ -211,8 +135,7 @@ Template.blogAdminEdit.events
     if $html.is(':visible')
       return
 
-    editor = makeEditor tpl
-    $html.val prettyHtml(editor.scrubbed())
+    $html.val tpl.editor.pretty()
     setEditMode tpl, 'html'
     $html.height($editable.height())
 
