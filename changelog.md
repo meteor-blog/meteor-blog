@@ -2,11 +2,16 @@
 layout: default
 username: Differential
 repo: meteor-blog
-version: 0.5.9
+version: 0.5.10
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
+
+### v0.5.10
+
+* Fix lots of issues with medium editor and code blocks
+* Fix bug where post body was showing up blank or wrong in editor
 
 ### v0.5.9
 

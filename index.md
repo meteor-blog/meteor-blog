@@ -2,7 +2,7 @@
 layout: default
 username: Differential
 repo: meteor-blog
-version: 0.5.9
+version: 0.5.10
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
@@ -27,6 +27,7 @@ vote with your [Github issues](https://github.com/Differential/meteor-blog/issue
 * SEO best practices (OpenGraph, Twitter Cards, share buttons, Google+ author attribution)
 * Autosave
 * Pagination
+* Code syntax highlighting
 * Multiple roles (admin/author)
 * RSS feed
 
