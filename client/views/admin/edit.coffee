@@ -98,20 +98,18 @@ Template.blogAdminEdit.rendered = ->
         @$('.html-editor').html post.body
 
   # Tags
-  @$('input[data-role="tagsinput"]').tagsinput
-    confirmKeys: [13, 44, 9]
-
-  @$('input[data-role="tagsinput"]').tagsinput('input').typeahead(
+  $tags = @$('[data-role=tagsinput]')
+  $tags.tagsinput confirmKeys: [13, 44, 9]
+  $tags.tagsinput('input').typeahead(
     highlight: true,
     hint: false
   ,
     name: 'tags'
     displayKey: 'val'
     source: substringMatcher Tag.first().tags
-  ).bind('typeahead:selected', $.proxy (obj, datum) ->
-    this.tagsinput('add', datum.val)
-    this.tagsinput('input').typeahead('val', '')
-  , $('input[data-role="tagsinput"]'))
+  ).bind 'typeahead:selected', (obj, datum) ->
+    $tags.tagsinput 'add', datum.val
+    $tags.tagsinput('input').typeahead 'val', ''
 
   # Medium editor
   @editor = BlogEditor.make @
