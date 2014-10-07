@@ -94,7 +94,7 @@ class @BlogEditor extends MediumEditor
   # Disable "hard" returns if we are in a code block
   bindParagraphCreation: (index) ->
     @elements[index].addEventListener 'keyup', (e) =>
-      if @inPreformatted() and e.which is 13
+      if e.which is 13 and @inPreformatted()
         e.preventDefault()
         @options.disableReturn = true
       else
@@ -105,7 +105,7 @@ class @BlogEditor extends MediumEditor
   # Insert "soft" returns always if we are in a code block
   bindReturn: (index) ->
     @elements[index].addEventListener 'keypress', (e) =>
-      if @inPreformatted() and e.which is 13
+      if e.which is 13 and @inPreformatted()
         e.preventDefault()
         document.execCommand 'insertHTML', false, "\n"
 
