@@ -101,7 +101,7 @@ Package.onUse(function(api) {
     'accounts-base',
     'mrt:minimongoid@0.8.8',
     'mrt:moment@2.8.1',
-    'vsivsi:file-collection@0.3.2',
+    'vsivsi:file-collection@0.3.3',
     'alanning:roles@1.2.12',
     'meteorhacks:fast-render@1.1.2',
     'meteorhacks:subs-manager@1.1.0'
