@@ -5,7 +5,7 @@ class @BlogEditor extends MediumEditor
   @make: (tpl) ->
     # Set up the medium editor with image upload
     editor = new BlogEditor '.editable',
-      placeholder: 'Start typing...'
+      placeholder: ''
       firstHeader: 'h1'
       secondHeader: 'h2'
       buttonLabels: 'fontawesome'
