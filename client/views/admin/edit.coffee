@@ -30,6 +30,7 @@ setEditMode = (tpl, mode) ->
 save = (tpl, cb) ->
   $form = tpl.$('form')
   $editable = $('.editable', $form)
+  editor = BlogEditor.make tpl
 
   # Make paragraphs commentable
   i = $editable.find('p[data-section-id]').length + 1
@@ -38,10 +39,10 @@ save = (tpl, cb) ->
     i++
 
   # Highlight code blocks
-  tpl.editor.highlightSyntax()
+  editor.highlightSyntax()
 
   if $editable.is(':visible')
-    body = tpl.editor.contents()
+    body = editor.contents()
   else
     body = $('.html-editor', $form).val().trim()
 
@@ -112,7 +113,7 @@ Template.blogAdminEdit.rendered = ->
     $tags.tagsinput('input').typeahead 'val', ''
 
   # Medium editor
-  @editor = BlogEditor.make @
+  BlogEditor.make @
 
 Template.blogAdminEdit.helpers
   post: ->
@@ -124,7 +125,7 @@ Template.blogAdminEdit.events
     if tpl.$('.editable').is(':visible')
       return
 
-    tpl.editor.highlightSyntax()
+    BlogEditor.make(tpl).highlightSyntax()
     setEditMode tpl, 'visual'
 
   'click .html-toggle': (e, tpl) ->
@@ -133,7 +134,7 @@ Template.blogAdminEdit.events
     if $html.is(':visible')
       return
 
-    $html.val tpl.editor.pretty()
+    $html.val BlogEditor.make(tpl).pretty()
     setEditMode tpl, 'html'
     $html.height($editable.height())
 
