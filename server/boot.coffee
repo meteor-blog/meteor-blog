@@ -13,9 +13,20 @@ Blog =
       description: ''
 
   config: (appConfig) ->
-    @settings = _.extend(@settings, appConfig)
+    for func in @configs
+      func( appConfig )
 
-@Blog = Blog
+  configs: [ (appConfig) ->
+      @settings = _.extend(@settings, appConfig)
+  ]
+
+  extend: (extended) ->
+    extended.settings = _.extend(extended.settings, @settings)
+    extended.settings.rss = _.extend(extended.settings.rss, @settings.rss)
+    extended.configs = extended.configs.concat( @configs )
+    return extended
+
+@Blog = if @Blog then @Blog.extend( Blog ) else Blog
 
 ################################################################################
 # Bootstrap Code
