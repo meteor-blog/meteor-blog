@@ -1,6 +1,6 @@
 Package.describe({
   summary: "A package that provides a blog at /blog",
-  version: "0.5.10",
+  version: "0.6.0",
   name: "ryw:blog",
   git: "https://github.com/Differential/meteor-blog.git"
 });
@@ -20,9 +20,9 @@ Package.onUse(function(api) {
     'ui',
     'less',
     'underscore',
-    'aslagle:reactive-table@0.4.0',
-    'joshowens:shareit@0.1.0',
-    'gfk:notifications@1.0.9'
+    'aslagle:reactive-table@0.5.0',
+    'joshowens:shareit@0.2.0',
+    'gfk:notifications@1.0.11'
   ], 'client');
 
   /**
@@ -46,8 +46,8 @@ Package.onUse(function(api) {
     'client/compatibility/beautify-html.js',
     'client/compatibility/highlight.pack.js',
     'client/views/404.html',
-    'client/views/dynamic.html',
-    'client/views/dynamic.coffee',
+    'client/views/custom.html',
+    'client/views/custom.coffee',
     'client/views/admin/admin.less',
     'client/views/admin/admin.html',
     'client/views/admin/admin.coffee',
@@ -97,14 +97,14 @@ Package.onUse(function(api) {
   api.use([
     'coffeescript',
     'deps',
-    'iron:router@0.9.1',
+    'iron:router@1.0.0',
     'accounts-base',
-    'mrt:minimongoid@0.8.8',
+    'kaptron:minimongoid@0.9.1',
     'mrt:moment@2.8.1',
     'vsivsi:file-collection@0.3.3',
-    'alanning:roles@1.2.12',
-    'meteorhacks:fast-render@1.1.2',
-    'meteorhacks:subs-manager@1.1.0'
+    'alanning:roles@1.2.13',
+    'meteorhacks:fast-render@1.2.1',
+    'meteorhacks:subs-manager@1.2.0'
   ], both);
 
   /**
