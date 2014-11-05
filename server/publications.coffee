@@ -14,7 +14,9 @@ Meteor.publish 'singlePostBySlug', (slug) ->
   Post.find slug: slug
 
 Meteor.publish 'posts', (limit) ->
-  check limit, Match.Optional(Number)
+  check limit, Match.OneOf(Number, null)
+
+  if limit is null then limit = 0
 
   Post.find { published: true },
     fields: body: 0
