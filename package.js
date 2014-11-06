@@ -10,9 +10,7 @@ Package.onUse(function(api) {
 
   var both = ['client', 'server'];
 
-  /**
-   * Packages for client
-   */
+  // PACKAGES FOR CLIENT
 
   api.use([
     'session',
@@ -20,14 +18,12 @@ Package.onUse(function(api) {
     'ui',
     'less',
     'underscore',
-    'aslagle:reactive-table@0.5.0',
+    'aslagle:reactive-table@0.5.5',
     'joshowens:shareit@0.2.0',
     'gfk:notifications@1.0.11'
   ], 'client');
 
-  /**
-   * Files for client
-   */
+  // FILES FOR CLIENT
 
   api.addFiles([
     'client/stylesheets/lib/side-comments/side-comments.css',
@@ -62,9 +58,7 @@ Package.onUse(function(api) {
     'client/views/widget/latest.coffee'
   ], 'client');
 
-  /**
-   * Static assets for client
-   */
+  // STATIC ASSETS FOR CLIENT
 
   api.addFiles([
     'public/default-user.png',
@@ -73,9 +67,7 @@ Package.onUse(function(api) {
     'client/stylesheets/images/resize-smaller.png'
   ], 'client', { isAsset: true });
 
-  /**
-   * Files for server
-   */
+  // FILES FOR SERVER
 
   api.addFiles([
     'collections/config.coffee',
@@ -84,20 +76,17 @@ Package.onUse(function(api) {
     'server/publications.coffee'
   ], 'server');
 
-  /**
-   * Packages for server
-   */
+  // PACKAGES FOR SERVER
 
   Npm.depends({ rss: '0.0.4' });
 
-  /**
-   * Packages for server and client
-   */
+  // PACKAGES FOR SERVER AND CLIENT
 
   api.use([
     'coffeescript',
     'deps',
     'iron:router@1.0.0',
+    'iron:location@1.0.0',
     'accounts-base',
     'kaptron:minimongoid@0.9.1',
     'mrt:moment@2.8.1',
@@ -107,17 +96,15 @@ Package.onUse(function(api) {
     'meteorhacks:subs-manager@1.2.0'
   ], both);
 
-  /**
-   * Files for server and client
-   */
+  // FILES FOR SERVER AND CLIENT
 
   api.addFiles([
-    'router.coffee',
     'collections/author.coffee',
     'collections/post.coffee',
     'collections/comment.coffee',
     'collections/tag.coffee',
-    'collections/files.coffee'
+    'collections/files.coffee',
+    'router.coffee'
   ], both);
 });
 

@@ -1,6 +1,6 @@
 Template.custom.helpers
   template: ->
-    name = Router.current().route.name
+    name = Router.current().route.getName()
 
     # Tagged view uses 'blogIndex' template
     if name is 'blogTagged'
