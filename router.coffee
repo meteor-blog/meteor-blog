@@ -26,6 +26,7 @@ Router.route '/blog',
   onRun: ->
     if not Session.get('postLimit') and Blog.settings.pageSize
       Session.set 'postLimit', Blog.settings.pageSize
+    @next()
   waitOn: ->
     if (typeof Session isnt 'undefined')
       [
@@ -61,6 +62,7 @@ Router.route '/blog/:slug',
   notFoundTemplate: 'blogNotFound'
   onRun: ->
     Session.set('slug', @params.slug)
+    @next()
   onBeforeAction: ->
     if Blog.settings.blogNotFoundTemplate
       @notFoundTemplate = Blog.settings.blogNotFoundTemplate
@@ -135,6 +137,7 @@ Router.route '/admin/blog/edit/:id',
     @render() if @ready()
   onRun: ->
     Session.set 'postId', @params.id
+    @next()
   waitOn: -> [
     Meteor.subscribe 'singlePostById', @params.id
     Meteor.subscribe 'authors'
