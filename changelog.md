@@ -2,11 +2,18 @@
 layout: default
 username: Differential
 repo: meteor-blog
-version: 0.5.10
+version: 0.6.0
 desc: Gives you an basic, out-of-the-box blog at `/blog`
 
 ---
 # Changelog
+
+### v0.6.0
+
+_NOTE: `0.6.0` is probably only compatible with Meteor `1.0` and higher._
+
+* Make compatible with Meteor `1.0`
+* Fix bugs [#109](https://github.com/Differential/meteor-blog/issues/109), [#120](https://github.com/Differential/meteor-blog/issues/120), [#121](https://github.com/Differential/meteor-blog/issues/121), [#119](https://github.com/Differential/meteor-blog/issues/119).
 
 ### v0.5.10
 
