@@ -32,7 +32,7 @@ Template.blogAdmin.events
 
   'click .for-new-blog': (e, tpl) ->
     e.preventDefault()
-
+    # TODO random.id works only 99% of the time.
     Router.go 'blogAdminEdit', id: Random.id()
 
   'change .for-filtering': (e) ->
