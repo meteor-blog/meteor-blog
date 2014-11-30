@@ -268,8 +268,9 @@ description in the feed, configure RSS:
 {% highlight coffeescript %}
 if Meteor.isServer
   Blog.config
-    title: 'My blog title'
-    description: 'My blog description'
+    rss:
+      title: 'My blog title'
+      description: 'My blog description'
 {% endhighlight %}
 
 Add a head tag somewhere in your `.html` files so your RSS feed can be discovered:
