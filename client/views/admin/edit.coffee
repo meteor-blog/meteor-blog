@@ -3,8 +3,8 @@
 
 # Return current post if we are editing one, or empty object if this is a new
 # post that has not been saved yet.
-getPost = ->
-  (Post.first()) or {}
+getPost = (id) ->
+  (Post.first( { _id : id } ) ) or {}
 
 # Find tags using typeahead
 substringMatcher = (strs) ->
@@ -58,8 +58,8 @@ save = (tpl, cb) ->
     body: body
     updatedAt: new Date()
 
-  if getPost().id
-    post = getPost().update attrs
+  if getPost( Session.get('postId') ).id
+    post = getPost( Session.get('postId') ).update attrs
     if post.errors
       return cb(null, new Error _(post.errors[0]).values()[0])
     cb null
@@ -93,7 +93,7 @@ Template.blogAdminEdit.rendered = ->
     # Load post body initially, if any
     if sub.ready() and not ranOnce
       ranOnce = true
-      post = getPost()
+      post = getPost( Session.get('postId') )
       if post?.body
         @$('.editable').html post.body
         @$('.html-editor').html post.body
@@ -117,7 +117,7 @@ Template.blogAdminEdit.rendered = ->
 
 Template.blogAdminEdit.helpers
   post: ->
-    getPost()
+    getPost( Session.get('postId') )
 
 Template.blogAdminEdit.events
   # Toggle between VISUAL/HTML modes
