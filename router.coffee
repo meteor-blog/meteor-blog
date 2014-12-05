@@ -4,10 +4,13 @@ subs = new SubsManager
 
 if Meteor.isClient
   Router.onBeforeAction ->
-    if @lookupOption('data') is undefined
-      return @next()
-
+    @notFoundTemplate =
+      if Blog.settings.blogNotFoundTemplate
+        Blog.settings.blogNotFoundTemplate
+      else
+        'blogNotFound'
     Iron.Router.hooks.dataNotFound.call @
+  , only: ['blogShow']
 
 # RSS
 
@@ -59,14 +62,10 @@ Router.route '/blog/tag/:tag',
 Router.route '/blog/:slug',
   name: 'blogShow'
   template: 'custom'
-  notFoundTemplate: 'blogNotFound'
   onRun: ->
     Session.set('slug', @params.slug)
     @next()
   onBeforeAction: ->
-    if Blog.settings.blogNotFoundTemplate
-      @notFoundTemplate = Blog.settings.blogNotFoundTemplate
-
     if Blog.settings.blogShowTemplate
       tpl = Blog.settings.blogShowTemplate
 
@@ -113,8 +112,6 @@ Router.route '/admin/blog',
   waitOn: ->
     [ Meteor.subscribe 'postForAdmin'
       Meteor.subscribe 'authors' ]
-  data: ->
-    true
 
 # NEW/EDIT BLOG
 
@@ -143,5 +140,3 @@ Router.route '/admin/blog/edit/:id',
     Meteor.subscribe 'authors'
     Meteor.subscribe 'postTags'
   ]
-  data: ->
-    true
