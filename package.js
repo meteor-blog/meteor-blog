@@ -63,6 +63,8 @@ Package.onUse(function(api) {
   api.addFiles([
     'public/default-user.png',
     'client/stylesheets/images/remove.png',
+    'client/stylesheets/images/link.png',
+    'client/stylesheets/images/unlink.png',
     'client/stylesheets/images/resize-bigger.png',
     'client/stylesheets/images/resize-smaller.png'
   ], 'client', { isAsset: true });

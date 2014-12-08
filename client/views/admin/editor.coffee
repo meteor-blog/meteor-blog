@@ -55,7 +55,7 @@ class @BlogEditor extends MediumEditor
                 processData: false
                 data: that.options.formatData(file)
 
-        embeds: {}
+        #embeds: {}
 
     editor
 
