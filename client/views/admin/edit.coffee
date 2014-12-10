@@ -50,11 +50,13 @@ save = (tpl, cb) ->
     return cb(null, new Error 'Blog body is required')
 
   slug = $('[name=slug]', $form).val()
+  metaDesc = $('[name=metaDesc]', $form).val()
 
   attrs =
     title: $('[name=title]', $form).val()
     tags: $('[name=tags]', $form).val()
     slug: slug
+    metaDesc: metaDesc
     body: body
     updatedAt: new Date()
 
