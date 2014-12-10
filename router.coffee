@@ -43,7 +43,7 @@ Router.route '/blog',
   onAfterAction: ->
     if not Meteor.isClient
       return
-    if SEO
+    if SEO and @ready()
       title = 'Blog'
       if Blog.settings.title
         title += " | #{Blog.settings.title}"
@@ -76,7 +76,7 @@ Router.route '/blog/tag/:tag',
   onAfterAction: ->
     if not Meteor.isClient
       return
-    if SEO
+    if SEO and @ready()
       tag = @data().tag
       title = "Blog: tagged \"#{tag}\""
       if Blog.settings.title
@@ -128,7 +128,7 @@ Router.route '/blog/:slug',
   onAfterAction: ->
     if not Meteor.isClient
       return
-    if SEO
+    if SEO and @ready()
       title = @data().title
       if Blog.settings.title
         title += " | #{Blog.settings.title}"
