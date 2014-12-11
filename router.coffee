@@ -40,23 +40,6 @@ Router.route '/blog',
   data: ->
     posts: Post.where {},
       sort: publishedAt: -1
-  onAfterAction: ->
-    if not Meteor.isClient
-      return
-    if SEO and @ready()
-      title = 'Blog'
-      if Blog.settings.title
-        title += " | #{Blog.settings.title}"
-      description = if Blog.settings.description then Blog.settings.description else ''
-      SEO.set
-        title: title
-        meta:
-          description: description
-        og:
-          title: title
-          description: description
-        , false
-      return
 
 # BLOG TAG
 
@@ -69,29 +52,10 @@ Router.route '/blog/tag/:tag',
   ]
   fastRender: true
   data: ->
-    tag: @params.tag
     posts: Post.where
       tags: @params.tag
     ,
       sort: publishedAt: -1
-  onAfterAction: ->
-    if not Meteor.isClient
-      return
-    if SEO and @ready()
-      tag = @data().tag
-      title = "Blog: tagged \"#{tag}\""
-      if Blog.settings.title
-        title += " | #{Blog.settings.title}"
-      description = if Blog.settings.description then Blog.settings.description else ''
-      SEO.set
-        title: title
-        meta:
-          description: description
-        og:
-          title: title
-          description: description
-        , false
-      return
 
 # SHOW BLOG
 
@@ -127,24 +91,6 @@ Router.route '/blog/:slug',
   ]
   data: ->
     Post.first slug: @params.slug
-  onAfterAction: ->
-    if not Meteor.isClient
-      return
-    if SEO and @ready()
-      title = @data().title
-      if Blog.settings.title
-        title += " | #{Blog.settings.title}"
-      description = if @data().metaDesc then @data().metaDesc else @data().excerpt
-      slug = @data().slug
-      SEO.set
-        title: title
-        meta:
-          description: description
-        og:
-          title: title
-          description: description
-        , false
-      return
 
 # BLOG ADMIN INDEX
 
