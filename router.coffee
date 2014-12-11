@@ -55,6 +55,7 @@ Router.route '/blog',
         og:
           title: title
           description: description
+        , false
       return
 
 # BLOG TAG
@@ -89,6 +90,7 @@ Router.route '/blog/tag/:tag',
         og:
           title: title
           description: description
+        , false
       return
 
 # SHOW BLOG
@@ -141,6 +143,7 @@ Router.route '/blog/:slug',
         og:
           title: title
           description: description
+        , false
       return
 
 # BLOG ADMIN INDEX
