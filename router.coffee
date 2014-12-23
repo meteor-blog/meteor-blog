@@ -132,7 +132,7 @@ Router.route '/admin/blog/edit/:id',
     @next()
   action: ->
     @render() if @ready()
-  onRun: ->
+  onBeforeAction: ->
     Session.set 'postId', @params.id
     @next()
   waitOn: -> [
