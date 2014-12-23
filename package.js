@@ -93,7 +93,10 @@ Package.onUse(function(api) {
     'vsivsi:file-collection@0.3.3',
     'alanning:roles@1.2.13',
     'meteorhacks:fast-render@2.0.2',
-    'meteorhacks:subs-manager@1.2.0'
+    'meteorhacks:subs-manager@1.2.0',
+    'cfs:standard-packages',
+    'cfs:filesystem',
+    'cfs:s3'
   ], both);
 
   // FILES FOR SERVER AND CLIENT
