@@ -45,12 +45,6 @@ Blog =
 
 
 Meteor.startup ->
-  # Load Font Awesome
-  $('<link>',
-    href: '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css'
-    rel: 'stylesheet'
-  ).appendTo 'head'
-
   # Listen for any 'Load More' clicks
   $('body').on 'click', '.blog-load-more', (e) ->
     e.preventDefault()
