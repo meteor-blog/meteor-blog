@@ -42,7 +42,7 @@ function requireClass(path, parent, orig) {
   return module.exports;
 }
 
-require = requireClass
+window.require = requireClass
 
 /**
  * Registered modules.
