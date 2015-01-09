@@ -12,7 +12,12 @@
 
 <template name="blogShowBody">
   <article class="post">
-    <h2>{{title}}</h2>
+    <h2>
+      {{title}}
+      {{#if isAdmin}}
+         <small><a href="#" id="edit-post">edit</a></small>
+      {{/if}}
+    </h2>
     <div class="post-meta">
       By {{authorName}} on {{blogFormatDate publishedAt}}
       {{> blogTags }}

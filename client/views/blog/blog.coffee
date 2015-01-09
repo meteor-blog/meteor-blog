@@ -6,6 +6,10 @@ Template.blogIndex.rendered = ->
 
 Template.blogShowBody.rendered = ->
 
+  Meteor.call 'isBlogAuthorized', @id, (err, authorized) =>
+      if authorized
+        Session.set 'canEditPost', authorized
+
   #
   # SIDECOMMENTS.JS
   #
@@ -91,6 +95,15 @@ Template.blogShowBody.rendered = ->
   if not @data.published
     $('<meta>', { name: 'robots', content: 'noindex,nofollow' }).appendTo 'head'
 
+Template.blogShowBody.events
+  'click a#edit-post': (event, template) ->
+    event.preventDefault()
+    postId = Post.first({slug: Router.current().params.slug})._id
+    Router.go 'blogAdminEdit', {id: postId}
+
+Template.blogShowBody.helpers
+  isAdmin: () ->
+    Session.get "canEditPost"
 
 Template.disqus.rendered = ->
 
