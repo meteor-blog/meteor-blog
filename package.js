@@ -1,6 +1,6 @@
 Package.describe({
   summary: "A package that provides a blog at /blog",
-  version: "0.6.1",
+  version: "0.6.2",
   name: "ryw:blog",
   git: "https://github.com/Differential/meteor-blog.git"
 });
@@ -93,7 +93,8 @@ Package.onUse(function(api) {
     'vsivsi:file-collection@0.3.3',
     'alanning:roles@1.2.13',
     'meteorhacks:fast-render@2.0.2',
-    'meteorhacks:subs-manager@1.2.0'
+    'meteorhacks:subs-manager@1.2.0',
+    'fortawesome:fontawesome'
   ], both);
 
   // FILES FOR SERVER AND CLIENT
