@@ -117,5 +117,7 @@ Package.onTest(function (api) {
   api.use('test-helpers', ['client', 'server']);
   api.use('coffeescript', ['client', 'server']);
 
+  Npm.depends({ rss: '0.0.4' });
+
   api.addFiles('test/server/rss.coffee', 'server');
 });
