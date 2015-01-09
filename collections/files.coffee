@@ -34,7 +34,7 @@ if Meteor.isServer
 ############################################################################/
 ##        Amazon S3 Filestore                                              /
 ##########################################################################/
-useS3 = Meteor.settings.public.blog.useS3
+useS3 = Meteor.settings?.public?.blog?.useS3
 
 if Meteor.isClient and useS3
   @s3ImportStore = new FS.Store.S3 "s3Imports"
@@ -53,7 +53,7 @@ if Meteor.isClient and useS3
   Meteor.subscribe "s3Imports"
 
 if Meteor.isServer and useS3
-  s3Config = Meteor.settings.private.blog.s3Config
+  s3Config = Meteor.settings?.private?.blog?.s3Config
   @s3ImportStore = new FS.Store.S3 "s3Imports",
     accessKeyId:  s3Config.accessKeyId
     secretAccessKey:  s3Config.secretAccessKey
