@@ -1415,3 +1415,56 @@
   });
 
 }(jQuery));
+
+
+
+// Extend medium-insert to work with meteor-blog
+(function($) {
+/**
+ *  Namespace: $.fn.mediumInsert
+ */
+    var extensionMethods = {
+        /*
+         * skip setEvents when events have already been bound
+         */
+        init: function ($el) {
+          this.$el = $el;
+          this.isFirefox = navigator.userAgent.match(/firefox/i);
+          this.setPlaceholders();
+          if ( !this.$el.data('events-bound') ) {
+            this.setEvents();
+            this.$el.data('events-bound', true);
+          }
+        }
+    };
+
+    $.extend(true, $[ "fn" ][ "mediumInsert" ][ "insert" ], extensionMethods);
+
+/**
+*
+* Extend mediumInsert image addon
+*
+**/
+ var extendImages = {
+   _setImageEvents: $.fn.mediumInsert.getAddon("images").setImageEvents,
+   setImageEvents: function() {
+     if ( this.$el.data('events-bound-images') ) {
+      return;
+     }
+     this._setImageEvents();
+     this.$el.data('events-bound-images');
+   },
+   _setDragAndDropEvents: $.fn.mediumInsert.getAddon("images").setDragAndDropEvents,
+   setDragAndDropEvents: function() {
+     if ( this.$el.data('events-bound-dragdrop') ) {
+       return;
+     }
+     this._setDragAndDropEvents();
+     this.$el.data('events-bound-dragdrop', true);
+   }
+ }
+
+  $.extend(true, $.fn.mediumInsert.getAddon("images"), extendImages);
+
+
+})(jQuery);
