@@ -388,10 +388,6 @@
       var that = this,
           $el = $.fn.mediumInsert.insert.$el;
 
-      if ( $el.data('events-bound') ) {
-        return;
-      }
-
       $el.on('selectstart mousedown', '.mediumInsert', function (e) {
         if ($(e.target).is('img') === false) {
           e.preventDefault();
@@ -499,8 +495,6 @@
 
         $(this).parents('.mediumInsert').mouseleave();
       });
-
-      $el.data('events-bound', true);
     }
 
   };
@@ -979,10 +973,6 @@
     setImageEvents: function () {
       var that = this;
 
-      if ( this.$el.data('events-bound-images') ) {
-        return;
-      }
-
       this.$el.on('mouseenter', '.mediumInsert-images', function () {
         var $img = $('img', this),
             positionTop,
@@ -1115,7 +1105,6 @@
             $(this).val(e.originalEvent.clipboardData.getData('text/plain'));
           }
         });
-        this.$el.data('events-bound-image', true);
     },
 
     /**
@@ -1129,10 +1118,6 @@
           dropSuccessful = false,
           dropSort = false,
           dropSortIndex, dropSortParent;
-
-      if ( this.$el.data('events-bound-dragdrop') ) {
-        return;
-      }
 
       $(document).on('dragover', 'body', function () {
         if ($.fn.mediumInsert.settings.enabled === false) {
@@ -1262,7 +1247,6 @@
           dropSuccessful = true;
         }
       });
-      this.$el.data('events-bound-dragdrop', true);
     }
   });
 }(jQuery));
