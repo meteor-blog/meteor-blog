@@ -149,7 +149,7 @@ Template.blogAdminEdit.events
     $html.height($editable.height())
 
   # Autosave
-  'input .editable, keyup .editable, keyup .html-editor': _.debounce (e, tpl) ->
+  'input .editable, keydown .editable, keydown .html-editor': _.debounce (e, tpl) ->
     save tpl, (id, err) ->
       if err
         return Notifications.error '', err.message
