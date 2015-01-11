@@ -130,7 +130,7 @@ Router.route '/admin/blog/edit/:id',
         return @redirect('/blog')
 
     Session.set 'postId', @params.id
-    @next()
+    @next() if Session.get("postId").length?
   action: ->
     @render() if @ready()
   waitOn: -> [
