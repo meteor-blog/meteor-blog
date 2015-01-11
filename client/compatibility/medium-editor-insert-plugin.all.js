@@ -1452,7 +1452,7 @@
       return;
      }
      this._setImageEvents();
-     this.$el.data('events-bound-images');
+     this.$el.data('events-bound-images', true);
    },
    _setDragAndDropEvents: $.fn.mediumInsert.getAddon("images").setDragAndDropEvents,
    setDragAndDropEvents: function() {
