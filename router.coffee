@@ -124,17 +124,15 @@ Router.route '/admin/blog/edit/:id',
 
     Deps.autorun () ->
       Router.go 'blogIndex' if not Meteor.userId()
-      
+
     Meteor.call 'isBlogAuthorized', @params.id, (err, authorized) =>
       if not authorized
         return @redirect('/blog')
 
+    Session.set 'postId', @params.id
     @next()
   action: ->
     @render() if @ready()
-  onRun: ->
-    Session.set 'postId', @params.id
-    @next()
   waitOn: -> [
     Meteor.subscribe 'singlePostById', @params.id
     Meteor.subscribe 'authors'
