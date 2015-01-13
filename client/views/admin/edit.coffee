@@ -158,7 +158,7 @@ Template.blogAdminEdit.events
         # If new blog post, subscribe to the new post and update URL
         Session.set 'postId', id
         path = Router.path 'blogAdminEdit', id: id
-        IronLocation.set path, { replaceState: true, skipReactive: true }
+        Iron.Location.go path, { replaceState: true, skipReactive: true }
 
       Notifications.success '', 'Saved'
   , 8000
