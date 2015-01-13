@@ -100,22 +100,22 @@ Template.blogAdminEdit.rendered = ->
         @$('.editable').html post.body
         @$('.html-editor').html post.body
 
-  # Tags
-  $tags = @$('[data-role=tagsinput]')
-  $tags.tagsinput confirmKeys: [13, 44, 9]
-  $tags.tagsinput('input').typeahead(
-    highlight: true,
-    hint: false
-  ,
-    name: 'tags'
-    displayKey: 'val'
-    source: substringMatcher Tag.first().tags
-  ).bind 'typeahead:selected', (obj, datum) ->
-    $tags.tagsinput 'add', datum.val
-    $tags.tagsinput('input').typeahead 'val', ''
+      # Tags
+      $tags = @$('[data-role=tagsinput]')
+      $tags.tagsinput confirmKeys: [13, 44, 9]
+      $tags.tagsinput('input').typeahead(
+        highlight: true,
+        hint: false
+      ,
+        name: 'tags'
+        displayKey: 'val'
+        source: substringMatcher Tag.first().tags
+      ).bind 'typeahead:selected', (obj, datum) ->
+        $tags.tagsinput 'add', datum.val
+        $tags.tagsinput('input').typeahead 'val', ''
 
-  # Medium editor
-  BlogEditor.make @
+      # Medium editor
+      BlogEditor.make @
 
 Template.blogAdminEdit.helpers
   post: ->

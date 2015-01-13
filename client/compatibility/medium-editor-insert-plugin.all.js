@@ -1,8 +1,8 @@
-/*! 
- * medium-editor-insert-plugin v0.2.13 - jQuery insert plugin for MediumEditor
+/*!
+ * medium-editor-insert-plugin v0.3.2 - jQuery insert plugin for MediumEditor
  *
  * https://github.com/orthes/medium-editor-insert-plugin
- * 
+ *
  * Copyright (c) 2014 Pavel Linkesch (http://linkesch.sk)
  * Released under the MIT license
  */
@@ -84,7 +84,8 @@
           this.elements[i].removeAttribute('contentEditable');
         }
 
-        $.fn.mediumInsert.insert.$el.mediumInsert('disable');
+        if ($.fn.mediumInsert.insert.$el)
+          $.fn.mediumInsert.insert.$el.mediumInsert('disable');
       };
 
       /**
@@ -109,7 +110,8 @@
         }
         this.bindSelect();
 
-        $.fn.mediumInsert.insert.$el.mediumInsert('enable');
+        if ($.fn.mediumInsert.insert.$el)
+          $.fn.mediumInsert.insert.$el.mediumInsert('enable');
       };
   }
 
@@ -145,9 +147,11 @@
         $.fn.mediumInsert.insert.init($(this));
 
         $.each($.fn.mediumInsert.settings.addons, function (i) {
-          var addonOptions = $.fn.mediumInsert.settings.addons[i];
-          addonOptions.$el = $.fn.mediumInsert.insert.$el;
-          addons[i].init(addonOptions);
+          if (typeof addons[i] !== 'undefined') {
+            var addonOptions = $.fn.mediumInsert.settings.addons[i];
+            addonOptions.$el = $.fn.mediumInsert.insert.$el;
+            addons[i].init(addonOptions);
+          }
         });
       });
     }
@@ -280,7 +284,11 @@
 
       if (typeof addon === 'undefined') {
         $.each($.fn.mediumInsert.settings.addons, function (i) {
-          buttons += '<li>' + addons[i].insertButton(buttonLabels) + '</li>';
+          if (typeof addons[i] === 'undefined') {
+            console.log('Addon "' + i + '" is not available. Did you forgot to include the related file?');
+          } else {
+            buttons += '<li>' + addons[i].insertButton(buttonLabels) + '</li>';
+          }
         });
       } else {
         buttons += '<li>' + addons[addon].insertButton(buttonLabels) + '</li>';
@@ -300,8 +308,6 @@
     setPlaceholders: function () {
       var that = this,
           $el = $.fn.mediumInsert.insert.$el,
-          editor = $.fn.mediumInsert.settings.editor,
-          buttonLabels = (editor && editor.options) ? editor.options.buttonLabels : '',
           insertBlock = this.getButtons(),
           $firstEl;
 
@@ -335,9 +341,15 @@
 
         // Fix not deleting placeholder in Firefox
         // by removing all empty placeholders
-        if (this.isFirefox){
+        if (that.isFirefox){
           $('.mediumInsert .mediumInsert-placeholder:empty', $el).each(function () {
-            $(this).parent().remove();
+            var parent = $(this).parent();
+
+            // if the parent has at least one div child it means it can be a plugin, so we don't remove it
+            // for example, embed works like that (Fix #98)
+            if (0 === parent.find('.mediumInsert-buttons div').length) {
+              parent.remove();
+            }
           });
         }
 
@@ -404,17 +416,19 @@
             //wrap content text in p to avoid firefox problems
             $el.contents().each((function() {
               return function(index, field) {
-                if (field.nodeName === '#text') {
+                if (field.nodeName === '#text' && field.textContent.trim() !== '') {
                   document.execCommand('insertHTML', false, "<p>" + field.data + "</p>");
                   return field.remove();
                 }
               };
             })(this));
-            //Firefox add extra br tag inside p tag
-            var latestPTag = $el.find('p').last();
-            if (latestPTag.text().length > 0) {
-              latestPTag.find('br').remove();
-            }
+            // Removed because of #94 issue
+            //
+            // Firefox add extra br tag inside p tag
+            // var latestPTag = $el.find('p').last();
+            // if (latestPTag.text().length > 0) {
+            //   latestPTag.find('br').remove();
+            // }
           }
         }
       });
@@ -681,7 +695,7 @@
     * Images default options
     */
 
-    default: {
+    defaults: {
       /**
       * Active or inactive image's drag and drop
       */
@@ -696,6 +710,11 @@
       * Relative path to a script that handles file deleting
       */
       imagesDeleteScript: 'delete.php',
+
+      /**
+      * Placeeholder text for inserting link
+      */
+      urlPlaceholder: 'Paste or type a link',
 
       /**
       * Format data before sending them to server while uploading an image
@@ -766,7 +785,7 @@
       if (options && options.$el) {
         this.$el = options.$el;
       }
-      this.options = $.extend(this.default, options);
+      this.options = $.extend(this.defaults, options);
 
       this.setImageEvents();
 
@@ -788,13 +807,13 @@
 
     insertButton: function(buttonLabels){
       var label = 'Img';
-      if (buttonLabels == 'fontawesome' || typeof buttonLabels === 'object' && !!(buttonLabels.fontawesome)) {
+      if (buttonLabels === 'fontawesome' || typeof buttonLabels === 'object' && !!(buttonLabels.fontawesome)) {
         label = '<i class="fa fa-picture-o"></i>';
       }
 
-	  if (typeof buttonLabels === 'object' && buttonLabels.img) {
-		  label = buttonLabels.img;
-	  }
+      if (typeof buttonLabels === 'object' && buttonLabels.img) {
+        label = buttonLabels.img;
+      }
 
       return '<button data-addon="images" data-action="add" class="medium-editor-action mediumInsert-action">'+label+'</button>';
     },
@@ -808,9 +827,11 @@
     preparePreviousImages: function () {
       this.$el.find('.mediumInsert-images').each(function() {
         var $parent = $(this).parent();
-        $parent.html($.fn.mediumInsert.insert.getButtons('images') +
-          '<div class="mediumInsert-placeholder" draggable="true">' + $parent.html() + '</div>'
-        );
+        if (!$parent.hasClass('mediumInsert-placeholder')) {
+          $parent.html($.fn.mediumInsert.insert.getButtons('images') +
+            '<div class="mediumInsert-placeholder" draggable="true">' + $parent.html() + '</div>'
+          );
+        }
       });
     },
 
@@ -962,12 +983,22 @@
         }
 
         if ($img.length > 0) {
-          $(this).append('<a class="mediumInsert-imageRemove"></a>');
+          $(this).append('<a class="mediumInsert-imageIcon mediumInsert-imageRemove"></a>');
 
-          if ($(this).parent().parent().hasClass('small')) {
-            $(this).append('<a class="mediumInsert-imageResizeBigger"></a>');
-          } else {
-            $(this).append('<a class="mediumInsert-imageResizeSmaller"></a>');
+          if ($(this).prevAll().length === 0) {
+            if ($(this).parent().parent().hasClass('small')) {
+              $(this).append('<a class="mediumInsert-imageIcon mediumInsert-imageResizeBigger"></a>');
+            } else {
+              $(this).append('<a class="mediumInsert-imageIcon mediumInsert-imageResizeSmaller"></a>');
+            }
+          }
+
+          if ($(this).siblings().length === 0) {
+            if ($img.parent().is('a')) {
+              $(this).append('<a class="mediumInsert-imageIcon mediumInsert-imageUnlink"></a>');
+            } else {
+              $(this).append('<a class="mediumInsert-imageIcon mediumInsert-imageLink"></a>');
+            }
           }
 
           positionTop = $img.position().top + parseInt($img.css('margin-top'), 10);
@@ -982,11 +1013,16 @@
             'top': positionTop,
             'left': positionLeft-31
           });
+          $('.mediumInsert-imageLink, .mediumInsert-imageUnlink', this).css({
+            'right': 'auto',
+            'top': positionTop,
+            'left': positionLeft-62
+          });
         }
       });
 
       this.$el.on('mouseleave', '.mediumInsert-images', function () {
-        $('.mediumInsert-imageRemove, .mediumInsert-imageResizeSmaller, .mediumInsert-imageResizeBigger', this).remove();
+        $('.mediumInsert-imageIcon', this).remove();
       });
 
       this.$el.on('click', '.mediumInsert-imageResizeSmaller', function () {
@@ -994,7 +1030,7 @@
         $(this).parent().mouseleave().mouseleave();
 
         $.fn.mediumInsert.insert.deselect();
-        that.$el.closest('[data-medium-element]').trigger('keyup').trigger('input');
+        that.$el.trigger('keyup').trigger('input');
       });
 
       this.$el.on('click', '.mediumInsert-imageResizeBigger', function () {
@@ -1002,7 +1038,7 @@
         $(this).parent().mouseleave().mouseleave();
 
         $.fn.mediumInsert.insert.deselect();
-        that.$el.closest('[data-medium-element]').trigger('keyup').trigger('input');
+        that.$el.trigger('keyup').trigger('input');
       });
 
       this.$el.on('click', '.mediumInsert-imageRemove', function () {
@@ -1016,8 +1052,59 @@
         that.deleteFile(img, that);
 
         $.fn.mediumInsert.insert.deselect();
-        that.$el.closest('[data-medium-element]').trigger('keyup').trigger('input');
+
+        that.$el.trigger('keyup').trigger('input');
       });
+
+      this.$el.on('click', '.mediumInsert-imageLink', function () {
+        var $placeholder = $(this).closest('.mediumInsert-placeholder'),
+            $formHtml = $('<div class="medium-editor-toolbar medium-editor-toolbar-active medium-editor-toolbar-form-anchor mediumInsert-imageLinkWire" style="display: block;"><input type="text" value="" placeholder="' + that.options.urlPlaceholder + '" class="mediumInsert-imageLinkText medium-editor-toolbar-anchor-input"></div>');
+
+        $formHtml.appendTo($placeholder);
+        setTimeout(function () {
+          $formHtml.find('input').focus();
+        }, 50);
+
+        $.fn.mediumInsert.insert.deselect();
+      });
+
+      this.$el.on('click', '.mediumInsert-imageUnlink', function () {
+        var $figure = $(this).closest('.mediumInsert-images');
+
+        $figure.find('img').unwrap();
+
+        $(this).removeClass('mediumInsert-imageUnlink')
+          .addClass('mediumInsert-imageLink');
+
+        that.$el.trigger('keyup').trigger('input');
+      });
+
+      this.$el
+        .on('keypress', '.mediumInsert-imageLinkText', function (e) {
+          var $placeholder = $(this).closest('.mediumInsert-placeholder');
+
+          if ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) {
+            $placeholder.find('.mediumInsert-images:first').find('img').wrap('<a href="'+ $(this).val() +'" target="_blank"></a>');
+            $placeholder.find('.mediumInsert-imageLink')
+              .removeClass('mediumInsert-imageLink')
+              .addClass('mediumInsert-imageUnlink');
+
+            // Workaround for "Uncaught NotFoundError: Failed to execute 'removeChild' on 'Node': The node to be removed is no longer a child of this node. Perhaps it was moved in a 'blur' event handler?"
+            try {
+              $('.mediumInsert-imageLinkWire').remove();
+            } catch(err) {}
+
+            that.$el.trigger('keyup').trigger('input');
+          }
+        })
+        .on('blur', '.mediumInsert-imageLinkText', function () {
+          $('.mediumInsert-imageLinkWire').remove();
+        })
+        .on('paste', '.mediumInsert-imageLinkText', function (e) {
+          if ($.fn.mediumInsert.insert.isFirefox && e.originalEvent.clipboardData) {
+            $(this).val(e.originalEvent.clipboardData.getData('text/plain'));
+          }
+        });
     },
 
     /**
@@ -1089,7 +1176,7 @@
           dropSuccessful = false;
           dropSort = false;
 
-          that.$el.closest('[data-medium-element]').trigger('keyup').trigger('input');
+          that.$el.trigger('keyup').trigger('input');
         }
       });
 
@@ -1131,7 +1218,7 @@
         dropSort = true;
         dropSortIndex = null;
 
-        that.$el.closest('[data-medium-element]').trigger('keyup').trigger('input');
+        that.$el.trigger('keyup').trigger('input');
       });
 
       this.$el.on('drop', '.mediumInsert', function (e) {
@@ -1328,3 +1415,56 @@
   });
 
 }(jQuery));
+
+
+
+// Extend medium-insert to work with meteor-blog
+(function($) {
+/**
+ *  Namespace: $.fn.mediumInsert
+ */
+    var extensionMethods = {
+        /*
+         * skip setEvents when events have already been bound
+         */
+        init: function ($el) {
+          this.$el = $el;
+          this.isFirefox = navigator.userAgent.match(/firefox/i);
+          this.setPlaceholders();
+          if ( !this.$el.data('events-bound') ) {
+            this.setEvents();
+            this.$el.data('events-bound', true);
+          }
+        }
+    };
+
+    $.extend(true, $[ "fn" ][ "mediumInsert" ][ "insert" ], extensionMethods);
+
+/**
+*
+* Extend mediumInsert image addon
+*
+**/
+ var extendImages = {
+   _setImageEvents: $.fn.mediumInsert.getAddon("images").setImageEvents,
+   setImageEvents: function() {
+     if ( this.$el.data('events-bound-images') ) {
+      return;
+     }
+     this._setImageEvents();
+     this.$el.data('events-bound-images', true);
+   },
+   _setDragAndDropEvents: $.fn.mediumInsert.getAddon("images").setDragAndDropEvents,
+   setDragAndDropEvents: function() {
+     if ( this.$el.data('events-bound-dragdrop') ) {
+       return;
+     }
+     this._setDragAndDropEvents();
+     this.$el.data('events-bound-dragdrop', true);
+   }
+ }
+
+  $.extend(true, $.fn.mediumInsert.getAddon("images"), extendImages);
+
+
+})(jQuery);

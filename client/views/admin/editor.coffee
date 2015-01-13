@@ -65,9 +65,8 @@ class @BlogEditor extends MediumEditor
     @init.apply @, arguments
 
     # Don't let the medium insert plugin submit the form
-    $(@elements[0]).find('.mediumInsert-action').on 'click', (e) ->
-      e.preventDefault()
-      e.stopPropagation()
+    $('form').on 'click', (event) ->
+      if $(event.target).is '.mediumInsert' then event.preventDefault();
 
   # Return medium editor's contents
   contents: ->
