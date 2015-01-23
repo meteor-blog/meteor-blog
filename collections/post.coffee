@@ -51,7 +51,7 @@ class @Post extends Minimongoid
       ret = ''
       while not ret and matches[i]
         # Strip tags and clean up whitespaces
-        ret += matches[i++].replace(/(<([^>]+)>)/ig, ' ').replace('&nbsp;', ' ').trim()
+        ret += matches[i++].replace(/(<([^>]+)>)/ig, ' ').replace(/(\s\.)/, '.').replace('&nbsp;', ' ').trim()
       ret
 
   authorName: ->
