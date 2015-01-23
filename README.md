@@ -189,6 +189,36 @@ if Meteor.isClient
       body.split('.')[0] + '.'
 ```
 
+### Images
+
+Adding images to your blog posts works out of the box and saves the images to
+gridFS in your Mongo database. You can optionally have these images to an Amazon
+S3 bucket that you configure.
+
+To setup S3 for file storage, add the following in `/settings.json` (or any
+other location of your choice).
+
+```json
+{
+  "public": {
+    "blog": {
+      "useS3": true
+    }
+  },
+  "private": {
+    "blog": {
+      "s3Config": {
+        "bucket": "you-bucket-name",
+        "ACL": "public-read",
+        "MaxTries": 2,
+        "accessKeyId": "XXXXXXXXXXXXX",
+        "secretAccessKey": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      }
+    }
+  }
+}
+```
+
 ### Pagination
 
 By default, blog posts are paged in 20 at a time.  You can modify this value in
