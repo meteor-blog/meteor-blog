@@ -27,8 +27,7 @@ vote with your [Github issues](https://github.com/Differential/meteor-blog/issue
 
 ### Roadmap
 
-* Customizable root path, including blog posts at website root
-* Customziable admin root path
+* Check out the [enhancements tracker](https://github.com/Differential/meteor-blog/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement)
 
 ### Quick Start
 
