@@ -57,10 +57,21 @@ select users can edit the blog, the package supports two roles:
 To enable either or both roles, specify values in the blog config:
 
 ```coffee
+# CoffeeScript
 if Meteor.isServer
   Blog.config
     adminRole: 'blogAdmin'
     authorRole: 'blogAuthor'
+```
+
+```javascript
+// JavaScript
+if (Meteor.isServer) {
+  Blog.config({
+    adminRole: 'blogAdmin',
+    authorRole: 'blogAuthor'
+  });
+}
 ```
 
 Then, you need to give blog users that role. Currently, you're on your own to
@@ -80,10 +91,22 @@ posts. If you use your own `blogShowTemplate` template, include `{{> disqus this
 display comments.
 
 ```coffee
+# CoffeeScript
 if Meteor.isClient
   Blog.config
     comments:
       disqusShortname: 'myshortname'
+```
+
+```javascript
+// JavaScript
+if (Meteor.isClient) {
+  Blog.config({
+    comments: {
+      disqusShortname: 'myshortname'
+    }
+  });
+}
 ```
 
 **SideComments.js**
@@ -95,11 +118,24 @@ what you want. You can also allow anonymous comments, which lets anyone type in
 anything without even a name. Also, probably not what you want.
 
 ```coffee
+# CoffeeScript
 if Meteor.isClient
   Blog.config
     comments:
       useSideComments: true # default is false
       allowAnonymous: true # default is false
+```
+
+```javascript
+// JavaScript
+if (Meteor.isClient) {
+  Blog.config({
+    comments: {
+      useSideComments: true,
+      allowAnonymous: true
+    }
+  });
+}
 ```
 
 ### Bootstrap Templates
@@ -119,10 +155,20 @@ to by styled. If the default templates aren't doing it for you, you can override
 the default templates with your own by setting configuration variables:
 
 ```coffee
+# CoffeeScript
 if Meteor.isClient
   Blog.config
     blogIndexTemplate: 'myBlogIndexTemplate' # '/blog' route
     blogShowTemplate: 'myShowBlogTemplate'   # '/blog/:slug' route
+```
+```javascript
+// JavaScript
+if (Meteor.isClient) {
+  Blog.config({
+    blogIndexTemplate: 'myBlogIndexTemplate',
+    blogShowTemplate: 'myShowBlogTemplate'
+  });
+}
 ```
 
 In your templates, you can use these Handlebars helpers provided by the package
@@ -169,9 +215,19 @@ You can provide a custom `notFoundTemplate` to use when a blog post slug is not
 found.
 
 ```coffee
+# CoffeeScript
 if Meteor.isClient
   Blog.config
     blogNotFoundTemplate: 'myNotFoundTemplate'
+```
+
+```javascript
+// JavaScript
+if (Meteor.isClient) {
+  Blog.config({
+    blogNotFoundTemplate: 'myNotFoundTemplate'
+  });
+}
 ```
 
 ### Blog Post Excerpt
@@ -182,11 +238,23 @@ from the blog post. You can override this function by configuring a custom
 sentence:
 
 ```coffee
+# CoffeeScript
 if Meteor.isClient
   Blog.config
     excerptFunction: (body) ->
       body.split('.')[0] + '.'
 ```
+```javascript
+// JavaScript
+if (Meteor.isClient) {
+  Blog.config({
+    excerptFunction: function(body) {
+      return body.split('.')[0] + '.';
+    }
+  });
+}
+```
+
 
 ### Images
 
@@ -224,9 +292,19 @@ By default, blog posts are paged in 20 at a time.  You can modify this value in
 settings. Set to `null` to turn off paging entirely.
 
 ```coffee
+# CoffeeScript
 if Meteor.isClient
   Blog.config
     pageSize: 10
+```
+
+```javascript
+// JavaScript
+if (Meteor.isClient) {
+  Blog.config({
+    pageSize: 10
+  });
+}
 ```
 
 The default `blogIndexTemplate` template displays a `Load More` button. If you
@@ -241,10 +319,20 @@ tags will get modified for syntax highlighting. You can specify any
 Example config:
 
 ```coffee
+# CoffeeScript
 if Meteor.isClient
   Blog.config
     syntaxHighlighting: true # default is false
     syntaxHighlightingTheme: 'atelier-dune.dark' # default is 'github'
+```
+```javascript
+// JavaScript
+if (Meteor.isClient) {
+  Blog.config({
+    syntaxHighlighting: true,
+    syntaxHighlightingTheme: 'atelier-dune.dark'
+  });
+}
 ```
 
 ### Social Sharing
@@ -277,11 +365,24 @@ An RSS feed is automatically generated at `/rss/posts`. To set the title and
 description in the feed, configure RSS:
 
 ```coffee
+# CoffeeScript
 if Meteor.isServer
   Blog.config
     rss:
       title: 'My blog title'
       description: 'My blog description'
+```
+
+```javascript
+// JavaScript
+if (Meteor.isServer) {
+  Blog.config({
+    rss: {
+      title: 'My blog title',
+      description: 'My blog description'
+    }
+  });
+}
 ```
 
 Add a head tag somewhere in your `.html` files so your RSS feed can be discovered:
