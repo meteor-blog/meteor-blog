@@ -16,7 +16,7 @@ Meteor.publish 'singlePostBySlug', (slug) ->
 Meteor.publish 'posts', (limit) ->
   check limit, Match.OneOf(Number, null)
 
-  if limit is null then limit = 0
+  if limit is null then return @ready()
 
   Post.find { published: true },
     fields: body: 0
