@@ -1,5 +1,9 @@
 ## Changelog
 
+### v0.6.3
+
+* Fix pagination
+
 ### v0.6.2
 
 * Allow user to upload blog images to S3 ([#141](https://github.com/Differential/meteor-blog/pull/141))
