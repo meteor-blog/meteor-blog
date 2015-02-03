@@ -509,7 +509,7 @@
     * Embed default options
     */
 
-    default: {
+    defaults: {
       urlPlaceholder: 'Paste or type a link'
       //,oembedProxy: 'http://medium.iframe.ly/api/oembed?iframe=1'
     },
@@ -519,7 +519,7 @@
      * @return {void}
      */
     init : function (options) {
-      this.options = $.extend(this.default, options);
+      this.options = $.extend(this.defaults, options);
       this.$el = $.fn.mediumInsert.insert.$el;
       this.setEmbedButtonEvents();
       this.preparePreviousEmbeds();
@@ -1300,7 +1300,7 @@
     * Table default options
     */
 
-    default: {
+    defaults: {
       defaultRows: 2,
       defaultCols: 2
     },
@@ -1310,7 +1310,7 @@
      * @return {void}
      */
     init : function (options) {
-      this.options = $.extend(this.default, options);
+      this.options = $.extend(this.defaults, options);
       this.$el = $.fn.mediumInsert.insert.$el;
       this.setTableButtonEvents();
     },
