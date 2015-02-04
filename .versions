@@ -48,7 +48,7 @@ iron:location@1.0.7
 iron:middleware-stack@1.0.7
 iron:router@1.0.7
 iron:url@1.0.7
-joshowens:shareit@0.2.0
+joshowens:shareit@0.3.1
 jquery@1.11.3
 json@1.0.2
 kaptron:minimongoid@0.9.1
