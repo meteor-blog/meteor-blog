@@ -4,6 +4,8 @@ Template.blogIndex.rendered = ->
   if Blog.settings.title
     document.title += " | #{Blog.settings.title}"
 
+
+
 Template.blogShowBody.rendered = ->
 
   Meteor.call 'isBlogAuthorized', @id, (err, authorized) =>
@@ -109,6 +111,14 @@ Template.blogShowBody.rendered = ->
   if not @data.published
     $('<meta>', { name: 'robots', content: 'noindex,nofollow' }).appendTo 'head'
 
+  # featured image resize
+  if Session.get "postHasFeaturedImage"
+    post = Post.first({slug: Router.current().params.slug})
+    $(window).resize ->
+      Session.set "fullWidthFeaturedImage", $(window).width() < post.featuredImageWidth
+    $(window).trigger "resize" # so it runs once
+
+
 Template.blogShowBody.events
   'click a#edit-post': (event, template) ->
     event.preventDefault()
@@ -118,6 +128,7 @@ Template.blogShowBody.events
 Template.blogShowBody.helpers
   isAdmin: () ->
     Session.get "canEditPost"
+
 
 Template.disqus.rendered = ->
 

@@ -11,9 +11,27 @@
           {{#with post}}
             <form>
               <div class="row form-group">
-                <div class="col-md-12">
+                <div class="col-md-9">
                   <label>Title</label>
                   <input tabindex="1" type="text" class="form-control" name="title" placeholder="Title" value="{{title}}">
+                </div>
+                <div class="col-md-3">
+                <label for="featured-image">Featured Image</label>
+                  <input type="file" id="input-featured-image" name="featured-image" class="hidden">
+                  <label class="btn btn-info" for="input-featured-image">
+                    {{#if featuredImage}}
+                      {{featuredImageName}}
+                    {{else}}
+                      Select File
+                    {{/if}}
+                  </label>
+                  <p class="help-block">
+                    <div class="checkbox">
+                      <label for="background-title">
+                        <input type="checkbox" name="background-title" checked="{{#if titleBackground}}checked{{/if}}"> Use as background for title
+                      </label>
+                    </div>
+                  </p>
                 </div>
               </div>
               <div class="row form-group">

@@ -6,6 +6,27 @@
 getPost = (id) ->
   (Post.first( { _id : id } ) ) or {}
 
+# reads image dimensions and takes a callback
+# callback passes params (width, height, fileName)
+readImageDimensions = (file, cb) ->
+  reader = new FileReader
+  image = new Image
+  reader.readAsDataURL file
+
+  reader.onload = (_file) ->
+    image.src = _file.target.result
+
+    image.onload = ->
+      w = @width
+      h = @height
+      n = file.name
+      cb(w,h,n) # callback with width, height as params
+      return
+
+    image.onerror = ->
+      alert 'Invalid file type: ' + file.type
+
+
 # Find tags using typeahead
 substringMatcher = (strs) ->
   (q, cb) ->
@@ -169,6 +190,51 @@ Template.blogAdminEdit.events
 
     if not slug.val()
       slug.val Post.slugify(title)
+
+  'change [name=featured-image]': (e, tpl) ->
+    the_file = $(e.currentTarget)[0].files[0]
+    post = getPost Session.get('postId')
+    # get dimensions
+    readImageDimensions the_file, (width, height, name) ->
+      post.update
+        featuredImageWidth: width
+        featuredImageHeight: height
+        featuredImageName: name
+    # S3
+    if Meteor.settings?.public?.blog?.useS3
+      S3Files.insert the_file, (err, fileObj) ->
+        Tracker.autorun (c) ->
+          theFile = S3Files.find({_id: fileObj._id}).fetch()[0]
+          if theFile.isUploaded() and theFile.url?()
+            if post.id?
+              post.update
+                featuredImage: theFile.url()
+              c.stop()
+    # Local Filestore
+    else
+      id = FilesLocal.insert
+        _id: Random.id()
+        contentType: 'image/jpeg'
+
+      $.ajax
+        type: "post"
+        url: "/fs/#{id}"
+        # xhr: ->
+        #   xhr = new XMLHttpRequest()
+        #   xhr.upload.onprogress = that.updateProgressBar
+        #   xhr
+        cache: false
+        contentType: false
+        complete: (jqxhr) ->
+          if post.id? then post.update { featuredImage: "/fs/#{id}" }
+          return
+        processData: false
+        data: that.options.formatData(file)
+
+  'change [name=background-title]': (e, tpl) ->
+    $checkbox = $(e.currentTarget)
+    getPost(Session.get("postId")).update
+      titleBackground: $checkbox.is(':checked')
 
   'submit form': (e, tpl) ->
     e.preventDefault()

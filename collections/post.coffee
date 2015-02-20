@@ -60,7 +60,7 @@ class @Post extends Minimongoid
     if author
       if author.profile and author.profile.name
         return author.profile.name
-        
+
       else if author.profile and author.profile.firstName and author.profile.lastName
         return "#{author.profile.firstName} #{author.profile.lastName}"
 
@@ -108,11 +108,11 @@ if Meteor.isServer
         else if Roles.userIsInRole(@userId, Blog.settings.adminRole)
           # Then they can do anything
           return true
- 
- 
+
+
       # If author role is set
       if Blog.settings.authorRole
- 
+
         # Get the post
         check arguments[0], Match.OneOf(Object, Number, String, null, undefined)
 
@@ -143,7 +143,7 @@ if Meteor.isServer
           else
             return true
 
- 
+
       false
 
 

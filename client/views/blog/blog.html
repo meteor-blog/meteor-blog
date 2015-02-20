@@ -14,16 +14,27 @@
 <template name="blogIndexLoop">
   {{#each posts}}
     <article class="post">
-      <h2>
-        <a href="{{pathFor 'blogShow'}}">{{title}}</a>
-      </h2>
-      <div class="post-meta">
-        By {{authorName}} on {{blogFormatDate publishedAt}}
-        {{> blogTags }}
-      </div>
-      <div class="the-content">
-        {{{excerpt}}}
-      </div>
+      <div class="row">
+        <div class="{{#if featuredImage}}col-md-9{{else}}col-md-12{{/if}}">
+          <h2>
+            <a href="{{pathFor 'blogShow'}}">{{title}}</a>
+          </h2>
+          <div class="post-meta">
+            By {{authorName}} on {{blogFormatDate publishedAt}}
+            {{> blogTags }}
+          </div>
+          <div class="the-content">
+            <small>{{{excerpt}}}</small>
+          </div>
+        </div>
+        {{#if featuredImage}}
+          <div class="col-md-3">
+            <a href="{{pathFor 'blogShow'}}" class="thumbnail">
+              <img src="{{featuredImage}}" alt="" class="img-responsive">
+            </a>
+          </div>
+        {{/if}}
+        </div>
     </article>
   {{else}}
     This blog is looking pretty empty...
