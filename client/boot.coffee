@@ -12,6 +12,7 @@ Blog =
     blogAdminTemplate: null
     blogAdminEditTemplate: null
     pageSize: 20
+    publicDrafts: true
     excerptFunction: null
     syntaxHighlighting: false
     syntaxHighlightingTheme: 'github'
