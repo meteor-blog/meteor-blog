@@ -45,11 +45,11 @@ class @Post extends Minimongoid
       Blog.settings.excerptFunction html
     else
       # Find 1st non-empty paragraph
-      matches = html.split /<\/div>|<\/p>|<\/blockquote>|<br><br>|\\n\\n|\\r\\n\\r\\n/m
+      matches = html?.split /<\/div>|<\/p>|<\/blockquote>|<br><br>|\\n\\n|\\r\\n\\r\\n/m
 
       i = 0
       ret = ''
-      while not ret and matches[i]
+      while not ret and matches?[i]
         # Strip tags and clean up whitespaces
         ret += matches[i++].replace(/(<([^>]+)>)/ig, ' ').replace(/(\s\.)/, '.').replace('&nbsp;', ' ').trim()
       ret
