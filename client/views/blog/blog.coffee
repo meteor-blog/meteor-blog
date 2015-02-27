@@ -27,7 +27,21 @@ Template.blogShowBody.rendered = ->
         id: 0
     else if Meteor.user()
       # check username
-      name = if Meteor.user().username then Meteor.user().username else Meteor.user().emails[0].address
+      the_user = Meteor.user()
+      possible_names = [                 # if more than one variable
+        the_user.username                # contains a usable name, the match
+        the_user.services?.google?.name  # with the lowest index will be chosen
+        the_user.profile?.name
+        the_user.emails?[0].address
+      ]
+      chosen_name = null
+      possible_names.every (name) ->
+        if name?
+          if typeof name is "string" and name.length > 0
+            chosen_name = name
+            false
+         else
+            true
       if Meteor.user().profile?[settings.userImg]
         avatar = Meteor.user().profile[settings.userImg]
       else
