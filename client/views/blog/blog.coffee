@@ -47,7 +47,7 @@ Template.blogShowBody.rendered = ->
       else
         avatar = settings.defaultImg
       commentUser =
-        name: name
+        name: chosen_name
         avatarUrl: avatar
         id: Meteor.userId()
     else
