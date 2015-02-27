@@ -81,6 +81,9 @@ Router.route '/blog/:slug',
       else
         Template[tpl].rendered = pkgFunc
 
+    if !Blog.settings.publicDrafts and !Post.first().published
+      Meteor.call 'isBlogAuthorized', (err, authorized) =>
+        return @redirect('/blog') unless authorized
     @next()
   action: ->
     @render() if @ready()
