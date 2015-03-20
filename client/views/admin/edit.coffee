@@ -33,6 +33,12 @@ save = (tpl, cb) ->
   editor = BlogEditor.make tpl
 
   # Make paragraphs commentable
+  # remove duplicates
+  $editable.find('p[data-section-id]').each ->
+    sec_id = $(this).attr 'data-section-id'
+    if $editable.find("p[data-section-id=#{sec_id}]").length > 1
+      $editable.find("p[data-section-id=#{sec_id}]:gt(0)").removeAttr 'data-section-id'
+  # decorate
   i = $editable.find('p[data-section-id]').length + 1
   $editable.find('p:not([data-section-id])').each ->
     $(this).addClass('commentable-section').attr('data-section-id', i)
