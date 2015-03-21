@@ -60,6 +60,7 @@ if Meteor.isServer and useS3
     bucket: s3Config.bucket
     ACL:  s3Config.s3ACL
     maxTries: s3Config.s3MaxTries
+    region: s3Config.region
 
   @S3Files = new FS.Collection "s3Imports",
     stores: [s3ImportStore]
