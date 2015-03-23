@@ -4,8 +4,6 @@ This Meteor package gives you a basic, out-of-the-box blog at `/blog`. We wanted
 a way to add a blog to an existing app without running another dyno or server
 for a meteor-based blog.
 
-Example instance: [http://differential.com/blog](http://differential.com/blog)
-
 This blog is very much a work in progress. To help decide what gets add next,
 vote with your [Github issues](https://github.com/Differential/meteor-blog/issues)!
 
