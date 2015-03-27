@@ -2,15 +2,26 @@ class @BlogEditor extends MediumEditor
 
   # FACTORY
   @make: (tpl) ->
+    $editable = $ '.editable'
+
+    if $editable.data('mediumEditor')
+      return $editable.data('mediumEditor')
+
     # Set up the medium editor with image upload
-    editor = new BlogEditor '.editable',
+    editor = new BlogEditor $editable[0],
       placeholder: ''
       firstHeader: 'h1'
       secondHeader: 'h2'
       buttonLabels: 'fontawesome'
       buttons:
         ['bold', 'italic', 'underline', 'anchor', 'pre', 'header1', 'header2', 'orderedlist', 'unorderedlist', 'quote', 'image']
+      onShowToolbar: =>
+        if @inPreformatted()
+          console.log 'preformatted'
+          editor.toolbar.hideToolbar()
 
+
+    ###
     tpl.$('.editable').mediumInsert
       editor: editor
       enabled: true
@@ -56,7 +67,18 @@ class @BlogEditor extends MediumEditor
                 data: that.options.formatData(file)
 
         #embeds: {}
+    ###
 
+    editor.subscribe 'editableKeydownEnter', (e, el) =>
+      if e.which is 13 and @inPreformatted()
+        console.log 'in preformatted'
+        e.preventDefault()
+        editor.disableReturn = true
+        document.execCommand 'insertHTML', false, "\n"
+      else
+        editor.disableReturn = false
+    
+    $editable.data 'mediumEditor', editor
     editor
 
   # INSTANCE METHODS
@@ -95,11 +117,25 @@ class @BlogEditor extends MediumEditor
     $(@elements[0]).find('pre').removeClass('hljs').html(br2nl).each (i, block) ->
       hljs.highlightBlock block
 
-  inPreformatted: ->
-    @findMatchingSelectionParent (el) ->
-      el.tagName.toLowerCase() is 'pre'
+  @inPreformatted: ->
+    node = document.getSelection().anchorNode
+    current = if node and node.nodeType == 3 then node.parentNode else node
+
+    loop
+      if current.nodeType == 1
+        if current.tagName.toLowerCase() is 'pre'
+          return true
+
+        # do not traverse upwards past the nearest containing editor
+        if current.getAttribute('data-medium-element')
+          return false
+      current = current.parentNode
+      unless current
+        break
+    false
 
   # Disable medium toolbar if we are in a code block
+  ###
   checkSelection: ->
     if @inPreformatted()
       return false
@@ -125,3 +161,4 @@ class @BlogEditor extends MediumEditor
         document.execCommand 'insertHTML', false, "\n"
 
     super index
+  ###
