@@ -277,7 +277,8 @@ other location of your choice).
         "ACL": "public-read",
         "MaxTries": 2,
         "accessKeyId": "XXXXXXXXXXXXX",
-        "secretAccessKey": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        "secretAccessKey": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "region": "OPTIONAL most of the time"
       }
     }
   }
