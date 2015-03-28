@@ -16,8 +16,8 @@ class @BlogEditor extends MediumEditor
       buttons:
         ['bold', 'italic', 'underline', 'anchor', 'pre', 'header1', 'header2', 'orderedlist', 'unorderedlist', 'quote', 'image']
       onShowToolbar: =>
+        # Disable medium toolbar if we are in a code block
         if @inPreformatted()
-          console.log 'preformatted'
           editor.toolbar.hideToolbar()
 
 
@@ -69,15 +69,7 @@ class @BlogEditor extends MediumEditor
         #embeds: {}
     ###
 
-    editor.subscribe 'editableKeydownEnter', (e, el) =>
-      if e.which is 13 and @inPreformatted()
-        console.log 'in preformatted'
-        e.preventDefault()
-        editor.disableReturn = true
-        document.execCommand 'insertHTML', false, "\n"
-      else
-        editor.disableReturn = false
-    
+
     $editable.data 'mediumEditor', editor
     editor
 
@@ -87,8 +79,8 @@ class @BlogEditor extends MediumEditor
     @init.apply @, arguments
 
     # Don't let the medium insert plugin submit the form
-    $('form').on 'click', (event) ->
-      if $(event.target).is '.mediumInsert' then event.preventDefault();
+    #$('form').on 'click', (event) ->
+      #if $(event.target).is '.mediumInsert' then event.preventDefault();
 
   # Return medium editor's contents
   contents: ->
@@ -133,32 +125,3 @@ class @BlogEditor extends MediumEditor
       unless current
         break
     false
-
-  # Disable medium toolbar if we are in a code block
-  ###
-  checkSelection: ->
-    if @inPreformatted()
-      return false
-
-    super()
-
-  # Disable "hard" returns if we are in a code block
-  bindParagraphCreation: (index) ->
-    @elements[index].addEventListener 'keyup', (e) =>
-      if e.which is 13 and @inPreformatted()
-        e.preventDefault()
-        @options.disableReturn = true
-      else
-        @options.disableReturn = false
-
-    super index
-
-  # Insert "soft" returns always if we are in a code block
-  bindReturn: (index) ->
-    @elements[index].addEventListener 'keypress', (e) =>
-      if e.which is 13 and @inPreformatted()
-        e.preventDefault()
-        document.execCommand 'insertHTML', false, "\n"
-
-    super index
-  ###
