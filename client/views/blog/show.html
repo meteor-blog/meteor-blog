@@ -1,5 +1,8 @@
 <template name="blogShow">
   <div id="meteor-blog" class="blog-single">
+    {{#if session "postHasFeaturedImage"}}
+      {{> blogShowFeaturedImage}}
+    {{/if}}
     <div class="container">
       <div class="row">
         <div class="col-xs-12 col-sm-11 col-md-8 col-md-offset-2">
@@ -12,16 +15,19 @@
 
 <template name="blogShowBody">
   <article class="post">
-    <h2>
-      {{title}}
-      {{#if isAdmin}}
-         <small><a href="#" id="edit-post">edit</a></small>
-      {{/if}}
-    </h2>
-    <div class="post-meta">
-      By {{authorName}} on {{blogFormatDate publishedAt}}
-      {{> blogTags }}
-    </div>
+    {{#unless titleBackground}}
+      <h1 class="mb-title text-center">
+        {{title}}
+      </h1>
+      <div class="post-meta text-center">
+        {{#if isAdmin}}
+           <small><a href="#" id="edit-post">edit</a></small>
+           --
+        {{/if}}
+        By {{authorName}} on {{blogFormatDate publishedAt}}
+        {{> blogTags }}
+      </div>
+    {{/unless}}
     <div id="commentable-area" class="the-content">
       {{{html}}}
     </div>
@@ -33,6 +39,38 @@
   {{> disqus this}}
 </template>
 
+<template name="blogShowFeaturedImage">
+  <div class="row">
+    <div class="mb-featured-image-container">
+      <figure class="{{#if session 'fullWidthFeaturedImage'}}mb-fillWidthImage{{else}}mb-scaleImage{{/if}}">
+        <div class="mg-aspectRatioPlaceholder" style="{{#unless session 'fullWidthFeaturedImage'}}width: {{featuredImageWidth}}px; height: {{featuredImageHeight}}px;{{/unless}}">
+          <!-- <div class="mb-aspect-ratio-fill"></div> -->
+          <img src="{{featuredImage}}" alt="" class="img-responsive center-block">
+          {{#if titleBackground}}
+            <div class="mb-background-title">
+              <div class="container">
+                <div class="row">
+                  <div class="center-block">
+                    <h1 class="text-center">
+                      {{title}}
+                      {{#if isAdmin}}
+                         <small><a href="#" id="edit-post">edit</a></small>
+                      {{/if}}
+                    </h1>
+                    <div class="post-meta text-center">
+                      By {{authorName}} on {{blogFormatDate publishedAt}}
+                      {{> blogTags }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {{/if}}
+        </div>
+      </figure>
+    </div>
+  </div>
+</template>
 <template name="disqus">
   {{#if useDisqus}}
     <div id="disqus_thread"></div>

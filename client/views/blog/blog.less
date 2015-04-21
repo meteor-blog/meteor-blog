@@ -4,6 +4,9 @@
   padding-top: 20px;
   padding-bottom: 40px;
   &.blog-list {
+    .thumbnail {
+      margin-top: 20px;
+    }
     article.post {
       border-bottom: 1px solid #EEE;
       padding-bottom: 40px;
@@ -32,7 +35,7 @@
 
       .post-meta {
         color: #bbb;
-        margin-bottom: 20px;
+        margin-bottom: 50px;
 
         > a {
           color: #bbb;
@@ -53,6 +56,45 @@
   }
 
   &.blog-single {
+    padding-top: 0px;
+    .mb-title {
+      font-size: 50px;
+      margin-top: 50px;
+    }
+    .mb-featured-image-container {
+      .mb-aspect-ratio-fill {
+        padding-bottom: 40.1%;
+      }
+      .mb-scaleImage {
+        margin-top: 20px;
+      }
+      .mb-background-title {
+        text-shadow: black 0.2em 0.2em 0.2em;
+        color:white;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 150px;
+        position: absolute;
+        z-index: 10;
+      }
+      img.featured-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        margin: auto;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+      .mg-aspectRatioPlaceholder {
+        position: relative;
+        width: 100%;
+        margin: 0 auto;
+      }
+    }
     article.post {
       border-bottom: 1px solid #EEE;
       padding-bottom: 10px;
@@ -81,7 +123,7 @@
 
       .post-meta {
         color: #bbb;
-        margin-bottom: 20px;
+        margin-bottom: 50px;
 
         > a {
           color: #bbb;
