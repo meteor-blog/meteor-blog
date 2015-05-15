@@ -92,7 +92,7 @@ Package.onUse(function(api) {
     'accounts-base',
     'kaptron:minimongoid@0.9.1',
     'mrt:moment@2.8.1',
-    'vsivsi:file-collection@0.3.3',
+    'vsivsi:file-collection@1.1.0',
     'alanning:roles@1.2.13',
     'meteorhacks:fast-render@2.0.2',
     'meteorhacks:subs-manager@1.2.0',
