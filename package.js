@@ -26,21 +26,32 @@ Package.onUse(function(api) {
   // FILES FOR CLIENT
 
   api.addFiles([
+
+    // STYLESHEETS
     'client/stylesheets/lib/side-comments/side-comments.css',
     'client/stylesheets/lib/side-comments/default.css',
     'client/stylesheets/lib/medium-editor.css',
     'client/stylesheets/lib/medium-themes/bootstrap.css',
-    //'client/stylesheets/lib/medium-editor-insert-plugin-frontend.css',
-    //'client/stylesheets/lib/medium-editor-insert-plugin.css',
+    'client/compatibility/bower_components/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.css',
     'client/stylesheets/lib/bootstrap-tagsinput.css',
+
+    // JAVASCRIPT LIBS
     'client/boot.coffee',
     'client/compatibility/side-comments.js',
     'client/compatibility/medium-editor.js',
-    //'client/compatibility/medium-editor-insert-plugin.all.js',
+    'client/compatibility/bower_components/handlebars/handlebars.runtime.js',
+    'client/compatibility/handlebars.noconflict.js',
+    'client/compatibility/bower_components/jquery-sortable/source/js/jquery-sortable.js',
+    'client/compatibility/bower_components/blueimp-file-upload/js/vendor/jquery.ui.widget.js',
+    'client/compatibility/bower_components/blueimp-file-upload/js/jquery.iframe-transport.js',
+    'client/compatibility/bower_components/blueimp-file-upload/js/jquery.fileupload.js',
+    'client/compatibility/bower_components/medium-editor-insert-plugin/dist/js/medium-editor-insert-plugin.js',
     'client/compatibility/bootstrap-tagsinput.js',
     'client/compatibility/typeahead.jquery.js',
     'client/compatibility/beautify-html.js',
     'client/compatibility/highlight.pack.js',
+
+    // PACKAGE FILES
     'client/views/404.html',
     'client/views/custom.html',
     'client/views/custom.coffee',

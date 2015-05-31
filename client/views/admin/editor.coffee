@@ -21,7 +21,6 @@ class @BlogEditor extends MediumEditor
           editor.toolbar.hideToolbar()
 
 
-    ###
     tpl.$('.editable').mediumInsert
       editor: editor
       enabled: true
@@ -67,7 +66,6 @@ class @BlogEditor extends MediumEditor
                 data: that.options.formatData(file)
 
         #embeds: {}
-    ###
 
 
     $editable.data 'mediumEditor', editor
@@ -77,10 +75,6 @@ class @BlogEditor extends MediumEditor
 
   constructor: ->
     @init.apply @, arguments
-
-    # Don't let the medium insert plugin submit the form
-    #$('form').on 'click', (event) ->
-      #if $(event.target).is '.mediumInsert' then event.preventDefault();
 
   # Return medium editor's contents
   contents: ->
