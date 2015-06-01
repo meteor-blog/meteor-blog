@@ -1,5 +1,9 @@
 ## Changelog
 
+### v0.7.0
+
+* Upgrade `vsivsi:file-collection` to 1.1.0 ([#171](https://github.com/Differential/meteor-blog/issues/171) and [#180](https://github.com/Differential/meteor-blog/issues/180))
+
 ### v0.6.4
 
 * Upgrade `medium-editor`, `medium-editor-insert-plugin` libs to 1.0 versions ([#164](https://github.com/Differential/meteor-blog/issues/164))
