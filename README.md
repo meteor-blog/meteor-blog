@@ -11,7 +11,8 @@ vote with your [Github issues](https://github.com/Differential/meteor-blog/issue
 
 * Medium-style editor
 * Slug-based URLs (editable)
-* Add images (store in database or upload to S3)
+* Add blog post images (store in database or upload to S3)
+* Add featured, "masthead" image for a post
 * Support DISQUS comments
 * Blog post tags and tag view
 * Widget to embed recent posts on another (e.g. home) page
