@@ -1,0 +1,19 @@
+{
+  "name": "compatibility",
+  "version": "0.6.3",
+  "homepage": "https://github.com/Differential/meteor-blog",
+  "authors": [
+    "gerard sychay <hellogerard@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "medium-editor-insert-plugin": "^1.0"
+  }
+}

@@ -2,14 +2,24 @@ class @BlogEditor extends MediumEditor
 
   # FACTORY
   @make: (tpl) ->
+    $editable = $ '.editable'
+
+    if $editable.data('mediumEditor')
+      return $editable.data('mediumEditor')
+
     # Set up the medium editor with image upload
-    editor = new BlogEditor '.editable',
+    editor = new BlogEditor $editable[0],
       placeholder: ''
       firstHeader: 'h1'
       secondHeader: 'h2'
       buttonLabels: 'fontawesome'
       buttons:
         ['bold', 'italic', 'underline', 'anchor', 'pre', 'header1', 'header2', 'orderedlist', 'unorderedlist', 'quote', 'image']
+      onShowToolbar: =>
+        # Disable medium toolbar if we are in a code block
+        if @inPreformatted()
+          editor.toolbar.hideToolbar()
+
 
     tpl.$('.editable').mediumInsert
       editor: editor
@@ -57,16 +67,14 @@ class @BlogEditor extends MediumEditor
 
         #embeds: {}
 
+
+    $editable.data 'mediumEditor', editor
     editor
 
   # INSTANCE METHODS
 
   constructor: ->
     @init.apply @, arguments
-
-    # Don't let the medium insert plugin submit the form
-    $('form').on 'click', (event) ->
-      if $(event.target).is '.mediumInsert' then event.preventDefault();
 
   # Return medium editor's contents
   contents: ->
@@ -95,33 +103,19 @@ class @BlogEditor extends MediumEditor
     $(@elements[0]).find('pre').removeClass('hljs').html(br2nl).each (i, block) ->
       hljs.highlightBlock block
 
-  inPreformatted: ->
-    @findMatchingSelectionParent (el) ->
-      el.tagName.toLowerCase() is 'pre'
+  @inPreformatted: ->
+    node = document.getSelection().anchorNode
+    current = if node and node.nodeType == 3 then node.parentNode else node
 
-  # Disable medium toolbar if we are in a code block
-  checkSelection: ->
-    if @inPreformatted()
-      return false
+    loop
+      if current.nodeType == 1
+        if current.tagName.toLowerCase() is 'pre'
+          return true
 
-    super()
-
-  # Disable "hard" returns if we are in a code block
-  bindParagraphCreation: (index) ->
-    @elements[index].addEventListener 'keyup', (e) =>
-      if e.which is 13 and @inPreformatted()
-        e.preventDefault()
-        @options.disableReturn = true
-      else
-        @options.disableReturn = false
-
-    super index
-
-  # Insert "soft" returns always if we are in a code block
-  bindReturn: (index) ->
-    @elements[index].addEventListener 'keypress', (e) =>
-      if e.which is 13 and @inPreformatted()
-        e.preventDefault()
-        document.execCommand 'insertHTML', false, "\n"
-
-    super index
+        # do not traverse upwards past the nearest containing editor
+        if current.getAttribute('data-medium-element')
+          return false
+      current = current.parentNode
+      unless current
+        break
+    false

@@ -15,7 +15,7 @@
   20% {
     -webkit-transform: matrix(0.99, 0, 0, 1, 0, 2);
             transform: matrix(0.99, 0, 0, 1, 0, 2);
-    opacity: 0.7; }
+    opacity: .7; }
 
   40% {
     -webkit-transform: matrix(1, 0, 0, 1, 0, -1);
@@ -41,7 +41,7 @@
   20% {
     -webkit-transform: matrix(0.99, 0, 0, 1, 0, 2);
             transform: matrix(0.99, 0, 0, 1, 0, 2);
-    opacity: 0.7; }
+    opacity: .7; }
 
   40% {
     -webkit-transform: matrix(1, 0, 0, 1, 0, -1);
@@ -58,6 +58,12 @@
             transform: matrix(1, 0, 0, 1, 0, 0);
     opacity: 1; } }
 
+.data-medium-element sup {
+  vertical-align: super; }
+.data-medium-element sub {
+  vertical-align: sub; }
+.data-medium-element img {
+  max-width: 100%; }
 
 .medium-toolbar-arrow-under:after, .medium-toolbar-arrow-over:before {
   position: absolute;
@@ -100,8 +106,9 @@
       font-size: 14px;
       line-height: 1.33;
       text-decoration: none;
-      -moz-box-sizing: border-box;
-           box-sizing: border-box; }
+      box-sizing: border-box; }
+      .medium-editor-toolbar li button:focus, .medium-editor-anchor-preview li button:focus {
+        outline: none; }
     .medium-editor-toolbar li .medium-editor-action-underline, .medium-editor-anchor-preview li .medium-editor-action-underline {
       text-decoration: underline; }
     .medium-editor-toolbar li .medium-editor-action-pre, .medium-editor-anchor-preview li .medium-editor-action-pre {
@@ -118,12 +125,15 @@
   cursor: pointer; }
 
 .medium-editor-toolbar-active, .medium-editor-anchor-preview-active {
-  visibility: visible;
+  visibility: visible; }
+
+.sticky-toolbar {
+  position: fixed;
+  top: 1px; }
+
+.medium-editor-toolbar-active.stalker-toolbar {
   -webkit-animation: pop-upwards 160ms forwards linear;
-  -ms-animation: pop-upwards 160ms forwards linear;
-  animation: pop-upwards 160ms forwards linear;
-  -webkit-transition: top 0.075s ease-out, left 0.075s ease-out;
-          transition: top 0.075s ease-out, left 0.075s ease-out; }
+          animation: pop-upwards 160ms forwards linear; }
 
 .medium-editor-action-bold {
   font-weight: bolder; }
@@ -131,27 +141,25 @@
 .medium-editor-action-italic {
   font-style: italic; }
 
-.medium-editor-toolbar-form-anchor {
+.medium-editor-toolbar-form {
   display: none; }
-  .medium-editor-toolbar-form-anchor input, .medium-editor-toolbar-form-anchor a {
+  .medium-editor-toolbar-form input, .medium-editor-toolbar-form a {
     font-family: HelveticaNeue, Helvetica, Arial, sans-serif; }
-  .medium-editor-toolbar-form-anchor .medium-editor-toolbar-anchor-input, .medium-editor-toolbar-form-anchor label {
+  .medium-editor-toolbar-form .medium-editor-toolbar-input, .medium-editor-toolbar-form label {
     margin: 0;
     padding: 6px;
     width: 316px;
     border: none;
     font-size: 14px;
-    -moz-box-sizing: border-box;
-         box-sizing: border-box; }
-    .medium-editor-toolbar-form-anchor .medium-editor-toolbar-anchor-input:focus, .medium-editor-toolbar-form-anchor label:focus {
+    box-sizing: border-box; }
+    .medium-editor-toolbar-form .medium-editor-toolbar-input:focus, .medium-editor-toolbar-form label:focus {
       outline: 0;
       border: none;
       box-shadow: none;
-      -webkit-appearance: none;
-      -moz-appearance: none; }
-  .medium-editor-toolbar-form-anchor label {
+      appearance: none; }
+  .medium-editor-toolbar-form label {
     display: block; }
-  .medium-editor-toolbar-form-anchor a {
+  .medium-editor-toolbar-form a {
     display: inline-block;
     margin: 0 10px;
     text-decoration: none;
@@ -165,4 +173,37 @@
     top: 0;
     left: 0;
     content: attr(data-placeholder) !important;
-    font-style: italic; }
+    font-style: italic;
+    white-space: pre; }
+
+.medium-editor-dragover {
+  background: #ddd; }
+
+.medium-image-loading {
+  width: 40px;
+  height: 40px;
+  background-color: #333;
+  display: inline-block;
+  border-radius: 100%;
+  -webkit-animation: medium-image-loading-animation 1s infinite ease-in-out;
+          animation: medium-image-loading-animation 1s infinite ease-in-out; }
+
+@-webkit-keyframes medium-image-loading-animation {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0); }
+
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 0; } }
+
+@keyframes medium-image-loading-animation {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0); }
+
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 0; } }

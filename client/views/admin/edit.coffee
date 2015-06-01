@@ -163,7 +163,8 @@ Template.blogAdminEdit.events
     if $html.is(':visible')
       return
 
-    $html.val BlogEditor.make(tpl).pretty()
+    if $editable.find('.medium-insert-images').length is 0
+      $html.val BlogEditor.make(tpl).pretty()
     setEditMode tpl, 'html'
     $html.height($editable.height())
 
