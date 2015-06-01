@@ -88,6 +88,8 @@ if Meteor.isServer
       !! Post.first slug: slug
 
     isBlogAuthorized: () ->
+      check arguments[0], Match.OneOf(Object, Number, String, null, undefined)
+
       if not Meteor.user()
         return false
 
@@ -114,8 +116,6 @@ if Meteor.isServer
       if Blog.settings.authorRole
 
         # Get the post
-        check arguments[0], Match.OneOf(Object, Number, String, null, undefined)
-
         if _.isObject arguments[0]
           post = arguments[0]
         else if _.isNumber(arguments[0]) or _.isString(arguments[0])
