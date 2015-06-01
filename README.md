@@ -337,7 +337,7 @@ if (Meteor.isClient) {
 
 ### Social Sharing
 
-This package depends on the [`shareit` package](https://atmospherejs.com/package/shareit)
+This package depends on the [`lovetostrike:shareit` package](https://atmospherejs.com/lovetostrike/shareit)
 for powering social sharing.  If you use your own `blogShowTemplate` template,
 include `{{> shareit}}` to display share buttons.
 

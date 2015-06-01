@@ -8,7 +8,7 @@
 
 * Upgrade `medium-editor`, `medium-editor-insert-plugin` libs to 1.0 versions ([#164](https://github.com/Differential/meteor-blog/issues/164))
 * Add Swift syntax highlighting ([#156](https://github.com/Differential/meteor-blog/issues/156))
-* Allow user to upload a featured image for a post ([#161](https://github.com/Differential/meteor-blog/pull/161))
+* Allow user to upload a featured image for a post! ([#161](https://github.com/Differential/meteor-blog/pull/161))
 * Optionally make drafts inaccessible to public via `Blog.config` ([#163](https://github.com/Differential/meteor-blog/pull/163))
 * Fix bugs related to `side-comments.js` ([#157](https://github.com/Differential/meteor-blog/pull/157) and [#170](https://github.com/Differential/meteor-blog/pull/170))
 * Upgrade `shareit` package and move to `lovetostrike:shareit` ([#155](https://github.com/Differential/meteor-blog/pull/155) and [#175](https://github.com/Differential/meteor-blog/pull/175))
