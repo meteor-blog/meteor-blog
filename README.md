@@ -7,6 +7,9 @@ for a meteor-based blog.
 This blog is very much a work in progress. To help decide what gets add next,
 vote with your [Github issues](https://github.com/Differential/meteor-blog/issues)!
 
+## Example App
+You can view an example application [here](https://github.com/Differential/example-blog-app) or view it live (without customization) at [blog-example.meteor.com](http://blog-example.meteor.com)
+
 ### Features
 
 * Medium-style editor
