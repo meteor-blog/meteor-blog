@@ -128,6 +128,16 @@ Template.blogShowBody.events
 Template.blogShowBody.helpers
   isAdmin: () ->
     Session.get "canEditPost"
+  shareData: () ->
+    post = Post.first slug: Session.get('slug')
+
+    {
+      title: post.title,
+      excerpt: post.excerpt,
+      description: post.description,
+      author: post.authorName(),
+      thumbnail: post.thumbnail()
+    }
 
 
 Template.disqus.rendered = ->
