@@ -35,10 +35,15 @@ class @Post extends Minimongoid
     @body
 
   thumbnail: ->
-    regex = new RegExp /img src=[\'"]([^\'"]+)/ig
-
-    while match = regex.exec @body
-      return match[1]
+    if @featuredImage?
+      if Meteor.settings?.public?.blog?.useS3
+        @featuredImage
+      else
+        Meteor.absoluteUrl() + @featuredImage
+    else
+      regex = new RegExp /img src=[\'"]([^\'"]+)/ig
+      while match = regex.exec @body
+        return match[1]
 
   @excerpt: (html) ->
     if Blog.settings.excerptFunction?
