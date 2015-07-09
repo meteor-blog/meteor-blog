@@ -52,7 +52,7 @@ Meteor.startup ->
     html = obj.body
     para = /<p[^>]*>/g
     classPattern = /class=[\"|\'].*[\"|\']/g
-    if html.indexOf('commentable-section') < 0
+    if html?.indexOf('commentable-section') < 0
       index = 0
       html = html.replace(para, (ele) ->
         if classPattern.test(ele)
