@@ -25,6 +25,9 @@
                       Select File
                     {{/if}}
                   </label>
+                  {{#if featuredImage}}
+                    &nbsp;<a href="#" data-action="delete-featured"><i class="fa fa-trash-o"></i></a>
+                  {{/if}}
                   <p class="help-block">
                     <div class="checkbox">
                       <label for="background-title">

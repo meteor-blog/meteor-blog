@@ -198,6 +198,16 @@ Template.blogAdminEdit.events
     if not slug.val()
       slug.val Post.slugify(title)
 
+  'click [data-action=delete-featured]': (e, tpl) ->
+    e.preventDefault()
+    post = getPost Session.get('postId')
+    post.update
+      featuredImageWidth: null
+      featuredImageHeight: null
+      featuredImageName: null
+      featuredImage: null
+      titleBackground: null
+
   'change [name=featured-image]': (e, tpl) ->
     the_file = $(e.currentTarget)[0].files[0]
     post = getPost Session.get('postId')
