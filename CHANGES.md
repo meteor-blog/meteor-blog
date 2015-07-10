@@ -1,5 +1,13 @@
 ## Changelog
 
+### v0.7.1
+
+* Allow user to remove featured image ([#186](https://github.com/Differential/meteor-blog/issues/186)
+* Use featured image for social sharing thumbnail if there is one ([#192](https://github.com/Differential/meteor-blog/issues/192)
+* Add config to suppress loading CDN font-awesome ([#189](https://github.com/Differential/meteor-blog/issues/189)
+* Fix crash caused by empty blog posts
+* Fix `shareit` issue with Twitter cards ([#193](https://github.com/Differential/meteor-blog/pull/193))
+
 ### v0.7.0
 
 * Upgrade `vsivsi:file-collection` to 1.1.0 ([#171](https://github.com/Differential/meteor-blog/issues/171) and [#180](https://github.com/Differential/meteor-blog/issues/180))
