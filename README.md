@@ -56,6 +56,10 @@ select users can edit the blog, the package supports two roles:
 * `adminRole` - Can create, and modify or delete any post.
 * `authorRole` - Can create, and modify or delete only my own posts.
 
+In addition, if using groups from the alanning:roles package, set the associated group using
+* `adminGroup` - Group associated with `adminRole`.
+* `authorGroup` - Group associated with `authorRole`.
+
 To enable either or both roles, specify values in the blog config:
 
 ```coffee
