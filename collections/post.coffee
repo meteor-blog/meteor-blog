@@ -39,7 +39,7 @@ class @Post extends Minimongoid
       if Meteor.settings?.public?.blog?.useS3
         @featuredImage
       else
-        Meteor.absoluteUrl() + @featuredImage
+        Meteor.absoluteUrl() + @featuredImage.slice(1)
     else
       regex = new RegExp /img src=[\'"]([^\'"]+)/ig
       while match = regex.exec @body
