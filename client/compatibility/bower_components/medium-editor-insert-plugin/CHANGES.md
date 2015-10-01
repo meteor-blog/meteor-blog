@@ -1,8 +1,20 @@
 
+2.0.1 / 2015-06-11
+==================
+
+  * Fix ```hideButtons``` function
+
+2.0.0 / 2015-06-09
+==================
+
+  * **This version works for MediumEditor ```v4.12.0``` and up, because in ```v4.12.0``` MediumEditor changed the way to retrieve extension**
+  * Remove deprecated images options: ```uploadScript``` and ```formData```. Use ```fileUploadOptions``` instead.
+  * Add ```video-vimeo``` and ```video-youtube``` classes to embedded videos to allow css customization
+
 1.7.0 / 2015-05-11
 ==================
 
-  * Version bump to 1.7.0, because 1.6.2 added file type and size validation which should cause a minor version bump, not only s patch
+  * Version bump to 1.7.0, because 1.6.2 added file type and size validation which should cause a minor version bump, not only a patch
 
 1.6.2 / 2015-05-11
 ==================

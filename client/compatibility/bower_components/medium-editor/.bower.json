@@ -1,11 +1,11 @@
 {
   "name": "medium-editor",
-  "version": "4.11.1",
-  "homepage": "http://daviferreira.github.io/medium-editor/",
+  "homepage": "http://yabwe.github.io/medium-editor/",
   "authors": [
     "Davi Ferreira <hi@daviferreira.com>",
     "Nate Mielnik <nathan@outlook.com>",
-    "Noah Chase <nchase@gmail.com>"
+    "Noah Chase <nchase@gmail.com>",
+    "Jeremy Benoist <jeremy.benoist@gmail.com>"
   ],
   "description": "Medium.com WYSIWYG editor clone written in pure JavaScript.",
   "main": [
@@ -32,17 +32,19 @@
     "Gruntfile.js",
     "demo",
     "package.json",
-    "src/js",
+    "src",
     "README.md",
     "CHANGES.md"
   ],
-  "_release": "4.11.1",
+  "version": "5.8.2",
+  "_release": "5.8.2",
   "_resolution": {
     "type": "version",
-    "tag": "4.11.1",
-    "commit": "91633089fbb7367e96894173c9fddd5fb370dff5"
+    "tag": "5.8.2",
+    "commit": "c575bb4ac512bb5399837a80563e3ac497f6f127"
   },
   "_source": "git://github.com/daviferreira/medium-editor.git",
-  "_target": "^4.1.1",
-  "_originalSource": "medium-editor"
+  "_target": "~5.8.2",
+  "_originalSource": "medium-editor",
+  "_direct": true
 }

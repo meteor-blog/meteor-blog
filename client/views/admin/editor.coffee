@@ -9,18 +9,19 @@ class @BlogEditor extends MediumEditor
 
     # Set up the medium editor with image upload
     editor = new BlogEditor $editable[0],
-      placeholder: ''
-      firstHeader: 'h1'
-      secondHeader: 'h2'
       buttonLabels: 'fontawesome'
-      buttons:
-        ['bold', 'italic', 'underline', 'anchor', 'pre', 'header1', 'header2', 'orderedlist', 'unorderedlist', 'quote', 'image']
-      onShowToolbar: =>
-        # Disable medium toolbar if we are in a code block
-        if @inPreformatted()
-          editor.toolbar.hideToolbar()
+      extensions:
+        placeholder:
+          text: ''
+      toolbar:
+        buttons: ['bold', 'italic', 'underline', 'anchor', 'pre', 'h1', 'h2', 'orderedlist', 'unorderedlist', 'quote', 'image']
 
+    # Disable medium toolbar if we are in a code block
+    editor.subscribe 'showToolbar', (e) =>
+      if @inPreformatted()
+        editor.toolbar.hideToolbar()
 
+    # Enable medium-editor-insert-plugin for images
     tpl.$('.editable').mediumInsert
       editor: editor
       enabled: true

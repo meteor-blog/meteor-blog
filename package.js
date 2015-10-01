@@ -30,15 +30,15 @@ Package.onUse(function(api) {
     // STYLESHEETS
     'client/stylesheets/lib/side-comments/side-comments.css',
     'client/stylesheets/lib/side-comments/default.css',
-    'client/stylesheets/lib/medium-editor.css',
-    'client/stylesheets/lib/medium-themes/bootstrap.css',
+    'client/compatibility/bower_components/medium-editor/dist/css/medium-editor.css',
+    'client/compatibility/bower_components/medium-editor/dist/css/themes/bootstrap.css',
     'client/compatibility/bower_components/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.css',
     'client/stylesheets/lib/bootstrap-tagsinput.css',
 
     // JAVASCRIPT LIBS
     'client/boot.coffee',
     'client/compatibility/side-comments.js',
-    'client/compatibility/medium-editor.js',
+    'client/compatibility/bower_components/medium-editor/dist/js/medium-editor.js',
     'client/compatibility/bower_components/handlebars/handlebars.runtime.js',
     'client/compatibility/handlebars.noconflict.js',
     'client/compatibility/bower_components/jquery-sortable/source/js/jquery-sortable.js',
