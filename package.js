@@ -74,11 +74,6 @@ Package.onUse(function(api) {
 
   api.addAssets([
     'public/default-user.png',
-    'client/stylesheets/images/remove.png',
-    'client/stylesheets/images/link.png',
-    'client/stylesheets/images/unlink.png',
-    'client/stylesheets/images/resize-bigger.png',
-    'client/stylesheets/images/resize-smaller.png'
   ], 'client');
 
   // FILES FOR SERVER
@@ -104,7 +99,6 @@ Package.onUse(function(api) {
     'accounts-base',
     'kaptron:minimongoid@0.9.1',
     'momentjs:moment@2.10.6',
-    'vsivsi:file-collection@1.1.0',
     'alanning:roles@1.2.13',
     'meteorhacks:fast-render@2.10.0',
     'meteorhacks:subs-manager@1.6.2',
