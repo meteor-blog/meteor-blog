@@ -27,44 +27,38 @@ class @BlogEditor extends MediumEditor
       enabled: true
       addons:
         images:
-          uploadFile: ($placeholder, file, that) ->
-            # Use CollectionFS + Amazon S3
-            if Meteor.settings?.public?.blog?.useS3
-              FS.Utility.eachFile event, (file) ->
-                S3Files.insert file, (err, fileObj) ->
-                  Tracker.autorun (c) ->
-                    theFile = S3Files.find({_id: fileObj._id}).fetch()[0]
-                    if theFile.isUploaded() and theFile.url?()
-                      that.uploadCompleted { responseText: theFile.url() }, $placeholder
-                      c.stop()
-                      return
-                    else
-                      $progress = $('.progress:first', this.$el)
-                      complete = theFile.uploadProgress() ? 0
-                      $progress.attr 'value', complete
-                      $progress.html complete
-            # Use Local Filestore
-            else
-              id = FilesLocal.insert
-                _id: Random.id()
-                contentType: 'image/jpeg'
-
-              $.ajax
-                type: "post"
-                url: "/fs/#{id}"
-                xhr: ->
-                  xhr = new XMLHttpRequest()
-                  xhr.upload.onprogress = that.updateProgressBar
-                  xhr
-
-                cache: false
-                contentType: false
-                complete: (jqxhr) ->
-                  that.uploadCompleted { responseText: "/fs/#{id}" }, $placeholder
-                  return
-
-                processData: false
-                data: that.options.formatData(file)
+          fileUploadOptions:
+            submit: (e, data) ->
+              self = tpl.$('.editable').data('plugin_mediumInsertImages')
+              files = data.files
+              # Use CollectionFS + Amazon S3
+              if Meteor.settings?.public?.blog?.useS3
+                for file in files
+                  S3Files.insert file, (err, fileObj) ->
+                    Tracker.autorun (c) ->
+                      theFile = S3Files.find({_id: fileObj._id}).fetch()[0]
+                      if theFile.isUploaded() and theFile.url?()
+                        # insert-plugin assumes a server response, but we are
+                        # cooler than that so pretend this came from a server
+                        self.uploadDone e,
+                          result:
+                            files: [ url: theFile.url() ]
+                          context: data.context
+                        c.stop()
+              # Use Local Filestore
+              else
+                for file in files
+                  FilesLocal.insert file, (err, fileObj) ->
+                    Tracker.autorun (c) ->
+                      theFile = FilesLocal.find({_id: fileObj._id}).fetch()[0]
+                      if theFile.isUploaded() and theFile.url?()
+                        # insert-plugin assumes a server response, but we are
+                        # cooler than that so pretend this came from a server
+                        self.uploadDone e,
+                          result:
+                            files: [ url: theFile.url() ]
+                          context: data.context
+                        c.stop()
 
         #embeds: {}
 

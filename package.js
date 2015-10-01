@@ -107,9 +107,9 @@ Package.onUse(function(api) {
     'alanning:roles@1.2.13',
     'meteorhacks:fast-render@2.0.2',
     'meteorhacks:subs-manager@1.2.0',
-    'cfs:standard-packages@0.5.3',
-    'cfs:filesystem@0.1.1',
-    'cfs:s3@0.1.1'
+    'cfs:standard-packages@0.5.9',
+    'cfs:gridfs@0.0.33',
+    'cfs:s3@0.1.3'
   ], both);
 
   // FILES FOR SERVER AND CLIENT

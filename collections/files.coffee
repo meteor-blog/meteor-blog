@@ -1,32 +1,33 @@
 ############################################################################/
 ##        Local Filestore                                                  /
 ##########################################################################/
-@FilesLocal = FileCollection
-  resumable: false
-  baseURL: '/fs'
-  http: [
-    method: 'get',
-    path: '/:id',
-    lookup: (params, query) ->
-      _id: new Meteor.Collection.ObjectID(params.id)
-  ,
-    method: 'post',
-    path: '/:id',
-    lookup: (params, query) ->
-      _id: new Meteor.Collection.ObjectID(params.id)
-  ]
+@filesStore = new FS.Store.GridFS 'blog_images'
 
-if Meteor.isServer
+@FilesLocal = new FS.Collection 'blog_images',
+  stores: [filesStore]
+  filter:
+    # maxSize: 3145728
+    allow:
+      contentTypes: [
+        'image/*'
+      ]
+  onInvalid: (message) ->
+    console.log message
+
+if Meteor.isClient
+  Meteor.subscribe "blog_images"
+else
+  Meteor.publish 'blog_images', () -> FilesLocal.find()
   FilesLocal.allow
     insert: (userId, file) ->
       !!userId
     remove: (userId, file) ->
       # Only owners can delete
       return file.metadata and file.metadata.userId and file.metadata.userId is userId
-    write: ->
+    update: ->
       # Anyone can POST a file
       true
-    read: (userId, file) ->
+    download: (userId, file) ->
       # Anyone can GET a file
       true
 
@@ -73,8 +74,7 @@ if Meteor.isServer and useS3
     onInvalid: (message) ->
       console.log message
 
-  Meteor.publish 's3Imports', () ->
-    S3Files.find()
+  Meteor.publish 's3Imports', () -> S3Files.find()
   S3Files.allow
     insert: (userId, file) ->
       userId

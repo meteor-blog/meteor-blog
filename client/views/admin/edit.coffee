@@ -226,33 +226,19 @@ Template.blogAdminEdit.events
             if post.id?
               post.update
                 featuredImage: theFile.url()
+              Notifications.success '', 'Featured image saved!'
               c.stop()
     # Local Filestore
     else
-      # cfs id
-      id = FilesLocal.insert
-        _id: Random.id()
-        contentType: 'image/jpeg'
-      # format data
-      formdata = new FormData()
-      formdata.append('file', the_file)
-      $.ajax
-        type: "post"
-        url: "/fs/#{id}"
-        xhr: ->
-          xhr = new XMLHttpRequest()
-          xhr.upload.onprogress = (data) ->
-            # upload progress is avilable here if needed
-          xhr
-        cache: false
-        contentType: false
-        processData: false
-        data: formdata
-        complete: (jqxhr) ->
-          if post.id?
-            post.update
-              featuredImage: "/fs/#{id}"
-            Notifications.success '', 'Featured image saved!'
+      FilesLocal.insert the_file, (err, fileObj) ->
+        Tracker.autorun (c) ->
+          theFile = FilesLocal.find({_id: fileObj._id}).fetch()[0]
+          if theFile.isUploaded() and theFile.url?()
+            if post.id?
+              post.update
+                featuredImage: theFile.url()
+              Notifications.success '', 'Featured image saved!'
+              c.stop()
 
   'change [name=background-title]': (e, tpl) ->
     $checkbox = $(e.currentTarget)
