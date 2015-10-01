@@ -6,7 +6,7 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('METEOR@0.9.0');
+  api.versionsFrom('METEOR@1.2');
 
   var both = ['client', 'server'];
 
@@ -19,8 +19,8 @@ Package.onUse(function(api) {
     'less',
     'underscore',
     'aslagle:reactive-table@0.5.5',
-    'lovetostrike:shareit@0.4.1',
-    'gfk:notifications@1.0.11'
+    'liberation:shareit@1.0.1',
+    'gfk:notifications@1.1.4'
   ], 'client');
 
   // FILES FOR CLIENT
@@ -61,6 +61,7 @@ Package.onUse(function(api) {
     'client/views/admin/edit.html',
     'client/views/admin/editor.coffee',
     'client/views/admin/edit.coffee',
+    'client/stylesheets/variables.import.less',
     'client/views/blog/blog.less',
     'client/views/blog/blog.html',
     'client/views/blog/show.html',
@@ -71,14 +72,14 @@ Package.onUse(function(api) {
 
   // STATIC ASSETS FOR CLIENT
 
-  api.addFiles([
+  api.addAssets([
     'public/default-user.png',
     'client/stylesheets/images/remove.png',
     'client/stylesheets/images/link.png',
     'client/stylesheets/images/unlink.png',
     'client/stylesheets/images/resize-bigger.png',
     'client/stylesheets/images/resize-smaller.png'
-  ], 'client', { isAsset: true });
+  ], 'client');
 
   // FILES FOR SERVER
 
@@ -98,15 +99,15 @@ Package.onUse(function(api) {
   api.use([
     'coffeescript',
     'deps',
-    'iron:router@1.0.0',
-    'iron:location@1.0.0',
+    'iron:router@1.0.9',
+    'iron:location@1.0.9',
     'accounts-base',
     'kaptron:minimongoid@0.9.1',
     'momentjs:moment@2.10.6',
     'vsivsi:file-collection@1.1.0',
     'alanning:roles@1.2.13',
-    'meteorhacks:fast-render@2.0.2',
-    'meteorhacks:subs-manager@1.2.0',
+    'meteorhacks:fast-render@2.10.0',
+    'meteorhacks:subs-manager@1.6.2',
     'cfs:standard-packages@0.5.9',
     'cfs:gridfs@0.0.33',
     'cfs:s3@0.1.3'
