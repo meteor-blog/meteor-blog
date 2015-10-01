@@ -2,7 +2,8 @@ Meteor.methods
 
   serveRSS: () ->
     RSS = Npm.require('rss')
-    host = _.trim Meteor.absoluteUrl(), '/'
+    host = Meteor.absoluteUrl()
+    host = host.slice(0, host.length - 1)
 
     feed = new RSS
       title: Blog.settings.rss.title
