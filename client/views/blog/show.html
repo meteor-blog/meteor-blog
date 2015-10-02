@@ -21,7 +21,7 @@
       </h1>
       <div class="meteor-blog-post-meta text-center">
         {{#if isAdmin}}
-           <small><a href="#" id="edit-post">edit</a></small>
+           <small><a href="#" data-action="edit-post">edit</a></small>
            --
         {{/if}}
         By {{authorName}} on {{blogFormatDate publishedAt}}
@@ -54,7 +54,7 @@
                     <h1 class="text-center">
                       {{title}}
                       {{#if isAdmin}}
-                         <small><a href="#" id="edit-post">edit</a></small>
+                         <small><a href="#" data-action="edit-post">edit</a></small>
                       {{/if}}
                     </h1>
                     <div class="meteor-blog-post-meta text-center">

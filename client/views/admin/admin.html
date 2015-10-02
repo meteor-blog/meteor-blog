@@ -6,10 +6,10 @@
           <h1>Blog Admin</h1>
         </div>
         <div class="col-md-9">
-          <a href="#" class="for-new-blog btn btn-default">
+          <a href="#" data-action="new-blog" class="btn btn-default">
             <i class="fa fa-plus"></i> Add Blog Post
           </a>
-          <select class="for-filtering form-control">
+          <select data-action="filtering" class="form-control">
             <option value="all">All Posts</option>
             <option value="mine">My Posts</option>
           </select>
@@ -20,7 +20,7 @@
           {{#if posts}}
             {{> reactiveTable collection=posts settings=table}}
           {{else}}
-            <a href="#" class="for-new-blog">Create the first blog</a>
+            <a href="#" data-action="new-blog">Create the first blog</a>
           {{/if}}
         </div>
       </div>
@@ -51,9 +51,9 @@
 
 <template name="blogAdminStatusColumn">
   {{#if published}}
-    <a class="for-unpublish" href="#">Draft</a> | <span class="selected">Published</span>
+    <a data-action="unpublish" href="#">Draft</a> | <span class="selected">Published</span>
   {{else}}
-    <span class="selected">Draft</span> | <a class="for-publish" href="#">Published</a>
+    <span class="selected">Draft</span> | <a data-action="publish" href="#">Published</a>
   {{/if}}
 </template>
 
@@ -62,5 +62,5 @@
 </template>
 
 <template name="blogAdminDeleteColumn">
-  <a href="#" class='delete'><i class="fa fa-trash-o"></i></a>
+  <a href="#" data-action="delete"><i class="fa fa-trash-o"></i></a>
 </template>

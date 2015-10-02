@@ -120,7 +120,7 @@ Template.blogShowBody.rendered = ->
 
 
 Template.blogShowBody.events
-  'click a#edit-post': (event, template) ->
+  'click [data-action=edit-post]': (event, template) ->
     event.preventDefault()
     postId = Post.first({slug: Router.current().params.slug})._id
     Router.go 'blogAdminEdit', {id: postId}

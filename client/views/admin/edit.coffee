@@ -150,14 +150,14 @@ Template.blogAdminEdit.helpers
 
 Template.blogAdminEdit.events
   # Toggle between VISUAL/HTML modes
-  'click .visual-toggle': (e, tpl) ->
+  'click [data-action=toggle-visual]': (e, tpl) ->
     if tpl.$('.editable').is(':visible')
       return
 
     BlogEditor.make(tpl).highlightSyntax()
     setEditMode tpl, 'visual'
 
-  'click .html-toggle': (e, tpl) ->
+  'click [data-action=toggle-html]': (e, tpl) ->
     $editable = tpl.$('.editable')
     $html = tpl.$('.html-editor')
     if $html.is(':visible')

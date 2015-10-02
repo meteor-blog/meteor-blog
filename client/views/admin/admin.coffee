@@ -30,12 +30,12 @@ Template.blogAdmin.helpers
 
 Template.blogAdmin.events
 
-  'click .for-new-blog': (e, tpl) ->
+  'click [data-action=new-blog]': (e, tpl) ->
     e.preventDefault()
 
     Router.go 'blogAdminEdit', id: Random.id()
 
-  'change .for-filtering': (e) ->
+  'change [data-action=filtering]': (e) ->
     e.preventDefault()
 
     filters = {}
@@ -46,13 +46,13 @@ Template.blogAdmin.events
 
 Template.blogAdminStatusColumn.events
 
-  'click .for-publish': (e, tpl) ->
+  'click [data-action=publish]': (e, tpl) ->
     e.preventDefault()
     @update
       published: true
       publishedAt: new Date()
 
-  'click .for-unpublish': (e, tpl) ->
+  'click [data-action=unpublish]': (e, tpl) ->
     e.preventDefault()
     @update
       published: false
@@ -60,7 +60,7 @@ Template.blogAdminStatusColumn.events
 
 Template.blogAdminDeleteColumn.events
 
-  'click .delete': (e, tpl) ->
+  'click [data-action=delete]': (e, tpl) ->
     e.preventDefault()
 
     if confirm('Are you sure?')
