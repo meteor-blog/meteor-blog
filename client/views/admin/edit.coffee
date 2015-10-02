@@ -4,7 +4,7 @@
 # Return current post if we are editing one, or empty object if this is a new
 # post that has not been saved yet.
 getPost = (id) ->
-  (Post.first( { _id : id } ) ) or {}
+  (Blog.Post.first( { _id : id } ) ) or {}
 
 # reads image dimensions and takes a callback
 # callback passes params (width, height, fileName)
@@ -97,7 +97,7 @@ save = (tpl, cb) ->
     Meteor.call 'doesBlogExist', slug, (err, exists) ->
       if not exists
         attrs.userId = Meteor.userId()
-        post = Post.create attrs
+        post = Blog.Post.create attrs
         if post.errors
           return cb(null, new Error _(post.errors[0]).values()[0])
         cb post.id
@@ -136,7 +136,7 @@ Template.blogAdminEdit.rendered = ->
       ,
         name: 'tags'
         displayKey: 'val'
-        source: substringMatcher Tag.first().tags
+        source: substringMatcher Blog.Tag.first().tags
       ).bind 'typeahead:selected', (obj, datum) ->
         $tags.tagsinput 'add', datum.val
         $tags.tagsinput('input').typeahead 'val', ''
@@ -196,7 +196,7 @@ Template.blogAdminEdit.events
     title = $(e.currentTarget).val()
 
     if not slug.val()
-      slug.val Post.slugify(title)
+      slug.val Blog.Post.slugify(title)
 
   'click [data-action=delete-featured]': (e, tpl) ->
     e.preventDefault()
@@ -219,9 +219,9 @@ Template.blogAdminEdit.events
         featuredImageName: name
     # S3
     if Meteor.settings?.public?.blog?.useS3
-      S3Files.insert the_file, (err, fileObj) ->
+      Blog.S3Files.insert the_file, (err, fileObj) ->
         Tracker.autorun (c) ->
-          theFile = S3Files.find({_id: fileObj._id}).fetch()[0]
+          theFile = Blog.S3Files.find({_id: fileObj._id}).fetch()[0]
           if theFile.isUploaded() and theFile.url?()
             if post.id?
               post.update
@@ -230,9 +230,9 @@ Template.blogAdminEdit.events
               c.stop()
     # Local Filestore
     else
-      FilesLocal.insert the_file, (err, fileObj) ->
+      Blog.FilesLocal.insert the_file, (err, fileObj) ->
         Tracker.autorun (c) ->
-          theFile = FilesLocal.find({_id: fileObj._id}).fetch()[0]
+          theFile = Blog.FilesLocal.find({_id: fileObj._id}).fetch()[0]
           if theFile.isUploaded() and theFile.url?()
             if post.id?
               post.update

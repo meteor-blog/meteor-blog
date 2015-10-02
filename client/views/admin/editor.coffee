@@ -34,9 +34,9 @@ class @BlogEditor extends MediumEditor
               # Use CollectionFS + Amazon S3
               if Meteor.settings?.public?.blog?.useS3
                 for file in files
-                  S3Files.insert file, (err, fileObj) ->
+                  Blog.S3Files.insert file, (err, fileObj) ->
                     Tracker.autorun (c) ->
-                      theFile = S3Files.find({_id: fileObj._id}).fetch()[0]
+                      theFile = Blog.S3Files.find({_id: fileObj._id}).fetch()[0]
                       if theFile.isUploaded() and theFile.url?()
                         # insert-plugin assumes a server response, but we are
                         # cooler than that so pretend this came from a server
@@ -48,9 +48,9 @@ class @BlogEditor extends MediumEditor
               # Use Local Filestore
               else
                 for file in files
-                  FilesLocal.insert file, (err, fileObj) ->
+                  Blog.FilesLocal.insert file, (err, fileObj) ->
                     Tracker.autorun (c) ->
-                      theFile = FilesLocal.find({_id: fileObj._id}).fetch()[0]
+                      theFile = Blog.FilesLocal.find({_id: fileObj._id}).fetch()[0]
                       if theFile.isUploaded() and theFile.url?()
                         # insert-plugin assumes a server response, but we are
                         # cooler than that so pretend this came from a server

@@ -7,7 +7,7 @@ Template.blogLatest.rendered = ->
 
 Template.blogLatest.helpers
   latest: ->
-    Post.all()
+    Blog.Post.all()
 
   date: (date) ->
     if date

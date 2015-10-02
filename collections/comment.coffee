@@ -1,4 +1,4 @@
-class @Comment extends Minimongoid
+class Blog.Comment extends Minimongoid
 
   @_collection: new Meteor.Collection 'blog_comments'
 
@@ -7,7 +7,7 @@ class @Comment extends Minimongoid
     identifier: 'postId'
   ]
 
-Comment._collection.allow
+Blog.Comment._collection.allow
   insert: (userId, doc) ->
     !!userId
   update: (userId, doc, fields, modifier) ->

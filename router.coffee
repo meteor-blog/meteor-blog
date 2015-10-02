@@ -38,7 +38,7 @@ Router.route '/blog',
       ]
   fastRender: true
   data: ->
-    posts: Post.where {},
+    posts: Blog.Post.where {},
       sort: publishedAt: -1
 
 # BLOG TAG
@@ -52,7 +52,7 @@ Router.route '/blog/tag/:tag',
   ]
   fastRender: true
   data: ->
-    posts: Post.where
+    posts: Blog.Post.where
       tags: @params.tag
     ,
       sort: publishedAt: -1
@@ -81,10 +81,10 @@ Router.route '/blog/:slug',
       else
         Template[tpl].rendered = pkgFunc
 
-    if !Blog.settings.publicDrafts and !Post.first().published
+    if !Blog.settings.publicDrafts and !Blog.Post.first().published
       Meteor.call 'isBlogAuthorized', (err, authorized) =>
         return @redirect('/blog') unless authorized
-    Session.set 'postHasFeaturedImage', Post.first({slug: @params.slug}).featuredImage?.length > 0
+    Session.set 'postHasFeaturedImage', Blog.Post.first({slug: @params.slug}).featuredImage?.length > 0
     @next()
   action: ->
     @render() if @ready()
@@ -94,7 +94,7 @@ Router.route '/blog/:slug',
     subs.subscribe 'blog.authors'
   ]
   data: ->
-    Post.first slug: @params.slug
+    Blog.Post.first slug: @params.slug
 
 # BLOG ADMIN INDEX
 

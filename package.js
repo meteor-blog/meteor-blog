@@ -10,6 +10,36 @@ Package.onUse(function(api) {
 
   var both = ['client', 'server'];
 
+  // PACKAGES FOR SERVER AND CLIENT
+
+  api.use([
+    'coffeescript',
+    'deps',
+    'iron:router@1.0.9',
+    'iron:location@1.0.9',
+    'accounts-base',
+    'kaptron:minimongoid@0.9.1',
+    'momentjs:moment@2.10.6',
+    'alanning:roles@1.2.13',
+    'meteorhacks:fast-render@2.10.0',
+    'meteorhacks:subs-manager@1.6.2',
+    'cfs:standard-packages@0.5.9',
+    'cfs:gridfs@0.0.33',
+    'cfs:s3@0.1.3'
+  ], both);
+
+  // FILES FOR SERVER AND CLIENT
+
+  api.addFiles([
+    'lib/boot.coffee',
+    'collections/author.coffee',
+    'collections/post.coffee',
+    'collections/comment.coffee',
+    'collections/tag.coffee',
+    'collections/files.coffee',
+    'router.coffee'
+  ], both);
+
   // PACKAGES FOR CLIENT
 
   api.use([
@@ -26,6 +56,7 @@ Package.onUse(function(api) {
   // FILES FOR CLIENT
 
   api.addFiles([
+    'client/boot.coffee',
 
     // STYLESHEETS
     'client/stylesheets/lib/side-comments/side-comments.css',
@@ -36,7 +67,6 @@ Package.onUse(function(api) {
     'client/stylesheets/lib/bootstrap-tagsinput.css',
 
     // JAVASCRIPT LIBS
-    'client/boot.coffee',
     'client/compatibility/side-comments.js',
     'client/compatibility/bower_components/medium-editor/dist/js/medium-editor.js',
     'client/compatibility/bower_components/handlebars/handlebars.runtime.js',
@@ -88,35 +118,6 @@ Package.onUse(function(api) {
   // PACKAGES FOR SERVER
 
   Npm.depends({ rss: '0.0.4' });
-
-  // PACKAGES FOR SERVER AND CLIENT
-
-  api.use([
-    'coffeescript',
-    'deps',
-    'iron:router@1.0.9',
-    'iron:location@1.0.9',
-    'accounts-base',
-    'kaptron:minimongoid@0.9.1',
-    'momentjs:moment@2.10.6',
-    'alanning:roles@1.2.13',
-    'meteorhacks:fast-render@2.10.0',
-    'meteorhacks:subs-manager@1.6.2',
-    'cfs:standard-packages@0.5.9',
-    'cfs:gridfs@0.0.33',
-    'cfs:s3@0.1.3'
-  ], both);
-
-  // FILES FOR SERVER AND CLIENT
-
-  api.addFiles([
-    'collections/author.coffee',
-    'collections/post.coffee',
-    'collections/comment.coffee',
-    'collections/tag.coffee',
-    'collections/files.coffee',
-    'router.coffee'
-  ], both);
 });
 
 Package.onTest(function (api) {

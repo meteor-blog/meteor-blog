@@ -2,20 +2,18 @@
 # Server-side config
 #
 
-Blog =
-  settings:
-    adminRole: null
-    adminGroup: null
-    authorRole: null
-    authorGroup: null
-    rss:
-      title: ''
-      description: ''
+Blog.settings =
+  adminRole: null
+  adminGroup: null
+  authorRole: null
+  authorGroup: null
+  rss:
+    title: ''
+    description: ''
 
-  config: (appConfig) ->
-    @settings = _.extend(@settings, appConfig)
+Blog.config = (appConfig) ->
+  @settings = _.extend(@settings, appConfig)
 
-@Blog = Blog
 
 ################################################################################
 # Bootstrap Code
@@ -27,25 +25,25 @@ Meteor.startup ->
   # Migrations
   #
 
-  Post._collection._ensureIndex 'slug': 1
-  Comment._collection._ensureIndex 'slug': 1
+  Blog.Post._collection._ensureIndex 'slug': 1
+  Blog.Comment._collection._ensureIndex 'slug': 1
 
   # Create 'excerpt' field if none
-  if Post.where({ excerpt: { $exists: 0 }}).length
-    arr = Post.where({ excerpt: { $exists: 0 }})
+  if Blog.Post.where({ excerpt: { $exists: 0 }}).length
+    arr = Blog.Post.where({ excerpt: { $exists: 0 }})
     i = 0
     while i < arr.length
       obj = arr[i++]
-      obj.update({ excerpt: Post.excerpt(obj.body) })
+      obj.update({ excerpt: Blog.Post.excerpt(obj.body) })
 
   # Set version flag
-  if not Config.first()
-    Config.create versions: ['0.5.0']
+  if not Blog.Config.first()
+    Blog.Config.create versions: ['0.5.0']
   else
-    Config.first().push versions: '0.5.0'
+    Blog.Config.first().push versions: '0.5.0'
 
   # Add side comments
-  arr = Post.all()
+  arr = Blog.Post.all()
   i = 0
   while i < arr.length
     obj = arr[i++]
@@ -66,6 +64,6 @@ Meteor.startup ->
       obj.update body: html
 
   # Ensure tags collection is non-empty
-  if Tag.count() == 0
-    Tag.create
+  if Blog.Tag.count() == 0
+    Blog.Tag.create
       tags: ['meteor']

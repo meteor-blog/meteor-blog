@@ -6,19 +6,19 @@
 Meteor.publish 'blog.commentsBySlug', (slug) ->
   check slug, String
 
-  Comment.find slug: slug
+  Blog.Comment.find slug: slug
 
 Meteor.publish 'blog.singlePostBySlug', (slug) ->
   check slug, String
 
-  Post.find slug: slug
+  Blog.Post.find slug: slug
 
 Meteor.publish 'blog.posts', (limit) ->
   check limit, Match.OneOf(Number, null)
 
   if limit is null then return @ready()
 
-  Post.find { published: true },
+  Blog.Post.find { published: true },
     fields: body: 0
     sort: publishedAt: -1
     limit: limit
@@ -26,7 +26,7 @@ Meteor.publish 'blog.posts', (limit) ->
 Meteor.publish 'blog.taggedPosts', (tag) ->
   check tag, String
 
-  Post.find
+  Blog.Post.find
     published: true
     tags: tag
   ,
@@ -34,9 +34,9 @@ Meteor.publish 'blog.taggedPosts', (tag) ->
     sort: publishedAt: -1
 
 Meteor.publish 'blog.authors', ->
-  ids = _.uniq(_.pluck(Post.all(fields: userId: 1), 'userId'))
+  ids = _.uniq(_.pluck(Blog.Post.all(fields: userId: 1), 'userId'))
 
-  Author.find
+  Blog.Author.find
     _id: $in: ids
   ,
     fields:
@@ -55,27 +55,27 @@ Meteor.publish 'blog.singlePostById', (id) ->
   if not @userId
     return @ready()
 
-  Post.find _id: id
+  Blog.Post.find _id: id
 
 Meteor.publish 'blog.postTags', ->
   if not @userId
     return @ready()
 
   initializing = true
-  tags = Tag.first().tags
+  tags = Blog.Tag.first().tags
 
-  handle = Post.find({}, {fields: {tags: 1}}).observeChanges
+  handle = Blog.Post.find({}, {fields: {tags: 1}}).observeChanges
     added: (id, fields) =>
       if fields.tags
-        doc = Tag.first()
-        tags = _.uniq doc.tags.concat(Post.splitTags(fields.tags))
+        doc = Blog.Tag.first()
+        tags = _.uniq doc.tags.concat(Blog.Post.splitTags(fields.tags))
         doc.update tags: tags
         @changed('blog_tags', 42, {tags: tags}) unless initializing
 
     changed: (id, fields) =>
       if fields.tags
-        doc = Tag.first()
-        tags = _.uniq doc.tags.concat(Post.splitTags(fields.tags))
+        doc = Blog.Tag.first()
+        tags = _.uniq doc.tags.concat(Blog.Post.splitTags(fields.tags))
         doc.update tags: tags
         @changed('blog_tags', 42, {tags: tags}) unless initializing
 
@@ -94,6 +94,6 @@ Meteor.publish 'blog.postForAdmin', ->
   if Blog.settings.authorRole and Roles.userIsInRole(@userId, Blog.settings.authorRole)
     sel = userId: @userId
 
-  Post.find sel,
+  Blog.Post.find sel,
     fields: body: 0
     sort: publishedAt: -1

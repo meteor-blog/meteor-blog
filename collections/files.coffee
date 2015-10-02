@@ -1,9 +1,9 @@
 ############################################################################/
 ##        Local Filestore                                                  /
 ##########################################################################/
-@filesStore = new FS.Store.GridFS 'blog_images'
+filesStore = new FS.Store.GridFS 'blog_images'
 
-@FilesLocal = new FS.Collection 'blog_images',
+Blog.FilesLocal = new FS.Collection 'blog_images',
   stores: [filesStore]
   filter:
     # maxSize: 3145728
@@ -17,8 +17,8 @@
 if Meteor.isClient
   Meteor.subscribe "blog.images"
 else
-  Meteor.publish 'blog.images', () -> FilesLocal.find()
-  FilesLocal.allow
+  Meteor.publish 'blog.images', () -> Blog.FilesLocal.find()
+  Blog.FilesLocal.allow
     insert: (userId, file) ->
       !!userId
     remove: (userId, file) ->
@@ -38,9 +38,9 @@ else
 useS3 = Meteor.settings?.public?.blog?.useS3
 
 if Meteor.isClient and useS3
-  @s3ImportStore = new FS.Store.S3 "blog_s3Imports"
+  s3ImportStore = new FS.Store.S3 "blog_s3Imports"
 
-  @S3Files = new FS.Collection "blog_s3Imports",
+  Blog.S3Files = new FS.Collection "blog_s3Imports",
     stores: [s3ImportStore]
     filter:
       # maxSize: 3145728
@@ -55,7 +55,7 @@ if Meteor.isClient and useS3
 
 if Meteor.isServer and useS3
   s3Config = Meteor.settings?.private?.blog?.s3Config
-  @s3ImportStore = new FS.Store.S3 "blog_s3Imports",
+  s3ImportStore = new FS.Store.S3 "blog_s3Imports",
     accessKeyId:  s3Config.accessKeyId
     secretAccessKey:  s3Config.secretAccessKey
     bucket: s3Config.bucket
@@ -63,7 +63,7 @@ if Meteor.isServer and useS3
     maxTries: s3Config.s3MaxTries
     region: s3Config.region
 
-  @S3Files = new FS.Collection "blog_s3Imports",
+  Blog.S3Files = new FS.Collection "blog_s3Imports",
     stores: [s3ImportStore]
     filter:
       # maxSize: 3145728
@@ -74,8 +74,8 @@ if Meteor.isServer and useS3
     onInvalid: (message) ->
       console.log message
 
-  Meteor.publish 'blog.s3Imports', () -> S3Files.find()
-  S3Files.allow
+  Meteor.publish 'blog.s3Imports', () -> Blog.S3Files.find()
+  Blog.S3Files.allow
     insert: (userId, file) ->
       userId
     remove: (userId, file) ->

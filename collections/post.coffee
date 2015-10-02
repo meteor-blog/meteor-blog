@@ -1,4 +1,4 @@
-class @Post extends Minimongoid
+class Blog.Post extends Minimongoid
 
   @_collection: new Meteor.Collection 'blog_posts'
 
@@ -8,8 +8,8 @@ class @Post extends Minimongoid
   ]
 
   @after_save: (post) ->
-    post.tags = Post.splitTags post.tags
-    post.excerpt = Post.excerpt post.body if post.body
+    post.tags = Blog.Post.splitTags post.tags
+    post.excerpt = Blog.Post.excerpt post.body if post.body
 
     @_collection.update _id: post.id,
       $set:
@@ -90,7 +90,7 @@ if Meteor.isServer
     doesBlogExist: (slug) ->
       check slug, String
 
-      !! Post.first slug: slug
+      !! Blog.Post.first slug: slug
 
     isBlogAuthorized: () ->
       check arguments[0], Match.OneOf(Object, Number, String, null, undefined)
@@ -124,7 +124,7 @@ if Meteor.isServer
         if _.isObject arguments[0]
           post = arguments[0]
         else if _.isNumber(arguments[0]) or _.isString(arguments[0])
-          post = Post.first arguments[0]
+          post = Blog.Post.first arguments[0]
         else
           post = null
 
@@ -156,7 +156,7 @@ if Meteor.isServer
 # Authorization
 #
 
-Post._collection.allow
+Blog.Post._collection.allow
   insert: (userId, item) ->
     Meteor.call 'isBlogAuthorized', item
 

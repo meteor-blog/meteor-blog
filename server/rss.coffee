@@ -12,7 +12,7 @@ Meteor.methods
       site_url: host
       image_url: host + '/favicon.ico'
 
-    posts = Post.where
+    posts = Blog.Post.where
       published: true
     ,
       sort:

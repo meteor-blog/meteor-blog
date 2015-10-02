@@ -60,7 +60,7 @@ Template.blogShowBody.rendered = ->
 
     # load existing comments
     existingComments = []
-    Comment.where(slug: Session.get('slug')).forEach((comment) ->
+    Blog.Comment.where(slug: Session.get('slug')).forEach((comment) ->
       comment.comment.id = comment._id
       sec = _(existingComments).findWhere(sectionId: comment.sectionId.toString())
       if sec
@@ -85,7 +85,7 @@ Template.blogShowBody.rendered = ->
             authorName: comment.authorName
             authorId: comment.authorId
             comment: comment.comment
-        commentId = Comment.create attrs
+        commentId = Blog.Comment.create attrs
         comment.id = commentId
         sideComments.insertComment(comment)
       else
@@ -97,7 +97,7 @@ Template.blogShowBody.rendered = ->
 
     sideComments.on 'commentDeleted', (comment) ->
       if Meteor.user()
-        Comment.destroyAll comment.id
+        Blog.Comment.destroyAll comment.id
         sideComments.removeComment comment.sectionId, comment.id
 
   ####
@@ -113,7 +113,7 @@ Template.blogShowBody.rendered = ->
 
   # featured image resize
   if Session.get "postHasFeaturedImage"
-    post = Post.first({slug: Router.current().params.slug})
+    post = Blog.Post.first({slug: Router.current().params.slug})
     $(window).resize ->
       Session.set "fullWidthFeaturedImage", $(window).width() < post.featuredImageWidth
     $(window).trigger "resize" # so it runs once
@@ -122,14 +122,14 @@ Template.blogShowBody.rendered = ->
 Template.blogShowBody.events
   'click [data-action=edit-post]': (event, template) ->
     event.preventDefault()
-    postId = Post.first({slug: Router.current().params.slug})._id
+    postId = Blog.Post.first({slug: Router.current().params.slug})._id
     Router.go 'blogAdminEdit', {id: postId}
 
 Template.blogShowBody.helpers
   isAdmin: () ->
     Session.get "canEditPost"
   shareData: () ->
-    post = Post.first slug: Session.get('slug')
+    post = Blog.Post.first slug: Session.get('slug')
 
     {
       title: post.title,

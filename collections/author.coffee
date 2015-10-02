@@ -1,4 +1,4 @@
-class @Author extends Minimongoid
+class Blog.Author extends Minimongoid
 
   @_collection: Meteor.users
 
@@ -9,4 +9,4 @@ class @Author extends Minimongoid
 
   @current: ->
     if Meteor.userId()
-      Author.init Meteor.user()
+      Blog.Author.init Meteor.user()

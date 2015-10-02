@@ -6,7 +6,7 @@ Template.blogAdmin.helpers
   posts: ->
     # Call toArray() because minimongoid does not return a true array, and
     # reactive-table expects a true array (or collection)
-    results = Post.all(sort: updatedAt: -1).toArray()
+    results = Blog.Post.all(sort: updatedAt: -1).toArray()
 
     if _.size Session.get 'filters'
       results = _(results).where Session.get('filters')
