@@ -3,17 +3,17 @@
 # Public Publications
 #
 
-Meteor.publish 'commentsBySlug', (slug) ->
+Meteor.publish 'blog.commentsBySlug', (slug) ->
   check slug, String
 
   Comment.find slug: slug
 
-Meteor.publish 'singlePostBySlug', (slug) ->
+Meteor.publish 'blog.singlePostBySlug', (slug) ->
   check slug, String
 
   Post.find slug: slug
 
-Meteor.publish 'posts', (limit) ->
+Meteor.publish 'blog.posts', (limit) ->
   check limit, Match.OneOf(Number, null)
 
   if limit is null then return @ready()
@@ -23,7 +23,7 @@ Meteor.publish 'posts', (limit) ->
     sort: publishedAt: -1
     limit: limit
 
-Meteor.publish 'taggedPosts', (tag) ->
+Meteor.publish 'blog.taggedPosts', (tag) ->
   check tag, String
 
   Post.find
@@ -33,7 +33,7 @@ Meteor.publish 'taggedPosts', (tag) ->
     fields: body: 0
     sort: publishedAt: -1
 
-Meteor.publish 'authors', ->
+Meteor.publish 'blog.authors', ->
   ids = _.uniq(_.pluck(Post.all(fields: userId: 1), 'userId'))
 
   Author.find
@@ -49,7 +49,7 @@ Meteor.publish 'authors', ->
 # Admin Publications
 #
 
-Meteor.publish 'singlePostById', (id) ->
+Meteor.publish 'blog.singlePostById', (id) ->
   check id, String
 
   if not @userId
@@ -57,7 +57,7 @@ Meteor.publish 'singlePostById', (id) ->
 
   Post.find _id: id
 
-Meteor.publish 'postTags', ->
+Meteor.publish 'blog.postTags', ->
   if not @userId
     return @ready()
 
@@ -84,7 +84,7 @@ Meteor.publish 'postTags', ->
   @ready()
   @onStop -> handle.stop()
 
-Meteor.publish 'postForAdmin', ->
+Meteor.publish 'blog.postForAdmin', ->
   if not @userId
     return @ready()
 

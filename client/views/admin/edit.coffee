@@ -118,7 +118,7 @@ Template.blogAdminEdit.rendered = ->
   # (re: autosave).
   ranOnce = false
   @autorun =>
-    sub = Meteor.subscribe 'singlePostById', Session.get('postId')
+    sub = Meteor.subscribe 'blog.singlePostById', Session.get('postId')
     # Load post body initially, if any
     if sub.ready() and not ranOnce
       ranOnce = true

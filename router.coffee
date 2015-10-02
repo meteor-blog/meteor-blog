@@ -33,8 +33,8 @@ Router.route '/blog',
   waitOn: ->
     if (typeof Session isnt 'undefined')
       [
-        subs.subscribe 'posts', Session.get('postLimit')
-        subs.subscribe 'authors'
+        subs.subscribe 'blog.posts', Session.get('postLimit')
+        subs.subscribe 'blog.authors'
       ]
   fastRender: true
   data: ->
@@ -47,8 +47,8 @@ Router.route '/blog/tag/:tag',
   name: 'blogTagged'
   template: 'custom'
   waitOn: -> [
-    subs.subscribe 'taggedPosts', @params.tag
-    subs.subscribe 'authors'
+    subs.subscribe 'blog.taggedPosts', @params.tag
+    subs.subscribe 'blog.authors'
   ]
   fastRender: true
   data: ->
@@ -89,9 +89,9 @@ Router.route '/blog/:slug',
   action: ->
     @render() if @ready()
   waitOn: -> [
-    Meteor.subscribe 'singlePostBySlug', @params.slug
-    subs.subscribe 'commentsBySlug', @params.slug
-    subs.subscribe 'authors'
+    Meteor.subscribe 'blog.singlePostBySlug', @params.slug
+    subs.subscribe 'blog.commentsBySlug', @params.slug
+    subs.subscribe 'blog.authors'
   ]
   data: ->
     Post.first slug: @params.slug
@@ -114,8 +114,8 @@ Router.route '/admin/blog',
 
     @next()
   waitOn: ->
-    [ Meteor.subscribe 'postForAdmin'
-      Meteor.subscribe 'authors' ]
+    [ Meteor.subscribe 'blog.postForAdmin'
+      Meteor.subscribe 'blog.authors' ]
 
 # NEW/EDIT BLOG
 
@@ -138,7 +138,7 @@ Router.route '/admin/blog/edit/:id',
   action: ->
     @render() if @ready()
   waitOn: -> [
-    Meteor.subscribe 'singlePostById', @params.id
-    Meteor.subscribe 'authors'
-    Meteor.subscribe 'postTags'
+    Meteor.subscribe 'blog.singlePostById', @params.id
+    Meteor.subscribe 'blog.authors'
+    Meteor.subscribe 'blog.postTags'
   ]
