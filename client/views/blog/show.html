@@ -1,5 +1,5 @@
 <template name="blogShow">
-  <div id="meteor-blog" class="blog-single">
+  <div class="meteor-blog-single">
     {{#if session "postHasFeaturedImage"}}
       {{> blogShowFeaturedImage}}
     {{/if}}
@@ -14,12 +14,12 @@
 </template>
 
 <template name="blogShowBody">
-  <article class="post">
+  <div class="meteor-blog-post">
     {{#unless titleBackground}}
-      <h1 class="mb-title text-center">
+      <h1 class="meteor-blog-post-title text-center">
         {{title}}
       </h1>
-      <div class="post-meta text-center">
+      <div class="meteor-blog-post-meta text-center">
         {{#if isAdmin}}
            <small><a href="#" id="edit-post">edit</a></small>
            --
@@ -28,11 +28,11 @@
         {{> blogTags }}
       </div>
     {{/unless}}
-    <div id="commentable-area" class="the-content">
+    <div id="commentable-area">
       {{{html}}}
     </div>
-  </article>
-  <div class="blog-back-link pull-left">
+  </div>
+  <div class="meteor-blog-back-link pull-left">
     <a href="{{pathFor 'blogIndex'}}"><i class="fa fa-caret-left"></i>Back to the Blog</a>
   </div>
   {{> shareit shareData}}
@@ -41,13 +41,13 @@
 
 <template name="blogShowFeaturedImage">
   <div class="row">
-    <div class="mb-featured-image-container">
-      <figure class="{{#if session 'fullWidthFeaturedImage'}}mb-fillWidthImage{{else}}mb-scaleImage{{/if}}">
-        <div class="mg-aspectRatioPlaceholder" style="{{#unless session 'fullWidthFeaturedImage'}}width: {{featuredImageWidth}}px; height: {{featuredImageHeight}}px;{{/unless}}">
-          <!-- <div class="mb-aspect-ratio-fill"></div> -->
+    <div class="meteor-blog-featured-image">
+      <figure class="{{#if session 'fullWidthFeaturedImage'}}meteor-blog-fill-width-image{{else}}meteor-blog-scale-image{{/if}}">
+        <div class="meteor-blog-aspect-ratio-placeholder" style="{{#unless session 'fullWidthFeaturedImage'}}width: {{featuredImageWidth}}px; height: {{featuredImageHeight}}px;{{/unless}}">
+          <!-- <div class="meteor-blog-aspect-ratio-fill"></div> -->
           <img src="{{featuredImage}}" alt="" class="img-responsive center-block">
           {{#if titleBackground}}
-            <div class="mb-background-title">
+            <div class="meteor-blog-background-title">
               <div class="container">
                 <div class="row">
                   <div class="center-block">
@@ -57,7 +57,7 @@
                          <small><a href="#" id="edit-post">edit</a></small>
                       {{/if}}
                     </h1>
-                    <div class="post-meta text-center">
+                    <div class="meteor-blog-post-meta text-center">
                       By {{authorName}} on {{blogFormatDate publishedAt}}
                       {{> blogTags }}
                     </div>

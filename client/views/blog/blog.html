@@ -1,5 +1,5 @@
 <template name="blogIndex">
-  <div id="meteor-blog" class="blog-list">
+  <div class="meteor-blog-index">
     <div class="container">
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -13,11 +13,11 @@
 
 <template name="blogIndexLoop">
   {{#each posts}}
-    <article class="post">
+    <div class="meteor-blog-post">
       <div class="row">
         {{#if featuredImage}}
           <div class="col-md-3">
-            <a href="{{pathFor 'blogShow'}}" class="thumbnail">
+            <a href="{{pathFor 'blogShow'}}" class="meteor-blog-post-thumbnail thumbnail">
               <img src="{{featuredImage}}" alt="" class="img-responsive">
             </a>
           </div>
@@ -26,16 +26,16 @@
           <h2>
             <a href="{{pathFor 'blogShow'}}">{{title}}</a>
           </h2>
-          <div class="post-meta">
+          <div class="meteor-blog-post-meta">
             By {{authorName}} on {{blogFormatDate publishedAt}}
             {{> blogTags }}
           </div>
-          <div class="the-content">
+          <div class="meteor-blog-post-excerpt">
             <small>{{{excerpt}}}</small>
           </div>
         </div>
         </div>
-    </article>
+    </div>
   {{else}}
     This blog is looking pretty empty...
   {{/each}}
@@ -43,7 +43,7 @@
 
 <template name="blogTags">
   {{#if tags}}
-    <div class="post-tags">
+    <div class="meteor-blog-post-tags">
       <p> &ndash; Tags: {{blogFormatTags tags}}</p>
     </div>
   {{/if}}

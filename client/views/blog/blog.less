@@ -1,190 +1,153 @@
 @import '../../stylesheets/variables.import.less';
 
-#meteor-blog {
+/* METEOR BLOG INDEX */
+
+.meteor-blog-index {
   padding-top: 20px;
   padding-bottom: 40px;
-  &.blog-list {
-    .thumbnail {
-      margin-top: 20px;
-    }
-    article.post {
-      border-bottom: 1px solid #EEE;
-      padding-bottom: 40px;
-      margin-bottom: 40px;
-
-      &:last-child {
-        border-bottom: none;
-      }
-
-      h2 {
-        font-size: 32px;
-        line-height: 45px;
-        margin-bottom: 8px;
-        padding-right: 0px;
-
-        @media @tablet {
-          padding-right: 100px;
-        }
-
-        a {
-          &:hover {
-            text-decoration: none;
-          }
-        }
-      }
-
-      .post-meta {
-        color: #bbb;
-        margin-bottom: 50px;
-
-        > a {
-          color: #bbb;
-
-          &:hover {
-            color: #bbb;
-          }
-        }
-
-        .post-tags {
-          display: inline;
-          p {
-            display: inherit;
-          }
-        }
-      }
-    }
-  }
-
-  &.blog-single {
-    padding-top: 0px;
-    .mb-title {
-      font-size: 50px;
-      margin-top: 50px;
-    }
-    .mb-featured-image-container {
-      .mb-aspect-ratio-fill {
-        padding-bottom: 40.1%;
-      }
-      .mb-scaleImage {
-        margin-top: 20px;
-      }
-      .mb-background-title {
-        text-shadow: black 0.2em 0.2em 0.2em;
-        color:white;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 150px;
-        position: absolute;
-        z-index: 10;
-      }
-      img.featured-image {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: block;
-        margin: auto;
-        max-width: 100%;
-        box-sizing: border-box;
-      }
-      .mg-aspectRatioPlaceholder {
-        position: relative;
-        width: 100%;
-        margin: 0 auto;
-      }
-    }
-    article.post {
-      border-bottom: 1px solid #EEE;
-      padding-bottom: 10px;
-      margin-bottom: 30px;
-
-      /* MEDIUM-INSERT PLUGIN */
-
-      .mediumInsert {
-        width: 100%;
-        margin: -1em 0 0 0 !important;
-
-        img {
-          max-width: 100%;
-        }
-      }
-
-      .mediumInsert.small {
-        float: left;
-        width: 33.333333%;
-        margin-right: 10px !important;
-
-        img {
-          margin: 15px auto;
-        }
-      }
-
-      .post-meta {
-        color: #bbb;
-        margin-bottom: 50px;
-
-        > a {
-          color: #bbb;
-
-          &:hover {
-            color: #bbb;
-          }
-        }
-
-        .post-tags {
-          display: inline;
-          p {
-            display: inherit;
-          }
-        }
-      }
-
-      h2 {
-        font-size: 40px;
-        line-height: 48px;
-        margin-bottom: 8px;
-
-        a {
-          &:hover {
-            text-decoration: none;
-          }
-        }
-      }
-
-      img {
-        border: 1px solid rgba(0, 0, 0, 0.5);
-        margin: 30px auto;
-        display: block;
-      }
-
-      code {
-        color: inherit;
-      }
-    }
-
-    .blog-back-link {
-      margin-bottom: 20px;
-      i {
-        margin-right: 10px;
-      }
-
-      a:hover {
-        text-decoration: none;
-      }
-    }
-
-    .share-buttons {
-      float: right !important;
-
-      .btn-facebook, .btn-twitter {
-        font-size: inherit;
-      }
-
-      i {
-        margin-right: 10px;
-      }
-    }
+}
+.meteor-blog-index .meteor-blog-post {
+  border-bottom: 1px solid #EEE;
+  padding-bottom: 40px;
+  margin-bottom: 40px;
+  &:last-child {
+    border-bottom: none;
   }
 }
+.meteor-blog-index .meteor-blog-post h2 {
+  font-size: 32px;
+  line-height: 45px;
+  margin-bottom: 8px;
+  padding-right: 0px;
+  @media (max-width: 100px) {
+    padding-right: 100px;
+  }
+}
+.meteor-blog-index .meteor-blog-post-thumbnail {
+  margin-top: 20px;
+}
+.meteor-blog-index .meteor-blog-post-meta {
+  color: #bbb;
+  margin-bottom: 50px;
+}
+.meteor-blog-index .meteor-blog-post-meta > a {
+  color: #bbb;
+  &:hover {
+    color: #bbb;
+  }
+}
+.meteor-blog-index .meteor-blog-post-tags {
+  display: inline;
+}
+.meteor-blog-index .meteor-blog-post-tags p {
+  display: inherit;
+}
+
+/* METEOR BLOG FEATURED IMAGE */
+
+.meteor-blog-single .meteor-blog-featured-image {
+  margin-bottom: 50px;
+}
+.meteor-blog-single .meteor-blog-scale-image {
+  margin-top: 20px;
+}
+.meteor-blog-single .meteor-blog-aspect-ratio-fill {
+  padding-bottom: 40.1%;
+}
+.meteor-blog-single .meteor-blog-background-title {
+  text-shadow: black 0.2em 0.2em 0.2em;
+  color: white;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  position: absolute;
+  z-index: 10;
+}
+.meteor-blog-single .meteor-blog-aspect-ratio-placeholder {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* MEDIUM-INSERT PLUGIN */
+
+.meteor-blog-single .mediumInsert {
+  width: 100%;
+  margin: -1em 0 0 0 !important;
+}
+.meteor-blog-single .mediumInsert img {
+  max-width: 100%;
+}
+.meteor-blog-single .mediumInsert.small {
+  float: left;
+  width: 33.333333%;
+  margin-right: 10px !important;
+}
+.meteor-blog-single .mediumInsert.small img {
+  margin: 15px auto;
+}
+
+/* METEOR BLOG SINGLE POST */
+
+.meteor-blog-single {
+  padding-top: 0px;
+}
+.meteor-blog-single .meteor-blog-post {
+  border-bottom: 1px solid #EEE;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+}
+.meteor-blog-single .meteor-blog-post h2 {
+  font-size: 40px;
+  line-height: 48px;
+  margin-bottom: 8px;
+}
+.meteor-blog-single .meteor-blog-post img {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  margin: 30px auto;
+  display: block;
+}
+.meteor-blog-single .meteor-blog-post code {
+  color: inherit;
+}
+.meteor-blog-single .meteor-blog-post-title {
+  font-size: 50px;
+  margin-top: 50px;
+}
+.meteor-blog-single .meteor-blog-post-meta {
+  color: #bbb;
+  margin-bottom: 50px;
+}
+.meteor-blog-single .meteor-blog-post-meta > a {
+  color: #bbb;
+  &:hover {
+    color: #bbb;
+  }
+}
+.meteor-blog-single .meteor-blog-post-tags {
+  display: inline;
+}
+.meteor-blog-single .meteor-blog-post-tags p {
+  display: inherit;
+}
+.meteor-blog-single .meteor-blog-back-link {
+  margin-bottom: 20px;
+}
+.meteor-blog-single .meteor-blog-back-link i {
+  margin-right: 10px;
+}
+.meteor-blog-single .meteor-blog-back-link a:hover {
+  text-decoration: none;
+}
+.meteor-blog-single .share-buttons {
+  float: right !important;
+}
+.meteor-blog-single .share-buttons .btn-facebook,
+.meteor-blog-single .share-buttons .btn-twitter {
+  font-size: inherit;
+}
+.meteor-blog-single .share-buttons i {
+  margin-right: 10px;
+}
+

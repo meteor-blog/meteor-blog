@@ -1,19 +1,17 @@
 <template name="blogLatest">
-  <div id="blog-latest-widget">
-    <div class="blog-latest-title">
+  <div class="meteor-blog-latest">
+    <div class="meteor-blog-latest-heading">
       <span>Latest Posts</span>
     </div>
-    <ul class="blog-latest-posts">
+    <ul class="meteor-blog-latest-posts">
       {{#each latest}}
-        <li>
+        <li class="meteor-blog-latest-post">
           <a href="{{pathFor 'blogShow'}}">
-            <div class="blog-meta">
-              <div class="blog-title">
-                {{{title}}}
-              </div>
-              <div class="blog-date">
-                <time datetime="{{publishedAt}}">{{date publishedAt}}</time>
-              </div>
+            <div class="meteor-blog-latest-post-title">
+              {{{title}}}
+            </div>
+            <div class="meteor-blog-latest-post-date">
+              <time datetime="{{publishedAt}}">{{date publishedAt}}</time>
             </div>
           </a>
         </li>
