@@ -48,20 +48,16 @@
           <img src="{{featuredImage}}" alt="" class="img-responsive center-block">
           {{#if titleBackground}}
             <div class="meteor-blog-background-title">
-              <div class="container">
-                <div class="row">
-                  <div class="center-block">
-                    <h1 class="text-center">
-                      {{title}}
-                      {{#if isAdmin}}
-                         <small><a href="#" data-action="edit-post">edit</a></small>
-                      {{/if}}
-                    </h1>
-                    <div class="meteor-blog-post-meta text-center">
-                      By {{authorName}} on {{blogFormatDate publishedAt}}
-                      {{> blogTags }}
-                    </div>
-                  </div>
+              <div class="center-block">
+                <h1 class="text-center">
+                  {{title}}
+                  {{#if isAdmin}}
+                     <small><a href="#" data-action="edit-post">edit</a></small>
+                  {{/if}}
+                </h1>
+                <div class="meteor-blog-post-meta text-center">
+                  By {{authorName}} on {{blogFormatDate publishedAt}}
+                  {{> blogTags }}
                 </div>
               </div>
             </div>
