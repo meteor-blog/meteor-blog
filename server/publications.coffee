@@ -18,7 +18,9 @@ Meteor.publish 'blog.posts', (limit) ->
 
   if limit is null then return @ready()
 
-  Blog.Post.find { published: true },
+  Blog.Post.find
+    mode: 'public'
+  ,
     fields: body: 0
     sort: publishedAt: -1
     limit: limit
@@ -27,7 +29,7 @@ Meteor.publish 'blog.taggedPosts', (tag) ->
   check tag, String
 
   Blog.Post.find
-    published: true
+    mode: 'public'
     tags: tag
   ,
     fields: body: 0

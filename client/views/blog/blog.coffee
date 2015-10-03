@@ -107,8 +107,8 @@ Template.blogShowBody.rendered = ->
   if Blog.settings.title
     document.title += " | #{Blog.settings.title}"
 
-  # Hide draft posts from crawlers
-  if not @data.published
+  # Hide draft/private posts from crawlers
+  if @data.mode isnt 'public'
     $('<meta>', { name: 'robots', content: 'noindex,nofollow' }).appendTo 'head'
 
   # featured image resize

@@ -42,19 +42,19 @@
 </template>
 
 <template name="blogAdminPublishedColumn">
-  {{#if published}}
+  {{#if publishedAt}}
     {{blogFormatDate publishedAt}}
   {{else}}
     <i class="fa fa-ban"></i>
   {{/if}}
 </template>
 
-<template name="blogAdminStatusColumn">
-  {{#if published}}
-    <a data-action="unpublish" href="#">Draft</a> | <span class="selected">Published</span>
-  {{else}}
-    <span class="selected">Draft</span> | <a data-action="publish" href="#">Published</a>
-  {{/if}}
+<template name="blogAdminVisibleColumn">
+  <select data-action="visibility" class="form-control input-sm">
+    <option value="draft" selected={{isSelected "draft"}}>Me &amp; Admins only</option>
+    <option value="private" selected={{isSelected "private"}}>Anyone with link</option>
+    <option value="public" selected={{isSelected "public"}}>The world</option>
+  </select>
 </template>
 
 <template name="blogAdminEditColumn">

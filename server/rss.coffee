@@ -13,7 +13,7 @@ Meteor.methods
       image_url: host + '/favicon.ico'
 
     posts = Blog.Post.where
-      published: true
+      mode: 'public'
     ,
       sort:
         publishedAt: -1

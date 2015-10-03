@@ -67,3 +67,16 @@ Meteor.startup ->
   if Blog.Tag.count() == 0
     Blog.Tag.create
       tags: ['meteor']
+
+  # Convert 'published' field to 'mode' field
+  arr = Blog.Post.all()
+  i = 0
+  while i < arr.length
+    obj = arr[i++]
+    if obj.published
+      obj.update mode: 'public'
+    else
+      if Blog.settings.publicDrafts
+        obj.update mode: 'private'
+      else
+        obj.update mode: 'draft'

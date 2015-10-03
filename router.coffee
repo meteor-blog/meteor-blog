@@ -81,7 +81,7 @@ Router.route '/blog/:slug',
       else
         Template[tpl].rendered = pkgFunc
 
-    if !Blog.settings.publicDrafts and !Blog.Post.first().published
+    if Blog.Post.first().mode is 'draft'
       Meteor.call 'isBlogAuthorized', (err, authorized) =>
         return @redirect('/blog') unless authorized
     Session.set 'postHasFeaturedImage', Blog.Post.first({slug: @params.slug}).featuredImage?.length > 0

@@ -23,7 +23,7 @@ Template.blogAdmin.helpers
       { key: 'userId', label: 'Author', tmpl: Template.blogAdminAuthorColumn }
       { key: 'updatedAt', label: 'Updated At', tmpl: Template.blogAdminUpdatedColumn, sort: 'descending', sortByValue: true }
       { key: 'publishedAt', label: 'Published At', tmpl: Template.blogAdminPublishedColumn, sortByValue: true }
-      { key: 'published', label: 'Status', tmpl: Template.blogAdminStatusColumn }
+      { key: 'visibleTo', label: 'Visible To', tmpl: Template.blogAdminVisibleColumn }
       { key: 'id', label: 'Edit', tmpl: Template.blogAdminEditColumn }
       { key: 'id', label: 'Delete', tmpl: Template.blogAdminDeleteColumn }
     ]
@@ -44,19 +44,20 @@ Template.blogAdmin.events
 
     Session.set 'filters', filters
 
-Template.blogAdminStatusColumn.events
+Template.blogAdminVisibleColumn.helpers
 
-  'click [data-action=publish]': (e, tpl) ->
-    e.preventDefault()
-    @update
-      published: true
-      publishedAt: new Date()
+  isSelected: (mode) ->
+    mode is @mode
 
-  'click [data-action=unpublish]': (e, tpl) ->
+Template.blogAdminVisibleColumn.events
+
+  'change [data-action=visibility]': (e, tpl) ->
     e.preventDefault()
+    mode = e.currentTarget.value
+    publishedAt = if mode is 'draft' then null else new Date()
     @update
-      published: false
-      publishedAt: null
+      mode: mode
+      publishedAt: publishedAt
 
 Template.blogAdminDeleteColumn.events
 
