@@ -60,44 +60,10 @@ if Meteor.isServer
 Router.route '/admin/blog',
   name: 'blogAdmin'
   template: 'custom'
-  onBeforeAction: ->
-    if Meteor.loggingIn()
-      return
-
-    Deps.autorun () ->
-      Router.go 'blogIndex' if not Meteor.userId()
-
-    Meteor.call 'isBlogAuthorized', (err, authorized) =>
-      if not authorized
-        return @redirect('/blog')
-
-    @next()
-  waitOn: ->
-    [ Meteor.subscribe 'blog.postForAdmin'
-      Meteor.subscribe 'blog.authors' ]
 
 # NEW/EDIT BLOG
 
 Router.route '/admin/blog/edit/:id',
   name: 'blogAdminEdit'
   template: 'custom'
-  onBeforeAction: ->
-    if Meteor.loggingIn()
-      return
-
-    Deps.autorun () ->
-      Router.go 'blogIndex' if not Meteor.userId()
-
-    Meteor.call 'isBlogAuthorized', @params.id, (err, authorized) =>
-      if not authorized
-        return @redirect('/blog')
-
-    Session.set 'postId', @params.id
-    @next() if Session.get("postId").length?
-  action: ->
-    @render() if @ready()
-  waitOn: -> [
-    Meteor.subscribe 'blog.singlePostById', @params.id
-    Meteor.subscribe 'blog.authors'
-    Meteor.subscribe 'blog.postTags'
-  ]
+  data: -> id: @params.id

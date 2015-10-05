@@ -1,8 +1,22 @@
-Template.blogAdmin.rendered = ->
-  $(@find '.reactive-table').addClass 'table-bordered'
+Template.blogAdmin.onCreated ->
+  postsSub = @subscribe 'blog.postForAdmin'
+  authorsSub = @subscribe 'blog.authors'
+
+  @subsReady = new ReactiveVar false
+  @autorun =>
+    if postsSub.ready() and authorsSub.ready() and !Meteor.loggingIn()
+      @subsReady.set true
+
+  @autorun ->
+    Router.go 'blogIndex' if not Meteor.userId()
+
+Template.blogAdmin.onRendered ->
+  Meteor.call 'isBlogAuthorized', (err, authorized) =>
+    if not authorized
+      return Router.go('/blog')
 
 Template.blogAdmin.helpers
-
+  subsReady: -> Template.instance().subsReady.get()
   posts: ->
     # Call toArray() because minimongoid does not return a true array, and
     # reactive-table expects a true array (or collection)
@@ -18,6 +32,7 @@ Template.blogAdmin.helpers
     showFilter: false
     showNavigation: 'auto'
     useFontAwesome: true
+    'class': 'table table-striped table-hover col-sm-12 table-bordered'
     fields: [
       { key: 'title', label: 'Title', tmpl: Template.blogAdminTitleColumn }
       { key: 'userId', label: 'Author', tmpl: Template.blogAdminAuthorColumn }
@@ -29,28 +44,26 @@ Template.blogAdmin.helpers
     ]
 
 Template.blogAdmin.events
-
   'click [data-action=new-blog]': (e, tpl) ->
     e.preventDefault()
-
     Router.go 'blogAdminEdit', id: Random.id()
 
   'change [data-action=filtering]': (e) ->
     e.preventDefault()
-
     filters = {}
     if $(e.currentTarget).val() == 'mine'
       filters.userId = Meteor.userId()
-
     Session.set 'filters', filters
 
-Template.blogAdminVisibleColumn.helpers
 
-  isSelected: (mode) ->
-    mode is @mode
+# ------------------------------------------------------------------------------
+# TABLE COLUMNS
+
+
+Template.blogAdminVisibleColumn.helpers
+  isSelected: (mode) -> mode is @mode
 
 Template.blogAdminVisibleColumn.events
-
   'change [data-action=visibility]': (e, tpl) ->
     e.preventDefault()
     mode = e.currentTarget.value
@@ -60,7 +73,6 @@ Template.blogAdminVisibleColumn.events
       publishedAt: publishedAt
 
 Template.blogAdminDeleteColumn.events
-
   'click [data-action=delete]': (e, tpl) ->
     e.preventDefault()
 

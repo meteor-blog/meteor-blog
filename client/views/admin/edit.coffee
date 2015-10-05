@@ -1,13 +1,10 @@
-## METHODS
+
+# ------------------------------------------------------------------------------
+# METHODS
 
 
-# Return current post if we are editing one, or empty object if this is a new
-# post that has not been saved yet.
-getPost = (id) ->
-  (Blog.Post.first( { _id : id } ) ) or {}
-
-# reads image dimensions and takes a callback
-# callback passes params (width, height, fileName)
+# Reads image dimensions and takes a callback callback passes params (width,
+# height, fileName)
 readImageDimensions = (file, cb) ->
   reader = new FileReader
   image = new Image
@@ -87,8 +84,9 @@ save = (tpl, cb) ->
     body: body
     updatedAt: new Date()
 
-  if getPost( Session.get('postId') ).id
-    post = getPost( Session.get('postId') ).update attrs
+  post = Blog.Post.first(Session.get('blog.postId'))
+  if post?
+    post.update attrs
     if post.errors
       return cb(null, new Error _(post.errors[0]).values()[0])
     cb null
@@ -105,48 +103,69 @@ save = (tpl, cb) ->
         return cb(null, new Error 'Blog with this slug already exists')
 
 
-## TEMPLATE CODE
+# ------------------------------------------------------------------------------
+# TEMPLATE CODE
 
 
-Template.blogAdminEdit.rendered = ->
+Template.blogAdminEdit.onCreated ->
+  id = @data.id if @data
+  Session.set 'blog.postId', id
+
+  postSub = null
+  authorsSub = @subscribe 'blog.authors'
+  tagsSub = @subscribe 'blog.postTags'
+
+  @autorun =>
+    postSub = @subscribe 'blog.singlePostById', Session.get('blog.postId')
+
+  @subsReady = new ReactiveVar false
+  @autorun =>
+    if postSub.ready() and authorsSub.ready() and tagsSub.ready() and !Meteor.loggingIn()
+      @subsReady.set true
+
+  @autorun ->
+    Router.go 'blogIndex' if not Meteor.userId()
+
+
+Template.blogAdminEdit.onRendered ->
+  Meteor.call 'isBlogAuthorized', @data.id, (err, authorized) =>
+    if not authorized
+      return Router.go('/blog')
 
   # We can't use reactive template vars for contenteditable :-(
   # (https://github.com/meteor/meteor/issues/1964). So we put the single-post
-  # subscription in an autorun. If we're loading an existing post, once its
-  # ready, we populate the contents via jQquery. The catch is, we only want to
-  # run it once because when we set the contents, we lose our cursor position
-  # (re: autosave).
-  ranOnce = false
+  # subscription in an autorun and update the contents the old-fashioned way via
+  # jQuery.
   @autorun =>
-    sub = Meteor.subscribe 'blog.singlePostById', Session.get('postId')
-    # Load post body initially, if any
-    if sub.ready() and not ranOnce
-      ranOnce = true
-      post = getPost( Session.get('postId') )
-      if post?.body
-        @$('.editable').html post.body
-        @$('.html-editor').html post.body
+    if @subsReady.get()
+      Meteor.defer =>
+        # Wait a tick for template to re-render
+        post = Blog.Post.first(Session.get('blog.postId'))
+        if post?
+          # Load post body initially, if any
+          @$('.editable').html post.body
+          @$('.html-editor').html post.body
 
-      # Tags
-      $tags = @$('[data-role=tagsinput]')
-      $tags.tagsinput confirmKeys: [13, 44, 9]
-      $tags.tagsinput('input').typeahead(
-        highlight: true,
-        hint: false
-      ,
-        name: 'tags'
-        displayKey: 'val'
-        source: substringMatcher Blog.Tag.first().tags
-      ).bind 'typeahead:selected', (obj, datum) ->
-        $tags.tagsinput 'add', datum.val
-        $tags.tagsinput('input').typeahead 'val', ''
+        # Tags
+        $tags = @$('[data-role=tagsinput]')
+        $tags.tagsinput confirmKeys: [13, 44, 9]
+        $tags.tagsinput('input').typeahead(
+          highlight: true,
+          hint: false
+        ,
+          name: 'tags'
+          displayKey: 'val'
+          source: substringMatcher Blog.Tag.first().tags
+        ).bind 'typeahead:selected', (obj, datum) ->
+          $tags.tagsinput 'add', datum.val
+          $tags.tagsinput('input').typeahead 'val', ''
 
-      # Medium editor
-      BlogEditor.make @
+        # Create the Medium editor
+        BlogEditor.make @
 
 Template.blogAdminEdit.helpers
-  post: ->
-    getPost( Session.get('postId') )
+  post: -> Blog.Post.first(Session.get('blog.postId')) or {}
+  subsReady: -> Template.instance().subsReady.get()
 
 Template.blogAdminEdit.events
   # Toggle between VISUAL/HTML modes
@@ -184,7 +203,7 @@ Template.blogAdminEdit.events
 
       if id
         # If new blog post, subscribe to the new post and update URL
-        Session.set 'postId', id
+        Session.set 'blog.postId', id
         path = Router.path 'blogAdminEdit', id: id
         Iron.Location.go path, { replaceState: true, skipReactive: true }
 
@@ -200,8 +219,7 @@ Template.blogAdminEdit.events
 
   'click [data-action=delete-featured]': (e, tpl) ->
     e.preventDefault()
-    post = getPost Session.get('postId')
-    post.update
+    @update
       featuredImageWidth: null
       featuredImageHeight: null
       featuredImageName: null
@@ -210,7 +228,7 @@ Template.blogAdminEdit.events
 
   'change [name=featured-image]': (e, tpl) ->
     the_file = $(e.currentTarget)[0].files[0]
-    post = getPost Session.get('postId')
+    post = @
     # get dimensions
     readImageDimensions the_file, (width, height, name) ->
       post.update
@@ -242,7 +260,7 @@ Template.blogAdminEdit.events
 
   'change [name=background-title]': (e, tpl) ->
     $checkbox = $(e.currentTarget)
-    getPost(Session.get("postId")).update
+    @update
       titleBackground: $checkbox.is(':checked')
 
   'submit form': (e, tpl) ->

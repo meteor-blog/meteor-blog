@@ -8,70 +8,73 @@
             <strong>Edit Post</strong>
           </h1>
 
-          {{#with post}}
-            <form>
-              <div class="row form-group">
-                <div class="col-md-9">
-                  <label>Title</label>
-                  <input tabindex="1" type="text" class="form-control" name="title" placeholder="Title" value="{{title}}">
-                </div>
-                <div class="col-md-3">
-                <label for="featured-image">Featured Image</label>
-                  <input type="file" id="input-featured-image" name="featured-image" class="hidden">
-                  <label class="btn btn-info" for="input-featured-image">
-                    {{#if featuredImage}}
-                      {{featuredImageName}}
-                    {{else}}
-                      Select File
-                    {{/if}}
-                  </label>
-                  {{#if featuredImage}}
-                    &nbsp;<a href="#" data-action="delete-featured"><i class="fa fa-trash-o"></i></a>
-                  {{/if}}
-                  <p class="help-block">
-                    <div class="checkbox">
-                      <label for="background-title">
-                        <input type="checkbox" name="background-title" checked="{{#if titleBackground}}checked{{/if}}"> Use as background for title
-                      </label>
-                    </div>
-                  </p>
-                </div>
-              </div>
-              <div class="row form-group">
-                <div class="col-md-4">
-                  <label>Tags</label>
-                  <input tabindex="2" type="text" class="form-control" name="tags" placeholder="Type in a tag & hit enter" value="{{joinTags tags}}" data-role="tagsinput">
-                </div>
-                <div class="col-md-4">
-                  <label>Slug</label>
-                  <input type="text" class="form-control" name="slug" placeholder="Slug" value="{{slug}}">
-                </div>
-                <div class="col-md-4">
-                  <label>Meta Description</label>
-                  <input type="text" class="form-control" name="description" placeholder="Meta Description" value="{{description}}">
-                </div>
-              </div>
-              <div class="row form-group">
-                <div class="col-md-12">
-                  <label>Body</label>
-                  <div class="edit-mode">
-                    <a href="#" data-action="toggle-visual" class="selected">Visual</a>
-                    -
-                    <a href="#" data-action="toggle-html">HTML</a>
+          {{#if subsReady}}
+            {{#with post}}
+              <form>
+                <div class="row form-group">
+                  <div class="col-md-9">
+                    <label>Title</label>
+                    <input tabindex="1" type="text" class="form-control" name="title" placeholder="Title" value="{{title}}">
                   </div>
-                  <textarea hidden class="html-editor col-xs-12"></textarea>
-                  <div class="editable" tabindex="3"></div>
-                  <button type="submit" class="btn btn-default">
-                    <i class="fa fa-save"></i> Save
-                  </button>
-                  <a href="{{pathFor 'blogAdmin'}}" class="btn btn-default">
-                    <i class="fa fa-ban"></i> Cancel
-                  </a>
+                  <div class="col-md-3">
+                  <label for="featured-image">Featured Image</label>
+                    <input type="file" id="input-featured-image" name="featured-image" class="hidden">
+                    <label class="btn btn-info" for="input-featured-image">
+                      {{#if featuredImage}}
+                        {{featuredImageName}}
+                      {{else}}
+                        Select File
+                      {{/if}}
+                    </label>
+                    {{#if featuredImage}}
+                      &nbsp;<a href="#" data-action="delete-featured"><i class="fa fa-trash-o"></i></a>
+                    {{/if}}
+                    <p class="help-block">
+                      <div class="checkbox">
+                        <label for="background-title">
+                          <input type="checkbox" name="background-title" checked="{{#if titleBackground}}checked{{/if}}"> Use as background for title
+                        </label>
+                      </div>
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </form>
-          {{/with}}
-
+                <div class="row form-group">
+                  <div class="col-md-4">
+                    <label>Tags</label>
+                    <input tabindex="2" type="text" class="form-control" name="tags" placeholder="Type in a tag & hit enter" value="{{joinTags tags}}" data-role="tagsinput">
+                  </div>
+                  <div class="col-md-4">
+                    <label>Slug</label>
+                    <input type="text" class="form-control" name="slug" placeholder="Slug" value="{{slug}}">
+                  </div>
+                  <div class="col-md-4">
+                    <label>Meta Description</label>
+                    <input type="text" class="form-control" name="description" placeholder="Meta Description" value="{{description}}">
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <div class="col-md-12">
+                    <label>Body</label>
+                    <div class="edit-mode">
+                      <a href="#" data-action="toggle-visual" class="selected">Visual</a>
+                      -
+                      <a href="#" data-action="toggle-html">HTML</a>
+                    </div>
+                    <textarea hidden class="html-editor col-xs-12"></textarea>
+                    <div class="editable" tabindex="3"></div>
+                    <button type="submit" class="btn btn-default">
+                      <i class="fa fa-save"></i> Save
+                    </button>
+                    <a href="{{pathFor 'blogAdmin'}}" class="btn btn-default">
+                      <i class="fa fa-ban"></i> Cancel
+                    </a>
+                  </div>
+                </div>
+              </form>
+            {{/with}}
+          {{else}}
+            {{> blogLoading}}
+          {{/if}}
         </div>
       </div>
     </div>
