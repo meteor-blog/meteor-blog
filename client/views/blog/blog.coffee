@@ -1,20 +1,127 @@
-Template.blogIndex.rendered = ->
+
+# ------------------------------------------------------------------------------
+# BLOG INDEX
+
+
+Template.blogIndex.onCreated ->
+  tag = @data.tag if @data
+
+  if not Session.get('blog.postLimit')
+    if Blog.settings.pageSize
+      Session.set 'blog.postLimit', Blog.settings.pageSize
+
+  authorsSub = Blog.subs.subscribe 'blog.authors'
+  postsSub = null
+
+  @autorun ->
+    if tag
+      postsSub = Blog.subs.subscribe 'blog.taggedPosts', tag
+    else
+      postsSub = Blog.subs.subscribe 'blog.posts', Session.get('blog.postLimit')
+
+  @subsReady = new ReactiveVar false
+  @autorun =>
+    if authorsSub.ready() and postsSub.ready()
+      @subsReady.set true
+
+Template.blogIndex.onRendered ->
   # Page Title
   document.title = "Blog"
   if Blog.settings.title
     document.title += " | #{Blog.settings.title}"
 
+Template.blogIndex.helpers
+  subsReady: -> Template.instance().subsReady.get()
+  posts: ->
+    if @tag
+      Blog.Post.where({ tags: @tag }, { sort: publishedAt: -1 })
+    else
+      Blog.Post.where({}, { sort: publishedAt: -1 })
 
 
-Template.blogShowBody.rendered = ->
+# ------------------------------------------------------------------------------
+# SHOW BLOG
 
-  Meteor.call 'isBlogAuthorized', @id, (err, authorized) =>
-      if authorized
-        Session.set 'canEditPost', authorized
 
-  #
-  # SIDECOMMENTS.JS
-  #
+Template.blogShow.onCreated ->
+  slug = @data.slug if @data
+
+  postSub = Blog.subs.subscribe 'blog.singlePostBySlug', slug
+  commentsSub = Blog.subs.subscribe 'blog.commentsBySlug', slug
+  authorsSub = Blog.subs.subscribe 'blog.authors'
+
+  @subsReady = new ReactiveVar false
+  @autorun =>
+    if postSub.ready() and commentsSub.ready() and authorsSub.ready() and !Meteor.loggingIn()
+      @subsReady.set true
+
+Template.blogShow.helpers
+  subsReady: -> Template.instance().subsReady.get()
+  post: -> Blog.Post.first slug: @slug
+  notFound: ->
+    if Blog.settings.blogNotFoundTemplate
+      Blog.settings.blogNotFoundTemplate
+    else
+      'blogNotFound'
+
+
+renderSideComments = null
+
+
+Template.blogShowBody.onRendered ->
+  Meteor.call 'isBlogAuthorized', @data.id, (err, authorized) =>
+    # Can view?
+    if @data.mode is 'draft'
+      return Router.go('/blog') unless authorized
+
+    # Can edit?
+    if authorized
+      Session.set 'blog.canEditPost', authorized
+
+  # Page Title
+  document.title = "#{@data.title}"
+  if Blog.settings.title
+    document.title += " | #{Blog.settings.title}"
+
+  # Hide draft/private posts from crawlers
+  if @data.mode isnt 'public'
+    $('<meta>', { name: 'robots', content: 'noindex,nofollow' }).appendTo 'head'
+
+  # Featured image resize
+  if @data.featuredImage
+    $(window).resize =>
+      Session.set "blog.fullWidthFeaturedImage", $(window).width() < @data.featuredImageWidth
+    $(window).trigger "resize" # so it runs once
+
+  # Sidecomments.js
+  renderSideComments.call @
+
+Template.blogShowBody.events
+  'click [data-action=edit-post]': (event, template) ->
+    event.preventDefault()
+    postId = Blog.Post.first({slug: @slug})._id
+    Router.go 'blogAdminEdit', {id: postId}
+
+Template.blogShowBody.helpers
+  fullWidthFeaturedImage: -> Session.get "blog.fullWidthFeaturedImage"
+  isAdmin: -> Session.get "blog.canEditPost"
+  shareData: ->
+    post = Blog.Post.first slug: @slug
+
+    {
+      title: post.title,
+      excerpt: post.excerpt,
+      description: post.description,
+      author: post.authorName(),
+      thumbnail: post.thumbnail()
+    }
+
+
+# ------------------------------------------------------------------------------
+# SIDECOMMENTS.js
+
+
+renderSideComments = ->
 
   settings = Blog.settings.comments
   # check if useSideComments config is true (default is null)
@@ -60,7 +167,7 @@ Template.blogShowBody.rendered = ->
 
     # load existing comments
     existingComments = []
-    Blog.Comment.where(slug: Session.get('slug')).forEach((comment) ->
+    Blog.Comment.where(slug: @data.slug).forEach((comment) ->
       comment.comment.id = comment._id
       sec = _(existingComments).findWhere(sectionId: comment.sectionId.toString())
       if sec
@@ -78,7 +185,7 @@ Template.blogShowBody.rendered = ->
     sideComments.on 'commentPosted', (comment) ->
       if settings.allowAnonymous or Meteor.user()
         attrs =
-          slug: Session.get('slug')
+          slug: @data.slug
           sectionId: comment.sectionId
           comment:
             authorAvatarUrl: comment.authorAvatarUrl
@@ -100,47 +207,12 @@ Template.blogShowBody.rendered = ->
         Blog.Comment.destroyAll comment.id
         sideComments.removeComment comment.sectionId, comment.id
 
-  ####
 
-  # Page Title
-  document.title = "#{@data.title}"
-  if Blog.settings.title
-    document.title += " | #{Blog.settings.title}"
-
-  # Hide draft/private posts from crawlers
-  if @data.mode isnt 'public'
-    $('<meta>', { name: 'robots', content: 'noindex,nofollow' }).appendTo 'head'
-
-  # featured image resize
-  if Session.get "postHasFeaturedImage"
-    post = Blog.Post.first({slug: Router.current().params.slug})
-    $(window).resize ->
-      Session.set "fullWidthFeaturedImage", $(window).width() < post.featuredImageWidth
-    $(window).trigger "resize" # so it runs once
+# ------------------------------------------------------------------------------
+# DISQUS COMMENTS
 
 
-Template.blogShowBody.events
-  'click [data-action=edit-post]': (event, template) ->
-    event.preventDefault()
-    postId = Blog.Post.first({slug: Router.current().params.slug})._id
-    Router.go 'blogAdminEdit', {id: postId}
-
-Template.blogShowBody.helpers
-  isAdmin: () ->
-    Session.get "canEditPost"
-  shareData: () ->
-    post = Blog.Post.first slug: Session.get('slug')
-
-    {
-      title: post.title,
-      excerpt: post.excerpt,
-      description: post.description,
-      author: post.authorName(),
-      thumbnail: post.thumbnail()
-    }
-
-
-Template.disqus.rendered = ->
+Template.disqus.onRendered ->
 
   if Blog.settings.comments.disqusShortname
     # Don't load the Disqus embed.js into the DOM more than once

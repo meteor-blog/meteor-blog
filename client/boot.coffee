@@ -41,6 +41,10 @@ Blog.config = (appConfig) ->
 #
 
 
+Blog.subs = new SubsManager
+  cacheLimit: 10, # Maximum number of cache subscriptions
+  expireIn: 5 # Any subscription will be expire after 5 minute, if it's not subscribed again
+
 Meteor.startup ->
   if Blog.settings.cdnFontAwesome
     # Load Font Awesome
@@ -52,8 +56,8 @@ Meteor.startup ->
   # Listen for any 'Load More' clicks
   $('body').on 'click', '.blog-load-more', (e) ->
     e.preventDefault()
-    if Session.get 'postLimit'
-      Session.set 'postLimit', Session.get('postLimit') + Blog.settings.pageSize
+    if Session.get 'blog.postLimit'
+      Session.set 'blog.postLimit', Session.get('blog.postLimit') + Blog.settings.pageSize
 
   # Notifications package
   _.extend Notifications.defaultOptions,
@@ -82,7 +86,7 @@ UI.registerHelper "joinTags", (list) ->
     list.join ', '
 
 UI.registerHelper "blogPager", ->
-  if Blog.Post.count() is Session.get 'postLimit'
+  if Blog.Post.count() is Session.get 'blog.postLimit'
     return new Spacebars.SafeString '<a class="blog-load-more btn" href="#">Load More</a>'
 
 UI.registerHelper "session", (key) ->

@@ -14,7 +14,6 @@ Package.onUse(function(api) {
 
   api.use([
     'coffeescript',
-    'deps',
     'iron:router@1.0.9',
     'iron:location@1.0.9',
     'accounts-base',
@@ -45,6 +44,8 @@ Package.onUse(function(api) {
   api.use([
     'session',
     'templating',
+    'deps',
+    'reactive-var',
     'ui',
     'less',
     'underscore',
@@ -59,6 +60,7 @@ Package.onUse(function(api) {
     'client/boot.coffee',
 
     // STYLESHEETS
+    'client/stylesheets/loading.less',
     'client/stylesheets/lib/side-comments/side-comments.css',
     'client/stylesheets/lib/side-comments/default.css',
     'client/compatibility/bower_components/medium-editor/dist/css/medium-editor.css',
@@ -83,6 +85,7 @@ Package.onUse(function(api) {
 
     // PACKAGE FILES
     'client/views/404.html',
+    'client/views/loading.html',
     'client/views/custom.html',
     'client/views/custom.coffee',
     'client/views/admin/admin.less',

@@ -1,12 +1,22 @@
 <template name="blogShow">
   <div class="meteor-blog-single">
-    {{#if session "postHasFeaturedImage"}}
-      {{> blogShowFeaturedImage}}
-    {{/if}}
+    {{#with post}}
+      {{#if featuredImage}}
+        {{> blogShowFeaturedImage}}
+      {{/if}}
+    {{/with}}
     <div class="container">
       <div class="row">
         <div class="col-xs-12 col-sm-11 col-md-8 col-md-offset-2">
-          {{> blogShowBody}}
+          {{#if subsReady}}
+            {{#with post}}
+              {{> blogShowBody}}
+            {{else}}
+              {{> Template.dynamic template=notFound}}
+            {{/with}}
+          {{else}}
+            {{> blogLoading}}
+          {{/if}}
         </div>
       </div>
     </div>
@@ -42,8 +52,8 @@
 <template name="blogShowFeaturedImage">
   <div class="row">
     <div class="meteor-blog-featured-image">
-      <figure class="{{#if session 'fullWidthFeaturedImage'}}meteor-blog-fill-width-image{{else}}meteor-blog-scale-image{{/if}}">
-        <div class="meteor-blog-aspect-ratio-placeholder" style="{{#unless session 'fullWidthFeaturedImage'}}width: {{featuredImageWidth}}px; height: {{featuredImageHeight}}px;{{/unless}}">
+      <figure class="{{#if fullWidthFeaturedImage}}meteor-blog-fill-width-image{{else}}meteor-blog-scale-image{{/if}}">
+        <div class="meteor-blog-aspect-ratio-placeholder" style="{{#unless fullWidthFeaturedImage}}width: {{featuredImageWidth}}px; height: {{featuredImageHeight}}px;{{/unless}}">
           <!-- <div class="meteor-blog-aspect-ratio-fill"></div> -->
           <img src="{{featuredImage}}" alt="" class="img-responsive center-block">
           {{#if titleBackground}}
@@ -67,6 +77,7 @@
     </div>
   </div>
 </template>
+
 <template name="disqus">
   {{#if useDisqus}}
     <div id="disqus_thread"></div>
