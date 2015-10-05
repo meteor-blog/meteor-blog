@@ -73,10 +73,11 @@ Meteor.startup ->
   i = 0
   while i < arr.length
     obj = arr[i++]
-    if obj.published
-      obj.update mode: 'public'
-    else
-      if Blog.settings.publicDrafts
-        obj.update mode: 'private'
+    if not obj.mode?
+      if obj.published
+        obj.update mode: 'public'
       else
-        obj.update mode: 'draft'
+        if Blog.settings.publicDrafts
+          obj.update mode: 'private'
+        else
+          obj.update mode: 'draft'
