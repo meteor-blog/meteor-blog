@@ -160,14 +160,10 @@ routes.push
 # RSS
 
 
-if Package['iron:router']
-  # No server-side for Flow Router?
-  Package['iron:router'].Router.route '/rss/posts',
-    name: 'rss'
-    where: 'server'
-    action: ->
-      @response.write Meteor.call 'serveRSS'
-      @response.end()
+if Meteor.isServer
+  JsonRoutes.add 'GET', '/rss/posts', (req, res, next) ->
+    res.write Meteor.call 'serveRSS'
+    res.end()
 
 
 Meteor.startup ->

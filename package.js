@@ -117,14 +117,17 @@ Package.onUse(function(api) {
 
   // PACKAGES FOR SERVER
 
+  api.use([
+    'simple:json-routes@1.0.4'
+  ], 'server');
   Npm.depends({ rss: '0.0.4' });
 });
 
 Package.onTest(function (api) {
-  api.use("ryw:blog", ['client', 'server']);
-  api.use('tinytest', ['client', 'server']);
-  api.use('test-helpers', ['client', 'server']);
-  api.use('coffeescript', ['client', 'server']);
+  api.use('kadira:flow-router');
+  api.use('ryw:blog');
+  api.use('tinytest');
+  api.use('coffeescript');
 
   Npm.depends({ rss: '0.0.4' });
 
