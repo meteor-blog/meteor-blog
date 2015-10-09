@@ -1,5 +1,29 @@
 ## Changelog
 
+### v0.8.0
+
+*BREAKING CHANGES*:
+
+ * Compatible only with Meteor `1.2` and higher.
+ * Replaced `vsivsi:file-collection` with `cfs:gridfs`, so if you have any blog
+   images stored in your database created by `file-collection`, then you must
+   add `file-collection` to your app or they will be inaccessible.
+ * CSS classes have been renamed and prefixed, so if you have any custom
+   templates, styling may break.
+ * Publications, subscriptions, and collections have all been renamed and
+   prefixed. If you were doing anything clever with those, the clever thing may
+   break.
+
+
+* Update to Meteor 1.2
+* Reorganize & namespace all package publications, collections, and CSS classes (#82)
+* Add Public, Private, and Draft modes for blog posts (#129)
+* Add support for both Iron Router & Flow Router (#208)
+* Allow user to set a custom base path (e.g. `/news` instead of `/blog`) for blog & admin (#94, #115)
+* Upgrade `medium-editor` to 5.8.2, `medium-editor-insert-plugin` to 2.0.1 (fixes #198, #204)
+* Replace `vsivsi:file-collection` with `cfs:gridfs` (fixes #183, #200)
+* Fix minor bugs (#207, #203)
+
 ### v0.7.1
 
 * Allow user to remove featured image (#186)

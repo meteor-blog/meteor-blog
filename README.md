@@ -1,14 +1,16 @@
 ## Blog
 
-This Meteor package gives you a basic, out-of-the-box blog at `/blog`. We wanted
-a way to add a blog to an existing app without running another dyno or server
-for a meteor-based blog.
+This Meteor package gives you a basic, out-of-the-box blog at `/blog` (or where
+ever). We wanted a way to add a blog to an existing app without running another
+app for a meteor-based blog.
 
-This blog is very much a work in progress. To help decide what gets add next,
+This blog is very much a work in progress. To help decide what gets added next,
 vote with your [Github issues](https://github.com/Differential/meteor-blog/issues)!
 
-## Example App
-You can view an example application [here](https://github.com/Differential/example-blog-app) or view it live (without customization) at [blog-example.meteor.com](http://blog-example.meteor.com)
+### Example App
+
+You can view an example application [here](https://github.com/Differential/example-blog-app) or view it live
+(without customization) at [blog-example.meteor.com](http://blog-example.meteor.com)
 
 ### Features
 
@@ -19,12 +21,15 @@ You can view an example application [here](https://github.com/Differential/examp
 * Support DISQUS comments
 * Blog post tags and tag view
 * Widget to embed recent posts on another (e.g. home) page
-* Customizable templates
+* Customizable layouts & templates
+* Custom base paths
 * SEO best practices (OpenGraph, Twitter Cards, share buttons, Google+ author attribution)
 * Autosave
 * Pagination
 * Code syntax highlighting
 * Multiple roles (admin/author)
+* Have Public, Private & Draft modes
+* Support for both Iron Router and Flow Router
 * RSS feed
 
 ### Roadmap
@@ -37,16 +42,47 @@ You can view an example application [here](https://github.com/Differential/examp
 $ meteor add ryw:blog
 ```
 
-You will get routes for:
+You will by default get routes for:
 
 ```
 /blog
 /admin/blog
 ```
 
-`/admin/blog` requires that `Meteor.user()` return a user.
+These paths are customizable (see below). `/admin/blog` requires that `Meteor.user()` return a user.
 
 # Usage
+
+To configure your blog, create a file shared on client/server, probably in
+`lib/blog.js`.
+
+### Routing & Custom Base Paths
+
+Meteor blog works with both Iron Router and Flow Router. If your app and the
+blog have conflicting routes, your app will get priority.
+
+You can customize the base path for the blog and for the blog admin area.
+
+```coffee
+# CoffeeScript
+Blog.config
+  basePath: '/myBlog' # '/myBlog', '/myBlog/my-post', '/myBlog/tag/whatever', etc.
+  adminBasePath: '/myBlogAdmin'
+```
+
+```javascript
+// JavaScript
+Blog.config({
+  basePath: '/myBlog',
+  adminBasePath: '/myBlogAdmin'
+});
+```
+
+If you set the `basepath` to `'/'`, blog posts will appear at the root path of
+your app (e.g. http://myapp.com/my-post). This means that the blog index page
+will be your home page, unless you override the route. This also means that
+meteor blog can function as a crude CMS. For more CMS-like features, create a
+[Github issue](https://github.com/Differential/meteor-blog/issues)!
 
 ### Roles
 
@@ -57,6 +93,7 @@ select users can edit the blog, the package supports two roles:
 * `authorRole` - Can create, and modify or delete only my own posts.
 
 In addition, if using groups from the alanning:roles package, set the associated group using
+
 * `adminGroup` - Group associated with `adminRole`.
 * `authorGroup` - Group associated with `authorRole`.
 
@@ -64,20 +101,17 @@ To enable either or both roles, specify values in the blog config:
 
 ```coffee
 # CoffeeScript
-if Meteor.isServer
-  Blog.config
-    adminRole: 'blogAdmin'
-    authorRole: 'blogAuthor'
+Blog.config
+  adminRole: 'blogAdmin'
+  authorRole: 'blogAuthor'
 ```
 
 ```javascript
 // JavaScript
-if (Meteor.isServer) {
-  Blog.config({
-    adminRole: 'blogAdmin',
-    authorRole: 'blogAuthor'
-  });
-}
+Blog.config({
+  adminRole: 'blogAdmin',
+  authorRole: 'blogAuthor'
+});
 ```
 
 Then, you need to give blog users that role. Currently, you're on your own to
@@ -98,21 +132,18 @@ display comments.
 
 ```coffee
 # CoffeeScript
-if Meteor.isClient
-  Blog.config
-    comments:
-      disqusShortname: 'myshortname'
+Blog.config
+  comments:
+    disqusShortname: 'myshortname'
 ```
 
 ```javascript
 // JavaScript
-if (Meteor.isClient) {
-  Blog.config({
-    comments: {
-      disqusShortname: 'myshortname'
-    }
-  });
-}
+Blog.config({
+  comments: {
+    disqusShortname: 'myshortname'
+  }
+});
 ```
 
 **SideComments.js**
@@ -125,24 +156,29 @@ anything without even a name. Also, probably not what you want.
 
 ```coffee
 # CoffeeScript
-if Meteor.isClient
-  Blog.config
-    comments:
-      useSideComments: true # default is false
-      allowAnonymous: true # default is false
+Blog.config
+  comments:
+    useSideComments: true # default is false
+    allowAnonymous: true # default is false
 ```
 
 ```javascript
 // JavaScript
-if (Meteor.isClient) {
-  Blog.config({
-    comments: {
-      useSideComments: true,
-      allowAnonymous: true
-    }
-  });
-}
+Blog.config({
+  comments: {
+    useSideComments: true,
+    allowAnonymous: true
+  }
+});
 ```
+
+### Blog Post Modes
+
+When creating a blog post in the admin, you can set one of three modes:
+
+* `Public` - Listed in the blog and viewable by anyone
+* `Private` - Not listed in the blog, but viewable by anyone with the link
+* `Draft` - Unpublished and only viewable in the blog admin area
 
 ### Bootstrap Templates
 
@@ -154,6 +190,24 @@ templates. If you use these default templates, you must add the meteor
 $ meteor add mrt:bootstrap-3
 ```
 
+### Custom Layout
+
+By default, the layout configured for your app is used. To specify a layout for
+only the blog pages:
+
+```coffee
+# CoffeeScript
+Blog.config
+  blogLayoutTemplate: 'myBlogLayout'
+```
+
+```javascript
+// JavaScript
+Blog.config({
+  blogLayoutTemplate: 'myBlogLayout'
+});
+```
+
 ### Custom Templates
 
 While the admin templates are opinionated, the front-end is bare markup, ready
@@ -162,19 +216,17 @@ the default templates with your own by setting configuration variables:
 
 ```coffee
 # CoffeeScript
-if Meteor.isClient
-  Blog.config
-    blogIndexTemplate: 'myBlogIndexTemplate' # '/blog' route
-    blogShowTemplate: 'myShowBlogTemplate'   # '/blog/:slug' route
+Blog.config
+  blogIndexTemplate: 'myBlogIndexTemplate' # '/blog' route
+  blogShowTemplate: 'myShowBlogTemplate'   # '/blog/:slug' route
 ```
+
 ```javascript
 // JavaScript
-if (Meteor.isClient) {
-  Blog.config({
-    blogIndexTemplate: 'myBlogIndexTemplate',
-    blogShowTemplate: 'myShowBlogTemplate'
-  });
-}
+Blog.config({
+  blogIndexTemplate: 'myBlogIndexTemplate',
+  blogShowTemplate: 'myShowBlogTemplate'
+});
 ```
 
 In your templates, you can use these Handlebars helpers provided by the package
@@ -222,18 +274,15 @@ found.
 
 ```coffee
 # CoffeeScript
-if Meteor.isClient
-  Blog.config
-    blogNotFoundTemplate: 'myNotFoundTemplate'
+Blog.config
+  blogNotFoundTemplate: 'myNotFoundTemplate'
 ```
 
 ```javascript
 // JavaScript
-if (Meteor.isClient) {
-  Blog.config({
-    blogNotFoundTemplate: 'myNotFoundTemplate'
-  });
-}
+Blog.config({
+  blogNotFoundTemplate: 'myNotFoundTemplate'
+});
 ```
 
 ### Blog Post Excerpt
@@ -245,22 +294,19 @@ sentence:
 
 ```coffee
 # CoffeeScript
-if Meteor.isClient
-  Blog.config
-    excerptFunction: (body) ->
-      body.split('.')[0] + '.'
-```
-```javascript
-// JavaScript
-if (Meteor.isClient) {
-  Blog.config({
-    excerptFunction: function(body) {
-      return body.split('.')[0] + '.';
-    }
-  });
-}
+Blog.config
+  excerptFunction: (body) ->
+    body.split('.')[0] + '.'
 ```
 
+```javascript
+// JavaScript
+Blog.config({
+  excerptFunction: function(body) {
+    return body.split('.')[0] + '.';
+  }
+});
+```
 
 ### Images
 
@@ -300,18 +346,15 @@ settings. Set to `null` to turn off paging entirely.
 
 ```coffee
 # CoffeeScript
-if Meteor.isClient
-  Blog.config
-    pageSize: 10
+Blog.config
+  pageSize: 10
 ```
 
 ```javascript
 // JavaScript
-if (Meteor.isClient) {
-  Blog.config({
-    pageSize: 10
-  });
-}
+Blog.config({
+  pageSize: 10
+});
 ```
 
 The default `blogIndexTemplate` template displays a `Load More` button. If you
@@ -327,24 +370,22 @@ Example config:
 
 ```coffee
 # CoffeeScript
-if Meteor.isClient
-  Blog.config
-    syntaxHighlighting: true # default is false
-    syntaxHighlightingTheme: 'atelier-dune.dark' # default is 'github'
+Blog.config
+  syntaxHighlighting: true # default is false
+  syntaxHighlightingTheme: 'atelier-dune.dark' # default is 'github'
 ```
+
 ```javascript
 // JavaScript
-if (Meteor.isClient) {
-  Blog.config({
-    syntaxHighlighting: true,
-    syntaxHighlightingTheme: 'atelier-dune.dark'
-  });
-}
+Blog.config({
+  syntaxHighlighting: true,
+  syntaxHighlightingTheme: 'atelier-dune.dark'
+});
 ```
 
 ### Social Sharing
 
-This package depends on the [`lovetostrike:shareit` package](https://atmospherejs.com/lovetostrike/shareit)
+This package depends on the [`liberation:shareit` package](https://atmospherejs.com/liberation/shareit)
 for powering social sharing.  If you use your own `blogShowTemplate` template,
 include `{{> shareit}}` to display share buttons.
 
@@ -373,23 +414,20 @@ description in the feed, configure RSS:
 
 ```coffee
 # CoffeeScript
-if Meteor.isServer
-  Blog.config
-    rss:
-      title: 'My blog title'
-      description: 'My blog description'
+Blog.config
+  rss:
+    title: 'My blog title'
+    description: 'My blog description'
 ```
 
 ```javascript
 // JavaScript
-if (Meteor.isServer) {
-  Blog.config({
-    rss: {
-      title: 'My blog title',
-      description: 'My blog description'
-    }
-  });
-}
+Blog.config({
+  rss: {
+    title: 'My blog title',
+    description: 'My blog description'
+  }
+});
 ```
 
 Add a head tag somewhere in your `.html` files so your RSS feed can be discovered:
