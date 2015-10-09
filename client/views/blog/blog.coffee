@@ -7,7 +7,6 @@ Template.blogIndex.onCreated ->
   @tag = new ReactiveVar null
   @autorun =>
     @tag.set Blog.Router.getParam 'tag'
-    console.log 'TAG', @tag.get()
 
   if not Session.get('blog.postLimit')
     if Blog.settings.pageSize

@@ -13,6 +13,7 @@ Package.onUse(function(api) {
   // PACKAGES FOR SERVER AND CLIENT
 
   api.use([
+    'underscore',
     'coffeescript',
     'accounts-base',
     'iron:url@1.0.9',
@@ -43,11 +44,9 @@ Package.onUse(function(api) {
   api.use([
     'session',
     'templating',
-    'deps',
+    'tracker',
     'reactive-var',
-    'ui',
     'less',
-    'underscore',
     'aslagle:reactive-table@0.5.5',
     'liberation:shareit@1.0.1',
     'gfk:notifications@1.1.4'
@@ -120,6 +119,7 @@ Package.onUse(function(api) {
   api.use([
     'simple:json-routes@1.0.4'
   ], 'server');
+
   Npm.depends({ rss: '0.0.4' });
 });
 

@@ -1,20 +1,3 @@
-##############################################################################
-# Server-side config
-#
-
-Blog.settings =
-  adminRole: null
-  adminGroup: null
-  authorRole: null
-  authorGroup: null
-  rss:
-    title: ''
-    description: ''
-
-Blog.config = (appConfig) ->
-  @settings = _.extend(@settings, appConfig)
-
-
 ################################################################################
 # Bootstrap Code
 #

@@ -1,43 +1,4 @@
 ################################################################################
-# Client-side Config
-#
-
-
-Blog.settings =
-  title: ''
-  blogIndexTemplate: null
-  blogShowTemplate: null
-  blogNotFoundTemplate: null
-  blogAdminTemplate: null
-  blogAdminEditTemplate: null
-  blogLayoutTemplate: null
-  pageSize: 20
-  excerptFunction: null
-  syntaxHighlighting: false
-  syntaxHighlightingTheme: 'github'
-  cdnFontAwesome: true
-  comments:
-    allowAnonymous: false
-    useSideComments: false
-    defaultImg: '/packages/blog/public/default-user.png'
-    userImg: 'avatar'
-    disqusShortname: null
-
-Blog.config = (appConfig) ->
-  # No deep extend in underscore :-(
-  if appConfig.comments
-    @settings.comments = _.extend(@settings.comments, appConfig.comments)
-    delete appConfig.comments
-  @settings = _.extend(@settings, appConfig)
-
-  if @settings.syntaxHighlightingTheme
-    $('<link>',
-      href: '//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/' + @settings.syntaxHighlightingTheme + '.min.css'
-      rel: 'stylesheet'
-    ).appendTo 'head'
-
-
-################################################################################
 # Bootstrap Code
 #
 
@@ -47,6 +8,13 @@ Blog.subs = new SubsManager
   expireIn: 5 # Any subscription will be expire after 5 minute, if it's not subscribed again
 
 Meteor.startup ->
+  if Blog.settings.syntaxHighlightingTheme
+    # Syntax Highlighting
+    $('<link>',
+      href: '//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/' + Blog.settings.syntaxHighlightingTheme + '.min.css'
+      rel: 'stylesheet'
+    ).appendTo 'head'
+
   if Blog.settings.cdnFontAwesome
     # Load Font Awesome
     $('<link>',

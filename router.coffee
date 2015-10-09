@@ -20,6 +20,8 @@ Blog.Router =
       path = nameOrPath
     else
       route = _.findWhere @routes, name: nameOrPath
+      if not route
+        throw new Meteor.Error 500, "Route named '#{nameOrPath}' not found"
       options ?= {}
       url = new Iron.Url route.path
       path = url.resolve params, options
@@ -44,6 +46,8 @@ Blog.Router =
 
   pathFor: (name, params, options) ->
     route = _.findWhere @routes, name: name
+    if not route
+      throw new Meteor.Error 500, "Route named '#{name}' not found"
     opts = options and (options.hash or {})
     url = new Iron.Url route.path
     url.resolve params, opts
@@ -51,7 +55,7 @@ Blog.Router =
   getTemplate: ->
     location = @getLocation()
     url = null
-    match = _.find routes, (route) ->
+    match = _.find @routes, (route) ->
       url = new Iron.Url route.path
       url.test location
     if match
@@ -103,68 +107,81 @@ Blog.Router =
     else
       throw new Meteor.Error 500, 'Blog requires either iron:router or kadira:flow-router'
  
-
-# ------------------------------------------------------------------------------
-# PUBLIC ROUTES
-
-
-routes = []
-
-# BLOG INDEX
-
-routes.push
-  path: '/blog'
-  name: 'blogIndex'
-  fastRender: ->
-    @subscribe 'blog.authors'
-    @subscribe 'blog.posts'
-
-# BLOG TAG
-
-routes.push
-  path: '/blog/tag/:tag'
-  name: 'blogTagged'
-  fastRender: (params) ->
-    @subscribe 'blog.authors'
-    @subscribe 'blog.taggedPosts', params.tag
-
-# SHOW BLOG
-
-routes.push
-  path: '/blog/:slug'
-  name: 'blogShow'
-  fastRender: (params) ->
-    @subscribe 'blog.authors'
-    @subscribe 'blog.singlePostBySlug', params.slug
-    @subscribe 'blog.commentsBySlug', params.slug
-
-
-# ------------------------------------------------------------------------------
-# ADMIN ROUTES
-
-
-# BLOG ADMIN INDEX
-
-routes.push
-  path: '/admin/blog'
-  name: 'blogAdmin'
-
-# NEW/EDIT BLOG
-
-routes.push
-  path: '/admin/blog/edit/:id'
-  name: 'blogAdminEdit'
-
-
-# ------------------------------------------------------------------------------
-# RSS
-
-
-if Meteor.isServer
-  JsonRoutes.add 'GET', '/rss/posts', (req, res, next) ->
-    res.write Meteor.call 'serveRSS'
-    res.end()
-
-
+ 
 Meteor.startup ->
+ 
+
+  # ----------------------------------------------------------------------------
+  # PUBLIC ROUTES
+
+
+  routes = []
+  basePath =
+    # Avoid double-slashes like '//tag/:tag' when basePath is '/'...
+    if Blog.settings.basePath is '/'
+      ''
+    else
+      Blog.settings.basePath
+  adminBasePath =
+    if Blog.settings.adminBasePath is '/'
+      ''
+    else
+      Blog.settings.adminBasePath
+
+  # BLOG INDEX
+
+  routes.push
+    path: basePath or '/' # ...but ensure we don't have a route path of ''
+    name: 'blogIndex'
+    fastRender: ->
+      @subscribe 'blog.authors'
+      @subscribe 'blog.posts'
+
+  # BLOG TAG
+
+  routes.push
+    path: basePath + '/tag/:tag'
+    name: 'blogTagged'
+    fastRender: (params) ->
+      @subscribe 'blog.authors'
+      @subscribe 'blog.taggedPosts', params.tag
+
+  # SHOW BLOG
+
+  routes.push
+    path: basePath + '/:slug'
+    name: 'blogShow'
+    fastRender: (params) ->
+      @subscribe 'blog.authors'
+      @subscribe 'blog.singlePostBySlug', params.slug
+      @subscribe 'blog.commentsBySlug', params.slug
+
+
+  # ----------------------------------------------------------------------------
+  # ADMIN ROUTES
+
+
+  # BLOG ADMIN INDEX
+
+  routes.push
+    path: adminBasePath
+    name: 'blogAdmin'
+
+  # NEW/EDIT BLOG
+
+  routes.push
+    path: adminBasePath + '/edit/:id'
+    name: 'blogAdminEdit'
+
+
+  # ----------------------------------------------------------------------------
+  # RSS
+
+
+  if Meteor.isServer
+    JsonRoutes.add 'GET', '/rss/posts', (req, res, next) ->
+      res.write Meteor.call 'serveRSS'
+      res.end()
+
+
   Blog.Router.routeAll routes
