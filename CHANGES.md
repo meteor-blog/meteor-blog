@@ -2,7 +2,7 @@
 
 ### v0.8.0
 
-*BREAKING CHANGES*:
+**BREAKING CHANGES**:
 
  * Compatible only with Meteor `1.2` and higher.
  * Replaced `vsivsi:file-collection` with `cfs:gridfs`, so if you have any blog
@@ -14,6 +14,7 @@
    prefixed. If you were doing anything clever with those, the clever thing may
    break.
 
+**CHANGES**:
 
 * Update to Meteor 1.2
 * Reorganize & namespace all package publications, collections, and CSS classes (#82)
@@ -26,7 +27,7 @@
 
 ### v0.7.1
 
-* Allow user to remove featured image (#186)
+* Allow user to remove featured image ([#186](https://github.com/Differential/meteor-blog/issues/186))
 * Use featured image for social sharing thumbnail if there is one ([#192](https://github.com/Differential/meteor-blog/issues/192))
 * Add config to suppress loading CDN font-awesome ([#189](https://github.com/Differential/meteor-blog/issues/189))
 * Fix crash caused by empty blog posts

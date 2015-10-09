@@ -1,4 +1,4 @@
-## Blog
+## Meteor Blog
 
 This Meteor package gives you a basic, out-of-the-box blog at `/blog` (or where
 ever). We wanted a way to add a blog to an existing app without running another
@@ -9,8 +9,7 @@ vote with your [Github issues](https://github.com/Differential/meteor-blog/issue
 
 ### Example App
 
-You can view an example application [here](https://github.com/Differential/example-blog-app) or view it live
-(without customization) at [blog-example.meteor.com](http://blog-example.meteor.com)
+You can view an example application (without customization) at http://blog-example.meteor.com ([repo](https://github.com/Differential/example-blog-app)).
 
 ### Features
 
@@ -56,10 +55,12 @@ These paths are customizable (see below). `/admin/blog` requires that `Meteor.us
 To configure your blog, create a file shared on client/server, probably in
 `lib/blog.js`.
 
-### Routing & Custom Base Paths
+### Routing
 
 Meteor blog works with both Iron Router and Flow Router. If your app and the
 blog have conflicting routes, your app will get priority.
+
+**Custom Base Paths**
 
 You can customize the base path for the blog and for the blog admin area.
 
