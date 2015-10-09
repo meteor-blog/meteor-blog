@@ -2,10 +2,8 @@ class Blog.Comment extends Minimongoid
 
   @_collection: new Meteor.Collection 'blog_comments'
 
-  @belongs_to: [
-    name: 'post'
-    identifier: 'postId'
-  ]
+  post: ->
+    Blog.Post.first @postId
 
 Blog.Comment._collection.allow
   insert: (userId, doc) ->

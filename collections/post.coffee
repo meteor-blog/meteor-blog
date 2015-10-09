@@ -2,11 +2,6 @@ class Blog.Post extends Minimongoid
 
   @_collection: new Meteor.Collection 'blog_posts'
 
-  @belongs_to: [
-    name: 'author'
-    identifier: 'userId'
-  ]
-
   @after_save: (post) ->
     post.tags = Blog.Post.splitTags post.tags
     post.excerpt = Blog.Post.excerpt post.body if post.body
@@ -58,6 +53,9 @@ class Blog.Post extends Minimongoid
         # Strip tags and clean up whitespaces
         ret += matches[i++].replace(/(<([^>]+)>)/ig, ' ').replace(/(\s\.)/, '.').replace('&nbsp;', ' ').trim()
       ret
+
+  author: ->
+    Blog.Author.first @userId
 
   authorName: ->
     author = @author()

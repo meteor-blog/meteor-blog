@@ -2,10 +2,8 @@ class Blog.Author extends Minimongoid
 
   @_collection: Meteor.users
 
-  @has_many: [
-    name: 'posts'
-    foreign_key: 'userId'
-  ]
+  posts: ->
+    Blog.Post.where userId: @id
 
   @current: ->
     if Meteor.userId()
