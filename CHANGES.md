@@ -1,5 +1,9 @@
 ## Changelog
 
+### v0.8.1
+
+* Fix bug where author name was not showing up
+
 ### v0.8.0
 
 **BREAKING CHANGES**:
