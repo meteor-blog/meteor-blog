@@ -14,9 +14,8 @@ Package.onUse(function(api) {
 
   api.use([
     'coffeescript',
-    'iron:router@1.0.9',
-    'iron:location@1.0.9',
     'accounts-base',
+    'iron:url@1.0.9',
     'kaptron:minimongoid@0.9.1',
     'momentjs:moment@2.10.6',
     'alanning:roles@1.2.13',
@@ -86,8 +85,6 @@ Package.onUse(function(api) {
     // PACKAGE FILES
     'client/views/404.html',
     'client/views/loading.html',
-    'client/views/custom.html',
-    'client/views/custom.coffee',
     'client/views/admin/admin.less',
     'client/views/admin/admin.html',
     'client/views/admin/admin.coffee',

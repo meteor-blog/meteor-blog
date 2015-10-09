@@ -84,7 +84,7 @@ save = (tpl, cb) ->
     body: body
     updatedAt: new Date()
 
-  post = Blog.Post.first(Session.get('blog.postId'))
+  post = Blog.Post.first(tpl.id.get())
   if post?
     post.update attrs
     if post.errors
@@ -108,15 +108,16 @@ save = (tpl, cb) ->
 
 
 Template.blogAdminEdit.onCreated ->
-  id = @data.id if @data
-  Session.set 'blog.postId', id
+  @id = new ReactiveVar null
+  @autorun =>
+    @id.set Blog.Router.getParam 'id'
 
   postSub = null
   authorsSub = @subscribe 'blog.authors'
   tagsSub = @subscribe 'blog.postTags'
 
   @autorun =>
-    postSub = @subscribe 'blog.singlePostById', Session.get('blog.postId')
+    postSub = @subscribe 'blog.singlePostById', @id.get()
 
   @subsReady = new ReactiveVar false
   @autorun =>
@@ -124,13 +125,13 @@ Template.blogAdminEdit.onCreated ->
       @subsReady.set true
 
   @autorun ->
-    Router.go 'blogIndex' if not Meteor.userId()
+    Blog.Router.go 'blogIndex' if not Meteor.userId()
 
 
 Template.blogAdminEdit.onRendered ->
-  Meteor.call 'isBlogAuthorized', @data.id, (err, authorized) =>
+  Meteor.call 'isBlogAuthorized', @id.get(), (err, authorized) =>
     if not authorized
-      return Router.go('/blog')
+      return Blog.Router.go('/blog')
 
   # We can't use reactive template vars for contenteditable :-(
   # (https://github.com/meteor/meteor/issues/1964). So we put the single-post
@@ -140,7 +141,7 @@ Template.blogAdminEdit.onRendered ->
     if @subsReady.get()
       Meteor.defer =>
         # Wait a tick for template to re-render
-        post = Blog.Post.first(Session.get('blog.postId'))
+        post = Blog.Post.first(@id.get())
         if post?
           # Load post body initially, if any
           @$('.editable').html post.body
@@ -164,7 +165,7 @@ Template.blogAdminEdit.onRendered ->
         BlogEditor.make @
 
 Template.blogAdminEdit.helpers
-  post: -> Blog.Post.first(Session.get('blog.postId')) or {}
+  post: -> Blog.Post.first(Template.instance().id.get()) or {}
   subsReady: -> Template.instance().subsReady.get()
 
 Template.blogAdminEdit.events
@@ -203,9 +204,9 @@ Template.blogAdminEdit.events
 
       if id
         # If new blog post, subscribe to the new post and update URL
-        Session.set 'blog.postId', id
-        path = Router.path 'blogAdminEdit', id: id
-        Iron.Location.go path, { replaceState: true, skipReactive: true }
+        tpl.id.set id
+        path = Blog.Router.pathFor 'blogAdminEdit', id: id
+        Blog.Router.replaceState path
 
       Notifications.success '', 'Saved'
   , 8000
@@ -268,4 +269,4 @@ Template.blogAdminEdit.events
     save tpl, (id, err) ->
       if err
         return Notifications.error '', err.message
-      Router.go 'blogAdmin'
+      Blog.Router.go 'blogAdmin'

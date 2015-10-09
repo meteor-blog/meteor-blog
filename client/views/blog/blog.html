@@ -21,14 +21,14 @@
       <div class="row">
         {{#if featuredImage}}
           <div class="col-md-3">
-            <a href="{{pathFor 'blogShow'}}" class="meteor-blog-post-thumbnail thumbnail">
+            <a href="{{blogPathFor 'blogShow'}}" class="meteor-blog-post-thumbnail thumbnail">
               <img src="{{featuredImage}}" alt="" class="img-responsive">
             </a>
           </div>
         {{/if}}
         <div class="{{#if featuredImage}}col-md-9{{else}}col-md-12{{/if}}">
           <h2>
-            <a href="{{pathFor 'blogShow'}}">{{title}}</a>
+            <a href="{{blogPathFor 'blogShow'}}">{{title}}</a>
           </h2>
           <div class="meteor-blog-post-meta">
             By {{authorName}} on {{blogFormatDate publishedAt}}

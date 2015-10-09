@@ -4,7 +4,10 @@
 
 
 Template.blogIndex.onCreated ->
-  tag = @data.tag if @data
+  @tag = new ReactiveVar null
+  @autorun =>
+    @tag.set Blog.Router.getParam 'tag'
+    console.log 'TAG', @tag.get()
 
   if not Session.get('blog.postLimit')
     if Blog.settings.pageSize
@@ -13,9 +16,9 @@ Template.blogIndex.onCreated ->
   authorsSub = Blog.subs.subscribe 'blog.authors'
   postsSub = null
 
-  @autorun ->
-    if tag
-      postsSub = Blog.subs.subscribe 'blog.taggedPosts', tag
+  @autorun =>
+    if @tag.get()
+      postsSub = Blog.subs.subscribe 'blog.taggedPosts', @tag.get()
     else
       postsSub = Blog.subs.subscribe 'blog.posts', Session.get('blog.postLimit')
 
@@ -33,8 +36,9 @@ Template.blogIndex.onRendered ->
 Template.blogIndex.helpers
   subsReady: -> Template.instance().subsReady.get()
   posts: ->
-    if @tag
-      Blog.Post.where({ tags: @tag }, { sort: publishedAt: -1 })
+    tag = Template.instance().tag.get()
+    if tag
+      Blog.Post.where({ tags: tag }, { sort: publishedAt: -1 })
     else
       Blog.Post.where({}, { sort: publishedAt: -1 })
 
@@ -44,10 +48,12 @@ Template.blogIndex.helpers
 
 
 Template.blogShow.onCreated ->
-  slug = @data.slug if @data
+  @slug = new ReactiveVar null
+  @autorun =>
+    @slug.set Blog.Router.getParam 'slug'
 
-  postSub = Blog.subs.subscribe 'blog.singlePostBySlug', slug
-  commentsSub = Blog.subs.subscribe 'blog.commentsBySlug', slug
+  postSub = Blog.subs.subscribe 'blog.singlePostBySlug', @slug.get()
+  commentsSub = Blog.subs.subscribe 'blog.commentsBySlug', @slug.get()
   authorsSub = Blog.subs.subscribe 'blog.authors'
 
   @subsReady = new ReactiveVar false
@@ -57,7 +63,7 @@ Template.blogShow.onCreated ->
 
 Template.blogShow.helpers
   subsReady: -> Template.instance().subsReady.get()
-  post: -> Blog.Post.first slug: @slug
+  post: -> Blog.Post.first slug: Template.instance().slug.get()
   notFound: ->
     if Blog.settings.blogNotFoundTemplate
       Blog.settings.blogNotFoundTemplate
@@ -72,7 +78,7 @@ Template.blogShowBody.onRendered ->
   Meteor.call 'isBlogAuthorized', @data.id, (err, authorized) =>
     # Can view?
     if @data.mode is 'draft'
-      return Router.go('/blog') unless authorized
+      return Blog.Router.go('/blog') unless authorized
 
     # Can edit?
     if authorized
@@ -94,13 +100,13 @@ Template.blogShowBody.onRendered ->
     $(window).trigger "resize" # so it runs once
 
   # Sidecomments.js
-  renderSideComments.call @
+  renderSideComments.call @, @data.slug
 
 Template.blogShowBody.events
   'click [data-action=edit-post]': (event, template) ->
     event.preventDefault()
     postId = Blog.Post.first({slug: @slug})._id
-    Router.go 'blogAdminEdit', {id: postId}
+    Blog.Router.go 'blogAdminEdit', {id: postId}
 
 Template.blogShowBody.helpers
   fullWidthFeaturedImage: -> Session.get "blog.fullWidthFeaturedImage"
@@ -121,7 +127,7 @@ Template.blogShowBody.helpers
 # SIDECOMMENTS.js
 
 
-renderSideComments = ->
+renderSideComments = (slug) ->
 
   settings = Blog.settings.comments
   # check if useSideComments config is true (default is null)
@@ -167,7 +173,7 @@ renderSideComments = ->
 
     # load existing comments
     existingComments = []
-    Blog.Comment.where(slug: @data.slug).forEach((comment) ->
+    Blog.Comment.where(slug: slug).forEach((comment) ->
       comment.comment.id = comment._id
       sec = _(existingComments).findWhere(sectionId: comment.sectionId.toString())
       if sec
@@ -185,7 +191,7 @@ renderSideComments = ->
     sideComments.on 'commentPosted', (comment) ->
       if settings.allowAnonymous or Meteor.user()
         attrs =
-          slug: @data.slug
+          slug: slug
           sectionId: comment.sectionId
           comment:
             authorAvatarUrl: comment.authorAvatarUrl

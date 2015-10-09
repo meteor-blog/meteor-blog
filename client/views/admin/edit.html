@@ -41,7 +41,7 @@
                 <div class="row form-group">
                   <div class="col-md-4">
                     <label>Tags</label>
-                    <input tabindex="2" type="text" class="form-control" name="tags" placeholder="Type in a tag & hit enter" value="{{joinTags tags}}" data-role="tagsinput">
+                    <input tabindex="2" type="text" class="form-control" name="tags" placeholder="Type in a tag & hit enter" value="{{blogJoinTags tags}}" data-role="tagsinput">
                   </div>
                   <div class="col-md-4">
                     <label>Slug</label>
@@ -65,7 +65,7 @@
                     <button type="submit" class="btn btn-default">
                       <i class="fa fa-save"></i> Save
                     </button>
-                    <a href="{{pathFor 'blogAdmin'}}" class="btn btn-default">
+                    <a href="{{blogPathFor 'blogAdmin'}}" class="btn btn-default">
                       <i class="fa fa-ban"></i> Cancel
                     </a>
                   </div>

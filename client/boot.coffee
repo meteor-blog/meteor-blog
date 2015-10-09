@@ -10,6 +10,7 @@ Blog.settings =
   blogNotFoundTemplate: null
   blogAdminTemplate: null
   blogAdminEditTemplate: null
+  blogLayoutTemplate: null
   pageSize: 20
   excerptFunction: null
   syntaxHighlighting: false
@@ -67,27 +68,27 @@ Meteor.startup ->
 # Register Global Helpers
 #
 
-UI.registerHelper "blogFormatDate", (date) ->
+Template.registerHelper "blogFormatDate", (date) ->
   moment(new Date(date)).format "MMM Do, YYYY"
 
-UI.registerHelper "blogFormatTags", (tags) ->
+Template.registerHelper "blogFormatTags", (tags) ->
   return if !tags?
 
   for tag in tags
-    path = Router.path 'blogTagged', tag: tag
+    path = Blog.Router.pathFor 'blogTagged', tag: tag
     if str?
       str += ", <a href=\"#{path}\">#{tag}</a>"
     else
       str = "<a href=\"#{path}\">#{tag}</a>"
   return new Spacebars.SafeString str
 
-UI.registerHelper "joinTags", (list) ->
+Template.registerHelper "blogJoinTags", (list) ->
   if list
     list.join ', '
 
-UI.registerHelper "blogPager", ->
+Template.registerHelper "blogPager", ->
   if Blog.Post.count() is Session.get 'blog.postLimit'
     return new Spacebars.SafeString '<a class="blog-load-more btn" href="#">Load More</a>'
 
-UI.registerHelper "session", (key) ->
-  return Session.get key
+Template.registerHelper 'blogPathFor', (name, options) ->
+  return Blog.Router.pathFor name, @, options

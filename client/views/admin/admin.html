@@ -33,7 +33,7 @@
 </template>
 
 <template name="blogAdminTitleColumn">
-  <h4><a target="_blank" href="{{pathFor 'blogShow'}}">{{title}}</a></h4>
+  <h4><a target="_blank" href="{{blogPathFor 'blogShow'}}">{{title}}</a></h4>
   <p>{{{excerpt}}}</p>
 </template>
 
@@ -62,7 +62,7 @@
 </template>
 
 <template name="blogAdminEditColumn">
-  <a href="{{pathFor 'blogAdminEdit'}}"><i class="fa fa-edit"></i></a>
+  <a href="{{blogPathFor 'blogAdminEdit'}}"><i class="fa fa-edit"></i></a>
 </template>
 
 <template name="blogAdminDeleteColumn">

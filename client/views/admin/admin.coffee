@@ -8,12 +8,12 @@ Template.blogAdmin.onCreated ->
       @subsReady.set true
 
   @autorun ->
-    Router.go 'blogIndex' if not Meteor.userId()
+    Blog.Router.go 'blogIndex' if not Meteor.userId()
 
 Template.blogAdmin.onRendered ->
   Meteor.call 'isBlogAuthorized', (err, authorized) =>
     if not authorized
-      return Router.go('/blog')
+      return Blog.Router.go('/blog')
 
 Template.blogAdmin.helpers
   subsReady: -> Template.instance().subsReady.get()
@@ -46,7 +46,7 @@ Template.blogAdmin.helpers
 Template.blogAdmin.events
   'click [data-action=new-blog]': (e, tpl) ->
     e.preventDefault()
-    Router.go 'blogAdminEdit', id: Random.id()
+    Blog.Router.go 'blogAdminEdit', id: Random.id()
 
   'change [data-action=filtering]': (e) ->
     e.preventDefault()

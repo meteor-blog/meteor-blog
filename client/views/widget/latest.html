@@ -6,7 +6,7 @@
     <ul class="meteor-blog-latest-posts">
       {{#each latest}}
         <li class="meteor-blog-latest-post">
-          <a href="{{pathFor 'blogShow'}}">
+          <a href="{{blogPathFor 'blogShow'}}">
             <div class="meteor-blog-latest-post-title">
               {{{title}}}
             </div>
@@ -19,6 +19,6 @@
         <li>Loading...</li>
       {{/each}}
     </ul>
-    <a href="{{pathFor 'blogIndex'}}">View all posts&nbsp; &rsaquo;</a>
+    <a href="{{blogPathFor 'blogIndex'}}">View all posts&nbsp; &rsaquo;</a>
   </div>
 </template>
