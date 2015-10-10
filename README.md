@@ -1,8 +1,8 @@
 ## Meteor Blog
 
 This Meteor package gives you a basic, out-of-the-box blog at `/blog` (or where
-ever). We wanted a way to add a blog to an existing app without running another
-app for a meteor-based blog.
+ever). We wanted a way to add a meteor-based blog within an existing project
+without running another app.
 
 This blog is very much a work in progress. To help decide what gets added next,
 vote with your [Github issues](https://github.com/Differential/meteor-blog/issues)!

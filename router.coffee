@@ -109,11 +109,6 @@ Blog.Router =
  
  
 Meteor.startup ->
- 
-
-  # ----------------------------------------------------------------------------
-  # PUBLIC ROUTES
-
 
   routes = []
   basePath =
@@ -127,6 +122,11 @@ Meteor.startup ->
       ''
     else
       Blog.settings.adminBasePath
+
+
+  # ----------------------------------------------------------------------------
+  # PUBLIC ROUTES
+
 
   # BLOG INDEX
 
