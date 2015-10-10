@@ -5,77 +5,71 @@
         {{> blogShowFeaturedImage}}
       {{/if}}
     {{/with}}
-    <div class="container">
-      <div class="row">
-        <div class="col-xs-12 col-sm-11 col-md-8 col-md-offset-2">
-          {{#if subsReady}}
-            {{#with post}}
-              {{> blogShowBody}}
-            {{else}}
-              {{> Template.dynamic template=notFound}}
-            {{/with}}
-          {{else}}
-            {{> blogLoading}}
-          {{/if}}
-        </div>
-      </div>
-    </div>
+    {{#if subsReady}}
+      {{#with post}}
+        {{> blogShowBody}}
+      {{else}}
+        {{> Template.dynamic template=notFound}}
+      {{/with}}
+    {{else}}
+      {{> blogLoading}}
+    {{/if}}
   </div>
 </template>
 
 <template name="blogShowBody">
   <div class="meteor-blog-post">
-    {{#unless titleBackground}}
-      <h1 class="meteor-blog-post-title text-center">
-        {{title}}
-      </h1>
-      <div class="meteor-blog-post-meta text-center">
-        {{#if isAdmin}}
-           <small><a href="#" data-action="edit-post">edit</a></small>
-           --
-        {{/if}}
-        By {{authorName}} on {{blogFormatDate publishedAt}}
-        {{> blogTags }}
+    <div class="meteor-blog-post-main">
+      {{#unless titleBackground}}
+        <h1 class="meteor-blog-post-title text-center">
+          {{title}}
+        </h1>
+        <div class="meteor-blog-post-meta text-center">
+          {{#if isAdmin}}
+             <small><a href="#" data-action="edit-post">edit</a></small>
+             --
+          {{/if}}
+          By {{authorName}} on {{blogFormatDate publishedAt}}
+          {{> blogTags }}
+        </div>
+      {{/unless}}
+      <div id="commentable-area">
+        {{{html}}}
       </div>
-    {{/unless}}
-    <div id="commentable-area">
-      {{{html}}}
     </div>
+    <div class="meteor-blog-back-link pull-left">
+      <a href="{{blogPathFor 'blogIndex'}}"><i class="fa fa-caret-left"></i>Back to the Blog</a>
+    </div>
+    {{> shareit shareData}}
+    {{> disqus this}}
   </div>
-  <div class="meteor-blog-back-link pull-left">
-    <a href="{{blogPathFor 'blogIndex'}}"><i class="fa fa-caret-left"></i>Back to the Blog</a>
-  </div>
-  {{> shareit shareData}}
-  {{> disqus this}}
 </template>
 
 <template name="blogShowFeaturedImage">
-  <div class="row">
-    <div class="meteor-blog-featured-image">
-      <figure class="{{#if fullWidthFeaturedImage}}meteor-blog-fill-width-image{{else}}meteor-blog-scale-image{{/if}}">
-        <div class="meteor-blog-aspect-ratio-placeholder" style="{{#unless fullWidthFeaturedImage}}width: {{featuredImageWidth}}px; height: {{featuredImageHeight}}px;{{/unless}}">
-          <!-- <div class="meteor-blog-aspect-ratio-fill"></div> -->
-          <img src="{{featuredImage}}" alt="" class="img-responsive center-block">
-          {{#if titleBackground}}
-            <div class="meteor-blog-background-title">
-              <div class="center-block">
-                <h1 class="text-center">
-                  {{title}}
-                  {{#if isAdmin}}
-                     <small><a href="#" data-action="edit-post">edit</a></small>
-                  {{/if}}
-                </h1>
-                <div class="meteor-blog-post-meta text-center">
-                  By {{authorName}} on {{blogFormatDate publishedAt}}
-                  {{> blogTags }}
-                </div>
-              </div>
+  <div class="meteor-blog-featured-image {{#if fullWidthFeaturedImage}}meteor-blog-full-width-image{{else}}meteor-blog-regular-image{{/if}}">
+    <div class="meteor-blog-aspect-ratio-placeholder" style="{{#unless fullWidthFeaturedImage}}width: {{featuredImageWidth}}px; height: {{featuredImageHeight}}px;{{/unless}}">
+      <img src="{{featuredImage}}" alt="" class="img-responsive center-block">
+      {{#if titleBackground}}
+        <div class="meteor-blog-background-title">
+          <div class="center-block">
+            <h1 class="text-center">
+              {{title}}
+              {{#if isAdmin}}
+                 <small><a href="#" data-action="edit-post">edit</a></small>
+              {{/if}}
+            </h1>
+            <div class="meteor-blog-post-meta text-center">
+              By {{authorName}} on {{blogFormatDate publishedAt}}
+              {{> blogTags }}
             </div>
-          {{/if}}
+          </div>
         </div>
-      </figure>
+      {{/if}}
     </div>
   </div>
+  {{#if fullWidthFeaturedImage}}
+    <div class="meteor-blog-aspect-ratio-fill" style="height: {{fullWidthFeaturedImageHeight}}px;"></div>
+  {{/if}}
 </template>
 
 <template name="disqus">

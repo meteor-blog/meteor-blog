@@ -96,30 +96,38 @@ Template.blogShowBody.onRendered ->
   if @data.featuredImage
     $(window).resize =>
       Session.set "blog.fullWidthFeaturedImage", $(window).width() < @data.featuredImageWidth
+      if Session.get "blog.fullWidthFeaturedImage"
+        Session.set "blog.fullWidthFeaturedImageHeight", ($(window).width()/@data.featuredImageWidth)*@data.featuredImageHeight
     $(window).trigger "resize" # so it runs once
 
   # Sidecomments.js
   renderSideComments.call @, @data.slug
 
+editPost = (e, tpl) ->
+  e.preventDefault()
+  postId = Blog.Post.first(slug: @slug)._id
+  Blog.Router.go 'blogAdminEdit', id: postId
+
 Template.blogShowBody.events
-  'click [data-action=edit-post]': (event, template) ->
-    event.preventDefault()
-    postId = Blog.Post.first({slug: @slug})._id
-    Blog.Router.go 'blogAdminEdit', {id: postId}
+  'click [data-action=edit-post]': editPost
 
 Template.blogShowBody.helpers
-  fullWidthFeaturedImage: -> Session.get "blog.fullWidthFeaturedImage"
   isAdmin: -> Session.get "blog.canEditPost"
   shareData: ->
     post = Blog.Post.first slug: @slug
+    title: post.title,
+    excerpt: post.excerpt,
+    description: post.description,
+    author: post.authorName(),
+    thumbnail: post.thumbnail()
 
-    {
-      title: post.title,
-      excerpt: post.excerpt,
-      description: post.description,
-      author: post.authorName(),
-      thumbnail: post.thumbnail()
-    }
+Template.blogShowFeaturedImage.events
+  'click [data-action=edit-post]': editPost
+
+Template.blogShowFeaturedImage.helpers
+  isAdmin: -> Session.get "blog.canEditPost"
+  fullWidthFeaturedImage: -> Session.get "blog.fullWidthFeaturedImage"
+  fullWidthFeaturedImageHeight: -> Session.get "blog.fullWidthFeaturedImageHeight"
 
 
 # ------------------------------------------------------------------------------

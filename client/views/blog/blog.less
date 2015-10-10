@@ -13,6 +13,30 @@
   &:last-child {
     border-bottom: none;
   }
+  &:after {
+    clear: both;
+    display: table;
+    content: " ";
+  }
+}
+.meteor-blog-index .meteor-blog-post > div {
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+  float: left;
+}
+.meteor-blog-index .meteor-blog-post-thumbnail {
+  margin-top: 20px;
+  margin-right: -15px;
+  margin-left: -15px;
+  width: 100%;
+  @media only screen and (min-width: 601px) {
+    width: 25%;
+  }
+  @media only screen and (min-width: 1201px) {
+    width: 15%;
+  }
 }
 .meteor-blog-index .meteor-blog-post h2 {
   font-size: 32px;
@@ -22,9 +46,6 @@
   @media (max-width: 100px) {
     padding-right: 100px;
   }
-}
-.meteor-blog-index .meteor-blog-post-thumbnail {
-  margin-top: 20px;
 }
 .meteor-blog-index .meteor-blog-post-meta {
   color: #bbb;
@@ -45,14 +66,14 @@
 
 /* METEOR BLOG FEATURED IMAGE */
 
-.meteor-blog-single .meteor-blog-featured-image {
+.meteor-blog-single .meteor-blog-regular-image {
+  margin-top: 20px;
   margin-bottom: 50px;
 }
-.meteor-blog-single .meteor-blog-scale-image {
-  margin-top: 20px;
-}
-.meteor-blog-single .meteor-blog-aspect-ratio-fill {
-  padding-bottom: 40.1%;
+.meteor-blog-single .meteor-blog-full-width-image {
+  position: absolute;
+  left: 0;
+  right: 0;
 }
 .meteor-blog-single .meteor-blog-background-title {
   text-shadow: black 0.2em 0.2em 0.2em;
@@ -68,6 +89,9 @@
   position: relative;
   width: 100%;
   margin: 0 auto;
+}
+.meteor-blog-single .meteor-blog-aspect-ratio-fill {
+  margin-bottom: 50px;
 }
 
 /* MEDIUM-INSERT PLUGIN */
@@ -90,25 +114,22 @@
 
 /* METEOR BLOG SINGLE POST */
 
-.meteor-blog-single {
-  padding-top: 0px;
-}
-.meteor-blog-single .meteor-blog-post {
+.meteor-blog-single .meteor-blog-post-main {
   border-bottom: 1px solid #EEE;
   padding-bottom: 20px;
   margin-bottom: 30px;
 }
-.meteor-blog-single .meteor-blog-post h2 {
+.meteor-blog-single .meteor-blog-post-main h2 {
   font-size: 40px;
   line-height: 48px;
   margin-bottom: 8px;
 }
-.meteor-blog-single .meteor-blog-post img {
+.meteor-blog-single .meteor-blog-post-main img {
   border: 1px solid rgba(0, 0, 0, 0.5);
   margin: 30px auto;
   display: block;
 }
-.meteor-blog-single .meteor-blog-post code {
+.meteor-blog-single .meteor-blog-post-main code {
   color: inherit;
 }
 .meteor-blog-single .meteor-blog-post-title {

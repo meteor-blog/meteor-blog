@@ -1,44 +1,36 @@
 <template name="blogIndex">
   <div class="meteor-blog-index">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-          {{#if subsReady}}
-            {{> blogIndexLoop posts=posts}}
-            {{blogPager}}
-          {{else}}
-            {{> blogLoading}}
-          {{/if}}
-        </div>
-      </div>
-    </div>
+    {{#if subsReady}}
+      {{> blogIndexLoop posts=posts}}
+      {{blogPager}}
+    {{else}}
+      {{> blogLoading}}
+    {{/if}}
   </div>
 </template>
 
 <template name="blogIndexLoop">
   {{#each posts}}
     <div class="meteor-blog-post">
-      <div class="row">
-        {{#if featuredImage}}
-          <div class="col-md-3">
-            <a href="{{blogPathFor 'blogShow'}}" class="meteor-blog-post-thumbnail thumbnail">
-              <img src="{{featuredImage}}" alt="" class="img-responsive">
-            </a>
-          </div>
-        {{/if}}
-        <div class="{{#if featuredImage}}col-md-9{{else}}col-md-12{{/if}}">
-          <h2>
-            <a href="{{blogPathFor 'blogShow'}}">{{title}}</a>
-          </h2>
-          <div class="meteor-blog-post-meta">
-            By {{authorName}} on {{blogFormatDate publishedAt}}
-            {{> blogTags }}
-          </div>
-          <div class="meteor-blog-post-excerpt">
-            <small>{{{excerpt}}}</small>
-          </div>
+      {{#if featuredImage}}
+        <div class="meteor-blog-post-thumbnail">
+          <a href="{{blogPathFor 'blogShow'}}" class="thumbnail">
+            <img src="{{featuredImage}}" alt="" class="img-responsive">
+          </a>
         </div>
+      {{/if}}
+      <div class="meteor-blog-post-excerpt">
+        <h2>
+          <a href="{{blogPathFor 'blogShow'}}">{{title}}</a>
+        </h2>
+        <div class="meteor-blog-post-meta">
+          By {{authorName}} on {{blogFormatDate publishedAt}}
+          {{> blogTags }}
         </div>
+        <div class="meteor-blog-post-excerpt">
+          <small>{{{excerpt}}}</small>
+        </div>
+      </div>
     </div>
   {{else}}
     This blog is looking pretty empty...
