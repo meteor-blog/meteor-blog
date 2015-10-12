@@ -74,15 +74,20 @@ save = (tpl, cb) ->
     return cb(null, new Error 'Blog body is required')
 
   slug = $('[name=slug]', $form).val()
-  description = $('[name=description]', $form).val()
 
   attrs =
     title: $('[name=title]', $form).val()
     tags: $('[name=tags]', $form).val()
     slug: slug
-    description: description
+    description: $('[name=description]', $form).val()
     body: body
     updatedAt: new Date()
+    titleBackground: $('[name=background-title]', $form).is(':checked')
+
+  attrs.featuredImageWidth = Session.get('blog.featuredImageWidth')
+  attrs.featuredImageHeight = Session.get('blog.featuredImageHeight')
+  attrs.featuredImageName = Session.get('blog.featuredImageName')
+  attrs.featuredImage = Session.get('blog.featuredImage')
 
   post = Blog.Post.first(tpl.id.get())
   if post?
@@ -127,6 +132,11 @@ Template.blogAdminEdit.onCreated ->
   @autorun ->
     Blog.Router.go 'blogIndex' if not Meteor.userId()
 
+  Session.set 'blog.featuredImageWidth', null
+  Session.set 'blog.featuredImageHeight', null
+  Session.set 'blog.featuredImageName', null
+  Session.set 'blog.featuredImage', null
+
 
 Template.blogAdminEdit.onRendered ->
   Meteor.call 'isBlogAuthorized', @id.get(), (err, authorized) =>
@@ -165,8 +175,20 @@ Template.blogAdminEdit.onRendered ->
         BlogEditor.make @
 
 Template.blogAdminEdit.helpers
-  post: -> Blog.Post.first(Template.instance().id.get()) or {}
+  post: ->
+    post = Blog.Post.first(Template.instance().id.get())
+    if post
+      Session.set 'blog.featuredImageWidth', post.featuredImageWidth
+      Session.set 'blog.featuredImageHeight', post.featuredImageHeight
+      Session.set 'blog.featuredImageName', post.featuredImageName
+      Session.set 'blog.featuredImage', post.featuredImage
+      post
+    else
+      {}
   subsReady: -> Template.instance().subsReady.get()
+  featuredImage: -> Session.get('blog.featuredImage')
+  featuredImageName: -> Session.get('blog.featuredImageName')
+
 
 Template.blogAdminEdit.events
   # Toggle between VISUAL/HTML modes
@@ -183,8 +205,7 @@ Template.blogAdminEdit.events
     if $html.is(':visible')
       return
 
-    if $editable.find('.medium-insert-images').length is 0
-      $html.val BlogEditor.make(tpl).pretty()
+    $html.val BlogEditor.make(tpl).pretty()
     setEditMode tpl, 'html'
     $html.height($editable.height())
 
@@ -220,49 +241,38 @@ Template.blogAdminEdit.events
 
   'click [data-action=delete-featured]': (e, tpl) ->
     e.preventDefault()
-    @update
-      featuredImageWidth: null
-      featuredImageHeight: null
-      featuredImageName: null
-      featuredImage: null
-      titleBackground: null
+    Session.set 'blog.featuredImageWidth', null
+    Session.set 'blog.featuredImageHeight', null
+    Session.set 'blog.featuredImageName', null
+    Session.set 'blog.featuredImage', null
 
   'change [name=featured-image]': (e, tpl) ->
     the_file = $(e.currentTarget)[0].files[0]
     post = @
     # get dimensions
     readImageDimensions the_file, (width, height, name) ->
-      post.update
-        featuredImageWidth: width
-        featuredImageHeight: height
-        featuredImageName: name
+      Session.set 'blog.featuredImageWidth', width
+      Session.set 'blog.featuredImageHeight', height
+      Session.set 'blog.featuredImageName', name
+
     # S3
     if Meteor.settings?.public?.blog?.useS3
       Blog.S3Files.insert the_file, (err, fileObj) ->
         Tracker.autorun (c) ->
           theFile = Blog.S3Files.find({_id: fileObj._id}).fetch()[0]
           if theFile.isUploaded() and theFile.url?()
-            if post.id?
-              post.update
-                featuredImage: theFile.url()
-              Notifications.success '', 'Featured image saved!'
-              c.stop()
+            Session.set 'blog.featuredImage', theFile.url()
+            Notifications.success '', 'Featured image saved!'
+            c.stop()
     # Local Filestore
     else
       Blog.FilesLocal.insert the_file, (err, fileObj) ->
         Tracker.autorun (c) ->
           theFile = Blog.FilesLocal.find({_id: fileObj._id}).fetch()[0]
           if theFile.isUploaded() and theFile.url?()
-            if post.id?
-              post.update
-                featuredImage: theFile.url()
-              Notifications.success '', 'Featured image saved!'
-              c.stop()
-
-  'change [name=background-title]': (e, tpl) ->
-    $checkbox = $(e.currentTarget)
-    @update
-      titleBackground: $checkbox.is(':checked')
+            Session.set 'blog.featuredImage', theFile.url()
+            Notifications.success '', 'Featured image saved!'
+            c.stop()
 
   'submit form': (e, tpl) ->
     e.preventDefault()
