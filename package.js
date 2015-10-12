@@ -82,7 +82,6 @@ Package.onUse(function(api) {
     'client/compatibility/highlight.pack.js',
 
     // PACKAGE FILES
-    'client/views/404.html',
     'client/views/loading.html',
     'client/views/admin/admin.less',
     'client/views/admin/admin.html',

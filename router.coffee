@@ -3,6 +3,14 @@
 Blog.Router =
   routes: []
 
+  getNotFoundTemplate: ->
+    if Package['iron:router']
+      Router.lookupNotFoundTemplate()
+
+  notFound: ->
+    if Package['kadira:flow-router']
+      FlowRouter._notfoundRoute FlowRouter.current()
+
   replaceState: (path) ->
     if Package['iron:router']
       Iron.Location.go path, { replaceState: true, skipReactive: true }
@@ -102,6 +110,8 @@ Blog.Router =
               BlazeLayout.render layout, template: template
             else
               BlazeLayout.render template
+          else
+            Blog.Router.notFound()
 
 
     else

@@ -67,7 +67,11 @@ Template.blogShow.helpers
     if Blog.settings.blogNotFoundTemplate
       Blog.settings.blogNotFoundTemplate
     else
-      'blogNotFound'
+      notFound = Blog.Router.getNotFoundTemplate()
+      if notFound
+        return notFound
+      else
+        Blog.Router.notFound()
 
 
 renderSideComments = null
