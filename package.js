@@ -116,6 +116,7 @@ Package.onUse(function(api) {
   // PACKAGES FOR SERVER
 
   api.use([
+    'check',
     'simple:json-routes@1.0.4'
   ], 'server');
 
