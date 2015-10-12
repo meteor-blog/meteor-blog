@@ -211,9 +211,10 @@ Blog.config({
 
 ### Custom Templates
 
-While the admin templates are opinionated, the front-end is bare markup, ready
-to by styled. If the default templates aren't doing it for you, you can override
-the default templates with your own by setting configuration variables:
+The admin templates are designed for use with Bootstrap. However, the front-end
+is bare markup, ready to by styled, and does not depend on any CSS framework at
+all. If the default templates aren't doing it for you, you can override the
+default templates with your own by setting configuration variables:
 
 ```coffee
 # CoffeeScript
@@ -270,8 +271,9 @@ Example:
 
 **Custom NotFound**
 
-You can provide a custom `notFoundTemplate` to use when a blog post slug is not
-found.
+By default, if the browser loads a non-existent blog post, it will use your
+app's `notFound` handling. You can provide a custom `notFoundTemplate` to use
+when a blog post slug is not found.
 
 ```coffee
 # CoffeeScript

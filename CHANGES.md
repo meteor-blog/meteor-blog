@@ -1,5 +1,12 @@
 ## Changelog
 
+### v0.8.2
+
+* Remove Bootstrap classes from public templates
+* Improve 'notFound' handling
+* Fix hero image in some cases
+* Fix bug where you could not set the featured image before the post was saved
+
 ### v0.8.1
 
 * Fix bug where author name was not showing up
