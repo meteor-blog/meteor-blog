@@ -60,6 +60,8 @@ To configure your blog, create a file shared on client/server, probably in
 Meteor blog works with both Iron Router and Flow Router. If your app and the
 blog have conflicting routes, your app will get priority.
 
+If you use Flow Router, you must add `kadira:blaze-layout` to your app, as that is how Meteor blog renders its templates in a Flow Router route.
+
 **Custom Base Paths**
 
 You can customize the base path for the blog and for the blog admin area.
