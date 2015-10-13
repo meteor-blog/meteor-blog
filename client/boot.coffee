@@ -28,10 +28,6 @@ Meteor.startup ->
     if Session.get 'blog.postLimit'
       Session.set 'blog.postLimit', Session.get('blog.postLimit') + Blog.settings.pageSize
 
-  # Notifications package
-  _.extend Notifications.defaultOptions,
-    timeout: 5000
-
 ################################################################################
 # Register Global Helpers
 #

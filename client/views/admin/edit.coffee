@@ -221,7 +221,7 @@ Template.blogAdminEdit.events
   'input .editable, keydown .editable, keydown .html-editor': _.debounce (e, tpl) ->
     save tpl, (id, err) ->
       if err
-        return Notifications.error '', err.message
+        return toastr.error err.message
 
       if id
         # If new blog post, subscribe to the new post and update URL
@@ -229,7 +229,7 @@ Template.blogAdminEdit.events
         path = Blog.Router.pathFor 'blogAdminEdit', id: id
         Blog.Router.replaceState path
 
-      Notifications.success '', 'Saved'
+      toastr.success 'Saved'
   , 8000
 
   'blur [name=title]': (e, tpl) ->
@@ -262,7 +262,7 @@ Template.blogAdminEdit.events
           theFile = Blog.S3Files.find({_id: fileObj._id}).fetch()[0]
           if theFile.isUploaded() and theFile.url?()
             Session.set 'blog.featuredImage', theFile.url()
-            Notifications.success '', 'Featured image saved!'
+            toastr.success 'Featured image saved'
             c.stop()
     # Local Filestore
     else
@@ -271,12 +271,12 @@ Template.blogAdminEdit.events
           theFile = Blog.FilesLocal.find({_id: fileObj._id}).fetch()[0]
           if theFile.isUploaded() and theFile.url?()
             Session.set 'blog.featuredImage', theFile.url()
-            Notifications.success '', 'Featured image saved!'
+            toastr.success 'Featured image saved'
             c.stop()
 
   'submit form': (e, tpl) ->
     e.preventDefault()
     save tpl, (id, err) ->
       if err
-        return Notifications.error '', err.message
+        return toastr.error err.message
       Blog.Router.go 'blogAdmin'

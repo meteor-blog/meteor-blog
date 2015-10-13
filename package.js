@@ -49,7 +49,7 @@ Package.onUse(function(api) {
     'less',
     'aslagle:reactive-table@0.5.5',
     'liberation:shareit@1.0.1',
-    'gfk:notifications@1.1.4'
+    'flawless:meteor-toastr@1.0.1'
   ], 'client');
 
   // FILES FOR CLIENT
