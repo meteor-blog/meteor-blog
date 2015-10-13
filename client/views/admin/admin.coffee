@@ -46,7 +46,7 @@ Template.blogAdmin.helpers
 Template.blogAdmin.events
   'click [data-action=new-blog]': (e, tpl) ->
     e.preventDefault()
-    Blog.Router.go 'blogAdminEdit', id: Random.id()
+    Blog.Router.go 'blogAdminEdit', id: 'new'
 
   'change [data-action=filtering]': (e) ->
     e.preventDefault()
