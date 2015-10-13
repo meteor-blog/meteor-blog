@@ -52,7 +52,7 @@ Meteor.publish 'blog.authors', ->
 #
 
 Meteor.publish 'blog.singlePostById', (id) ->
-  check id, String
+  check id, Match.OneOf(String, null)
 
   if not @userId
     return @ready()
