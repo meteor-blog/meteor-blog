@@ -187,16 +187,6 @@ When creating a blog post in the admin, you can set one of three modes:
 * `Private` - Not listed in the blog, but viewable by anyone with the link
 * `Draft` - Unpublished and only viewable in the blog admin area
 
-### Bootstrap Templates
-
-Meteor blog works out-of-the-box with minimal, decent-looking Bootstrap
-templates. If you use these default templates, you must add the meteor
-`bootstrap-3` package.
-
-```bash
-$ meteor add mrt:bootstrap-3
-```
-
 ### Custom Layout
 
 By default, the layout configured for your app is used. To specify a layout for
@@ -292,6 +282,15 @@ Blog.config
 Blog.config({
   blogNotFoundTemplate: 'myNotFoundTemplate'
 });
+```
+
+### Admin Templates
+
+The admin templates are designed for use with Bootstrap. To use the admin area, 
+you should add the meteor `bootstrap-3` package.
+
+```bash
+$ meteor add mrt:bootstrap-3
 ```
 
 ### Blog Post Excerpt
