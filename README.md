@@ -87,6 +87,10 @@ will be your home page, unless you override the route. This also means that
 meteor blog can function as a crude CMS. For more CMS-like features, create a
 [Github issue](https://github.com/Differential/meteor-blog/issues)!
 
+**pathFor**
+
+If you need a `pathFor`-like way to generate URLs, you can use `blogPathFor` for either router (e.g. `{{blogPathFor 'blogIndex'}}`).
+
 ### Roles
 
 By default, _any_ logged-in user can administer the blog. To ensure that only
