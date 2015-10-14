@@ -7,14 +7,11 @@ Blog.settings =
 
 Blog.config = (appConfig) ->
   # No deep extend in underscore :-(
-  if appConfig.comments
-    @settings.comments = _.extend(@settings.comments, appConfig.comments)
-    delete appConfig.comments
-  @settings = _.extend(@settings, appConfig)
-  
-  if appConfig.language
-    @settings.language = _.extend(@settings.language, appConfig.language)
-    delete appConfig.language
+  for key in ['comments', 'rss', 'language']
+    if appConfig[key]
+      @settings[key] = _.extend(@settings[key], appConfig[key])
+      delete appConfig[key]
+
   @settings = _.extend(@settings, appConfig)
 
 
