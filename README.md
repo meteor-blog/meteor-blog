@@ -486,7 +486,7 @@ Blog.config
     postVisibilityAdmins: 'Me & Admins only',
     postVisibilityLink: 'Anyone with link',
     postVisibilityAnyone: 'The world',
-    editSaved: 'Saved',
+    saved: 'Saved',
     editFeaturedImageSaved: 'Featured image saved',
     editErrorSlugExists: 'Blog with this slug already exists',
     editErrorBodyRequired: 'Blog body is required'
