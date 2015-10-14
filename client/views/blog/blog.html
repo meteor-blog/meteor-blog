@@ -1,6 +1,6 @@
 <template name="blogIndex">
   <div class="meteor-blog-index">
-    {{#if subsReady}}
+    {{#if blogReady}}
       {{> blogIndexLoop posts=posts}}
       {{blogPager}}
     {{else}}

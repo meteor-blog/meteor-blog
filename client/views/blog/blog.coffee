@@ -21,10 +21,10 @@ Template.blogIndex.onCreated ->
     else
       postsSub = Blog.subs.subscribe 'blog.posts', Session.get('blog.postLimit')
 
-  @subsReady = new ReactiveVar false
+  @blogReady = new ReactiveVar false
   @autorun =>
     if authorsSub.ready() and postsSub.ready()
-      @subsReady.set true
+      @blogReady.set true
 
 Template.blogIndex.onRendered ->
   # Page Title
@@ -33,13 +33,22 @@ Template.blogIndex.onRendered ->
     document.title += " | #{Blog.settings.title}"
 
 Template.blogIndex.helpers
-  subsReady: -> Template.instance().subsReady.get()
+  blogReady: -> Template.instance().blogReady.get()
   posts: ->
     tag = Template.instance().tag.get()
     if tag
       Blog.Post.where({ tags: tag }, { sort: publishedAt: -1 })
     else
       Blog.Post.where({}, { sort: publishedAt: -1 })
+
+# Provide data to custom templates, if any
+Meteor.startup ->
+  if Blog.settings.blogIndexTemplate
+    customIndex = Blog.settings.blogIndexTemplate
+    Template[customIndex].onCreated Template.blogIndex._callbacks.created[0]
+    Template[customIndex].helpers
+      posts: Template.blogIndex.__helpers.get('posts')
+      blogReady: Template.blogIndex.__helpers.get('blogReady')
 
 
 # ------------------------------------------------------------------------------
@@ -55,13 +64,13 @@ Template.blogShow.onCreated ->
   commentsSub = Blog.subs.subscribe 'blog.commentsBySlug', @slug.get()
   authorsSub = Blog.subs.subscribe 'blog.authors'
 
-  @subsReady = new ReactiveVar false
+  @blogReady = new ReactiveVar false
   @autorun =>
     if postSub.ready() and commentsSub.ready() and authorsSub.ready() and !Meteor.loggingIn()
-      @subsReady.set true
+      @blogReady.set true
 
 Template.blogShow.helpers
-  subsReady: -> Template.instance().subsReady.get()
+  blogReady: -> Template.instance().blogReady.get()
   post: -> Blog.Post.first slug: Template.instance().slug.get()
   notFound: ->
     if Blog.settings.blogNotFoundTemplate
@@ -72,6 +81,15 @@ Template.blogShow.helpers
         return notFound
       else if Blog.Router.getParam('slug')
         Blog.Router.notFound()
+
+# Provide data to custom templates, if any
+Meteor.startup ->
+  if Blog.settings.blogShowTemplate
+    customShow = Blog.settings.blogShowTemplate
+    Template[customShow].onCreated Template.blogShow._callbacks.created[0]
+    Template[customShow].helpers
+      post: Template.blogShow.__helpers.get('post')
+      blogReady: Template.blogShow.__helpers.get('blogReady')
 
 
 renderSideComments = null

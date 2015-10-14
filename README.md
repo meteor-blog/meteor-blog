@@ -247,8 +247,9 @@ Example:
 If you don't want any of our markup, use the blog data provided in the template
 context directly:
 
+* `blogReady` - Flag that is true when blog data is ready
 * `posts` - Collection of [`minimongoid`](https://github.com/Exygy/minimongoid) blog post objects (`/blog` route)
-* `this` - [`minimongoid`](https://github.com/Exygy/minimongoid) blog post object (`/blog/:slug` route)
+* `post` - [`minimongoid`](https://github.com/Exygy/minimongoid) blog post object (`/blog/:slug` route)
 
 Example:
 
@@ -256,13 +257,19 @@ Example:
 <template name="myBlogIndexTemplate">
   <h1>Welcome to my Blog</h1>
   <ul>
-    {{#each posts}}
-      <li>
-        <h2>{{title}}</h2>
-        <p>Published on {{publishedAt}}</p>
-        <p>Excerpt: {{excerpt}}</p>
-      </li>
-    {{/each}}
+    {{#if blogReady}}
+      {{#each posts}}
+        <li>
+          <h2>{{title}}</h2>
+          <p>Published on {{publishedAt}}</p>
+          <p>Excerpt: {{excerpt}}</p>
+        </li>
+      {{else}}
+        <li>No posts found.</li>
+      {{/each}}
+    {{else}}
+      <li>Loading...</li>
+    {{/if}}
   </ul>
 </template>
 ```
