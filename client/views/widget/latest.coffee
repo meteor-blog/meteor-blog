@@ -7,7 +7,8 @@ Template.blogLatest.rendered = ->
 
 Template.blogLatest.helpers
   latest: ->
-    Blog.Post.all()
+    num = if @num then @num else 3
+    Blog.Post.all limit: num
 
   date: (date) ->
     if date
