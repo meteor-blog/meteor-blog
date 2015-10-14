@@ -1,5 +1,16 @@
 ## Changelog
 
+### v0.8.3
+
+* Add i18n support (#199, #220)
+* Improve `slugify` function to handle non-ascii chars (#221)
+* Provide data context directly to custom templates, as before (#219)
+* Replace `gfk:notifications` with `flawless:meteor-toastr` to remove extraneous
+  Blaze templates
+* Fix bug where sometimes latest widget displayed more posts than there should be
+* Fix bug where sometimes Flow Router would run notFound too soon
+* Remove need for `random` package
+
 ### v0.8.2
 
 * Remove Bootstrap classes from public templates
@@ -25,7 +36,7 @@
    prefixed. If you were doing anything clever with those, the clever thing may
    break.
 
-**CHANGES**:
+**ALL CHANGES**:
 
 * Update to Meteor 1.2
 * Reorganize & namespace all package publications, collections, and CSS classes (#82)
