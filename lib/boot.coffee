@@ -37,7 +37,7 @@ if Meteor.isServer
 
 
 if Meteor.isClient
-  Blog.config({
+  Blog.config
     title: ''
     blogIndexTemplate: null
     blogShowTemplate: null
@@ -50,14 +50,13 @@ if Meteor.isClient
     syntaxHighlighting: false
     syntaxHighlightingTheme: 'github'
     cdnFontAwesome: true
-    comments: {
+    comments:
       allowAnonymous: false
       useSideComments: false
       defaultImg: '/packages/blog/public/default-user.png'
       userImg: 'avatar'
       disqusShortname: null
-    }
-    language: {
+    language:
       blogEmpty: 'This blog is looking pretty empty...'
       backToBlogIndex: 'Back to the Blog'
       tags: 'Tags'
@@ -96,8 +95,6 @@ if Meteor.isClient
       editFeaturedImageSaved: 'Featured image saved'
       editErrorSlugExists: 'Blog with this slug already exists'
       editErrorBodyRequired: 'Blog body is required'
-    }})
-      
 
 
 ################################################################################

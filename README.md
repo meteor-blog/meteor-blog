@@ -451,8 +451,10 @@ Add a head tag somewhere in your `.html` files so your RSS feed can be discovere
 ### Language support
 You can change the text of the labels the blog uses in the Blog.config.  
 The following are the default labels used:
+
 ```javascript
-Blog.config
+// JavaScript
+Blog.config({
   language: {
     blogEmpty: 'This blog is looking pretty empty...',
     backToBlogIndex: 'Back to the Blog',
