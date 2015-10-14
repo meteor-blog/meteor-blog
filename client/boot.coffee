@@ -32,6 +32,9 @@ Meteor.startup ->
 # Register Global Helpers
 #
 
+Template.registerHelper 'BlogLanguage', () ->
+  return Blog.settings.language
+
 Template.registerHelper "blogFormatDate", (date) ->
   moment(new Date(date)).format "MMM Do, YYYY"
 
