@@ -26,10 +26,10 @@
         </h1>
         <div class="meteor-blog-post-meta text-center">
           {{#if isAdmin}}
-             <small><a href="#" data-action="edit-post">edit</a></small>
+             <small><a href="#" data-action="edit-post">{{ BlogLanguage.edit }}</a></small>
              --
           {{/if}}
-          By {{authorName}} on {{blogFormatDate publishedAt}}
+          {{ BlogLanguage.metaAuthorBy }} {{authorName}} {{ BlogLanguage.metaAuthorOn }} {{blogFormatDate publishedAt}}
           {{> blogTags }}
         </div>
       {{/unless}}
@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class="meteor-blog-back-link pull-left">
-      <a href="{{blogPathFor 'blogIndex'}}"><i class="fa fa-caret-left"></i>Back to the Blog</a>
+      <a href="{{blogPathFor 'blogIndex'}}"><i class="fa fa-caret-left"></i>{{ BlogLanguage.backToBlogIndex }}</a>
     </div>
     {{> shareit shareData}}
     {{> disqus this}}
@@ -55,11 +55,11 @@
             <h1 class="text-center">
               {{title}}
               {{#if isAdmin}}
-                 <small><a href="#" data-action="edit-post">edit</a></small>
+                 <small><a href="#" data-action="edit-post">{{ BlogLanguage.edit }}</a></small>
               {{/if}}
             </h1>
             <div class="meteor-blog-post-meta text-center">
-              By {{authorName}} on {{blogFormatDate publishedAt}}
+              {{ BlogLanguage.metaAuthorBy }} {{authorName}} {{ BlogLanguage.metaAuthorOn }} {{blogFormatDate publishedAt}}
               {{> blogTags }}
             </div>
           </div>
@@ -76,6 +76,6 @@
   {{#if useDisqus}}
     <div id="disqus_thread"></div>
     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    <a href="http://disqus.com" class="dsq-brlink">{{ BlogLanguage.disqusPoweredBy }} <span class="logo-disqus">Disqus</span></a>
   {{/if}}
 </template>

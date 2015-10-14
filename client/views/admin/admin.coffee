@@ -34,13 +34,13 @@ Template.blogAdmin.helpers
     useFontAwesome: true
     'class': 'table table-striped table-hover col-sm-12 table-bordered'
     fields: [
-      { key: 'title', label: 'Title', tmpl: Template.blogAdminTitleColumn }
-      { key: 'userId', label: 'Author', tmpl: Template.blogAdminAuthorColumn }
-      { key: 'updatedAt', label: 'Updated At', tmpl: Template.blogAdminUpdatedColumn, sort: 'descending', sortByValue: true }
-      { key: 'publishedAt', label: 'Published At', tmpl: Template.blogAdminPublishedColumn, sortByValue: true }
-      { key: 'visibleTo', label: 'Visible To', tmpl: Template.blogAdminVisibleColumn }
-      { key: 'id', label: 'Edit', tmpl: Template.blogAdminEditColumn }
-      { key: 'id', label: 'Delete', tmpl: Template.blogAdminDeleteColumn }
+      { key: 'title', label: Blog.settings.language.title, tmpl: Template.blogAdminTitleColumn }
+      { key: 'userId', label: Blog.settings.language.author, tmpl: Template.blogAdminAuthorColumn }
+      { key: 'updatedAt', label: Blog.settings.language.updatedAt, tmpl: Template.blogAdminUpdatedColumn, sort: 'descending', sortByValue: true }
+      { key: 'publishedAt', label: Blog.settings.language.publishedAt, tmpl: Template.blogAdminPublishedColumn, sortByValue: true }
+      { key: 'visibleTo', label: Blog.settings.language.visibleTo, tmpl: Template.blogAdminVisibleColumn }
+      { key: 'id', label: Blog.settings.language.edit, tmpl: Template.blogAdminEditColumn }
+      { key: 'id', label: Blog.settings.language.delete, tmpl: Template.blogAdminDeleteColumn }
     ]
 
 Template.blogAdmin.events
@@ -76,6 +76,8 @@ Template.blogAdminDeleteColumn.events
   'click [data-action=delete]': (e, tpl) ->
     e.preventDefault()
 
-    if confirm('Are you sure?')
+    console.log Blog.settings
+
+    if confirm(Blog.settings.language.areYouSure)
       $(e.currentTarget).parents('tr').fadeOut =>
         @destroy()

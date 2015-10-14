@@ -24,7 +24,7 @@
           <a href="{{blogPathFor 'blogShow'}}">{{title}}</a>
         </h2>
         <div class="meteor-blog-post-meta">
-          By {{authorName}} on {{blogFormatDate publishedAt}}
+          {{ BlogLanguage.metaAuthorBy }} {{authorName}} {{ BlogLanguage.metaAuthorOn }} {{blogFormatDate publishedAt}}
           {{> blogTags }}
         </div>
         <div class="meteor-blog-post-excerpt">
@@ -33,14 +33,14 @@
       </div>
     </div>
   {{else}}
-    This blog is looking pretty empty...
+    {{ BlogLanguage.blogEmpty }}
   {{/each}}
 </template>
 
 <template name="blogTags">
   {{#if tags}}
     <div class="meteor-blog-post-tags">
-      <p> &ndash; Tags: {{blogFormatTags tags}}</p>
+      <p> &ndash; {{ BlogLanguage.tags }}: {{blogFormatTags tags}}</p>
     </div>
   {{/if}}
 </template>

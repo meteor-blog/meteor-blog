@@ -71,7 +71,7 @@ save = (tpl, cb) ->
     body = $('.html-editor', $form).val().trim()
 
   if not body
-    return cb(null, new Error 'Blog body is required')
+    return cb(null, new Error Blog.settings.language.editErrorBodyRequired)
 
   slug = $('[name=slug]', $form).val()
 
@@ -105,7 +105,7 @@ save = (tpl, cb) ->
           return cb(null, new Error _(post.errors[0]).values()[0])
         cb post.id
       else
-        return cb(null, new Error 'Blog with this slug already exists')
+        return cb(null, new Error Blog.settings.language.editErrorSlugExists)
 
 
 # ------------------------------------------------------------------------------
@@ -229,7 +229,7 @@ Template.blogAdminEdit.events
         path = Blog.Router.pathFor 'blogAdminEdit', id: id
         Blog.Router.replaceState path
 
-      toastr.success 'Saved'
+      toastr.success Blog.settings.language.adminSaved
   , 8000
 
   'blur [name=title]': (e, tpl) ->
@@ -262,7 +262,7 @@ Template.blogAdminEdit.events
           theFile = Blog.S3Files.find({_id: fileObj._id}).fetch()[0]
           if theFile.isUploaded() and theFile.url?()
             Session.set 'blog.featuredImage', theFile.url()
-            toastr.success 'Featured image saved'
+            toastr.success Blog.settings.language.adminFeaturedImageSaved
             c.stop()
     # Local Filestore
     else
@@ -271,7 +271,7 @@ Template.blogAdminEdit.events
           theFile = Blog.FilesLocal.find({_id: fileObj._id}).fetch()[0]
           if theFile.isUploaded() and theFile.url?()
             Session.set 'blog.featuredImage', theFile.url()
-            toastr.success 'Featured image saved'
+            toastr.success Blog.settings.language.adminFeaturedImageSaved
             c.stop()
 
   'submit form': (e, tpl) ->

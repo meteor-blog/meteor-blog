@@ -3,15 +3,15 @@
     <div class="container meteor-blog-admin-index">
       <div class="row">
         <div class="col-md-3">
-          <h1>Blog Admin</h1>
+          <h1>{{BlogLanguage.adminHeader}}</h1>
         </div>
         <div class="col-md-9">
           <a href="#" data-action="new-blog" class="btn btn-default">
-            <i class="fa fa-plus"></i> Add Blog Post
+            <i class="fa fa-plus"></i> {{BlogLanguage.addPost}}
           </a>
           <select data-action="filtering" class="form-control">
-            <option value="all">All Posts</option>
-            <option value="mine">My Posts</option>
+            <option value="all">{{BlogLanguage.allPosts}}</option>
+            <option value="mine">{{BlogLanguage.myPosts}}</option>
           </select>
         </div>
       </div>
@@ -21,7 +21,7 @@
             {{#if posts}}
               {{> reactiveTable collection=posts settings=table}}
             {{else}}
-              <a href="#" data-action="new-blog">Create the first blog</a>
+              <a href="#" data-action="new-blog">{{BlogLanguage.createFirst}}</a>
             {{/if}}
           {{else}}
             {{> blogLoading}}
@@ -55,9 +55,9 @@
 
 <template name="blogAdminVisibleColumn">
   <select data-action="visibility" class="form-control input-sm">
-    <option value="draft" selected={{isSelected "draft"}}>Me &amp; Admins only</option>
-    <option value="private" selected={{isSelected "private"}}>Anyone with link</option>
-    <option value="public" selected={{isSelected "public"}}>The world</option>
+    <option value="draft" selected={{isSelected "draft"}}>{{BlogLanguage.postVisibilityAdmins}}</option>
+    <option value="private" selected={{isSelected "private"}}>{{BlogLanguage.postVisibilityLink}}</option>
+    <option value="public" selected={{isSelected "public"}}>{{BlogLanguage.postVisibilityAnyone}}</option>
   </select>
 </template>
 
