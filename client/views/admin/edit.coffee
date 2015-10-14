@@ -229,7 +229,7 @@ Template.blogAdminEdit.events
         path = Blog.Router.pathFor 'blogAdminEdit', id: id
         Blog.Router.replaceState path
 
-      toastr.success Blog.settings.language.adminSaved
+      toastr.success Blog.settings.language.saved
   , 8000
 
   'blur [name=title]': (e, tpl) ->
@@ -262,7 +262,7 @@ Template.blogAdminEdit.events
           theFile = Blog.S3Files.find({_id: fileObj._id}).fetch()[0]
           if theFile.isUploaded() and theFile.url?()
             Session.set 'blog.featuredImage', theFile.url()
-            toastr.success Blog.settings.language.adminFeaturedImageSaved
+            toastr.success Blog.settings.language.editFeaturedImageSaved
             c.stop()
     # Local Filestore
     else
@@ -271,7 +271,7 @@ Template.blogAdminEdit.events
           theFile = Blog.FilesLocal.find({_id: fileObj._id}).fetch()[0]
           if theFile.isUploaded() and theFile.url?()
             Session.set 'blog.featuredImage', theFile.url()
-            toastr.success Blog.settings.language.adminFeaturedImageSaved
+            toastr.success Blog.settings.language.editFeaturedImageSaved
             c.stop()
 
   'submit form': (e, tpl) ->
