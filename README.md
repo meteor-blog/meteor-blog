@@ -7,6 +7,8 @@ without running another app.
 This blog is very much a work in progress. To help decide what gets added next,
 vote with your [Github issues](https://github.com/Differential/meteor-blog/issues)!
 
+[![Meteor Icon](http://icon.meteor.com/package/ryw:blog)](https://atmospherejs.com/ryw/blog)
+
 ### Example App
 
 You can view an example application (without customization) at http://blog-example.meteor.com ([repo](https://github.com/Differential/example-blog-app)).
