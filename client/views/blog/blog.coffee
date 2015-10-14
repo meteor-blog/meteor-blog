@@ -70,7 +70,7 @@ Template.blogShow.helpers
       notFound = Blog.Router.getNotFoundTemplate()
       if notFound
         return notFound
-      else
+      else if Blog.Router.getParam('slug')
         Blog.Router.notFound()
 
 
