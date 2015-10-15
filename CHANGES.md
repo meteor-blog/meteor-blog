@@ -6,7 +6,7 @@
 * Improve `slugify` function to handle non-ascii chars (#221)
 * Provide data context directly to custom templates, as before (#219)
 * Replace `gfk:notifications` with `flawless:meteor-toastr` to remove extraneous
-  Blaze templates
+  Blaze templates (#218)
 * Fix bug where sometimes latest widget displayed more posts than there should be
 * Fix bug where sometimes Flow Router would run notFound too soon
 * Remove need for `random` package
@@ -29,7 +29,8 @@
  * Compatible only with Meteor `1.2` and higher.
  * Replaced `vsivsi:file-collection` with `cfs:gridfs`, so if you have any blog
    images stored in your database created by `file-collection`, then you must
-   add `file-collection` to your app or they will be inaccessible.
+   add `file-collection` to your app or they will be inaccessible and create a
+   file in your app that looks like [this one](https://github.com/Differential/meteor-blog/blob/80e915555944c15e5ed38556416b3deae59ad5eb/collections/files.coffee).
  * CSS classes have been renamed and prefixed, so if you have any custom
    templates, styling may break.
  * Publications, subscriptions, and collections have all been renamed and
