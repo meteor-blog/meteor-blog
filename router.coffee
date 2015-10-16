@@ -80,12 +80,33 @@ Blog.Router =
 
   routeAll: (routes) ->
     @routes = routes
+
+    # --------------------------------------------------------------------------
+    # IRON ROUTER
+
     if Package['iron:router']
       # Fast Render
       if Meteor.isServer
         routes.forEach (route) ->
           if route.fastRender
             FastRender.route route.path, route.fastRender
+
+      catchAll = _.findWhere(Package['iron:router'].Router.routes, _path: '/(.*)')
+      if catchAll
+        # If app has already defined a catch-all route, prepend our logic to its
+        # before hook
+
+        catchAllHook = catchAll.options.onBeforeAction
+        return catchAll.options.onBeforeAction = ->
+          template = Blog.Router.getTemplate()
+          if template
+            if Blog.settings.blogLayoutTemplate
+              @layout Blog.settings.blogLayoutTemplate
+            @render template
+          else if catchAllHook
+            catchAllHook.call @
+          else
+            @next()
 
       Package['iron:router'].Router.route '/(.*)',
         onBeforeAction: ->
@@ -99,6 +120,8 @@ Blog.Router =
         action: ->
           @next()
 
+    # --------------------------------------------------------------------------
+    # FLOW ROUTER
 
     else if Package['kadira:flow-router']
       Package['kadira:flow-router'].FlowRouter.route '/:any*',
