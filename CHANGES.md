@@ -1,5 +1,10 @@
 ## Changelog
 
+### v0.8.4
+
+* Add setting for custom Recent Posts widget template
+* Fix bug where package catch-all route & app catch-all route conflicted (IR only) (#223)
+
 ### v0.8.3
 
 * Add i18n support (#199, #220)

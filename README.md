@@ -201,7 +201,7 @@ If you don't want any of our markup, use the blog data provided in the template
 context directly:
 
 * `blogReady` - Flag that is true when blog data is ready
-* `posts` - Collection of [`minimongoid`](https://github.com/Exygy/minimongoid) blog post objects (`/blog` route)
+* `posts` - List of [`minimongoid`](https://github.com/Exygy/minimongoid) blog post objects (`/blog` route)
 * `post` - [`minimongoid`](https://github.com/Exygy/minimongoid) blog post object (`/blog/:slug` route)
 
 Example:
@@ -377,7 +377,7 @@ This package depends on the [`liberation:shareit` package](https://atmospherejs.
 for powering social sharing.  If you use your own `blogShowTemplate` template,
 include `{{> shareit}}` to display share buttons.
 
-### Recent Posts Helper
+### Recent Posts Widget
 
 You can include a basic snippet of HTML displaying recent blog posts (e.g. on
 your home page). Insert the inclusion helper where you want the recent posts to
@@ -393,7 +393,20 @@ Or you can specify the # of posts to show:
 {{> blogLatest num=5}}
 ```
 
-There are classes in the template for styling.
+There are classes in the template for styling, but you can use your own widget
+template as well.
+
+```javascript
+Blog.config({
+  blogLatestTemplate: 'myLatestWidgetTemplate'
+});
+```
+
+And then include `{{> myLatestWidgetTemplate}}` anywhere you want. It will
+receive the following data context variables:
+
+* `latest` - List of most recent `num` blog posts
+* `date` - Date format helper
 
 ### RSS
 
