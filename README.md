@@ -4,7 +4,10 @@ This Meteor package gives you a basic, out-of-the-box blog at `/blog` (or where
 ever). 
 
 This blog is very much a work in progress. To help decide what gets added next,
-vote with your [Github issues](https://github.com/Differential/meteor-blog/issues)!
+vote with your [Github issues](https://github.com/meteor-blog/meteor-blog/issues)!
+
+**NEW REPO**: We have moved `meteor-blog` to a Github org. Please update your
+remotes with `git remote set-url origin https://github.com/meteor-blog/meteor-blog.git`.
 
 [![Meteor Icon](http://icon.meteor.com/package/ryw:blog)](https://atmospherejs.com/ryw/blog)
 
@@ -51,7 +54,7 @@ running another app.
 ### Example App
 
 You can view an example application (without customization) at
-http://blog-example.meteor.com ([repo](https://github.com/Differential/example-blog-app)).
+http://blog-example.meteor.com ([repo](https://github.com/meteor-blog/example-blog-app)).
 
 ### Installation
 
@@ -90,7 +93,7 @@ These paths are customizable (see below). `/admin/blog` requires that `Meteor.us
 
 ### Roadmap
 
-Check out the [enhancements tracker](https://github.com/Differential/meteor-blog/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement)
+Check out the [enhancements tracker](https://github.com/meteor-blog/meteor-blog/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement)
 
 ### Changelog
 
@@ -124,7 +127,7 @@ If you set the `basepath` to `'/'`, blog posts will appear at the root path of
 your app (e.g. http://myapp.com/my-post). This means that the blog index page
 will be your home page, unless you override the route. This also means that
 Meteor Blog can function as a crude CMS. For more CMS-like features, create a
-[Github issue](https://github.com/Differential/meteor-blog/issues)!
+[Github issue](https://github.com/meteor-blog/meteor-blog/issues)!
 
 ##### pathFor
 
