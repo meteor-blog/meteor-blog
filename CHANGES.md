@@ -2,8 +2,8 @@
 
 ### v0.8.5
 
-* Add setting for custom date formats
-* Add language setting for Load More button
+* Add setting for custom date formats (#244)
+* Add language setting for Load More button (#232)
 
 ### v0.8.4
 
