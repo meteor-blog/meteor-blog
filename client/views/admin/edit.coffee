@@ -1,6 +1,11 @@
-
 # ------------------------------------------------------------------------------
 # METHODS
+
+getBlogTags = (tags) ->
+  if typeof tags is 'string'
+    []
+  else
+    tags
 
 
 # Reads image dimensions and takes a callback callback passes params (width,
@@ -17,7 +22,7 @@ readImageDimensions = (file, cb) ->
       w = @width
       h = @height
       n = file.name
-      cb(w,h,n) # callback with width, height as params
+      cb(w, h, n) # callback with width, height as params
       return
 
     image.onerror = ->
@@ -77,7 +82,7 @@ save = (tpl, cb) ->
 
   attrs =
     title: $('[name=title]', $form).val()
-    tags: $('[name=tags]', $form).val()
+    tags: getBlogTags($('[name=tags]', $form).val())
     slug: slug
     description: $('[name=description]', $form).val()
     body: body
@@ -150,10 +155,10 @@ Template.blogAdminEdit.onRendered ->
   @autorun =>
     if @subsReady.get()
       Meteor.defer =>
-        # Wait a tick for template to re-render
+# Wait a tick for template to re-render
         post = Blog.Post.first(@id.get())
         if post?
-          # Load post body initially, if any
+# Load post body initially, if any
           @$('.editable').html post.body
           @$('.html-editor').html post.body
 
@@ -191,7 +196,7 @@ Template.blogAdminEdit.helpers
 
 
 Template.blogAdminEdit.events
-  # Toggle between VISUAL/HTML modes
+# Toggle between VISUAL/HTML modes
   'click [data-action=toggle-visual]': (e, tpl) ->
     if tpl.$('.editable').is(':visible')
       return
@@ -209,7 +214,7 @@ Template.blogAdminEdit.events
     setEditMode tpl, 'html'
     $html.height($editable.height())
 
-  # Copy HTML content to visual editor and autosize height
+# Copy HTML content to visual editor and autosize height
   'keyup .html-editor': (e, tpl) ->
     $editable = tpl.$('.editable')
     $html = tpl.$('.html-editor')
@@ -217,14 +222,14 @@ Template.blogAdminEdit.events
     $editable.html($html.val()?.trim())
     $html.height($editable.height())
 
-  # Autosave
+# Autosave
   'input .editable, keydown .editable, keydown .html-editor': _.debounce (e, tpl) ->
     save tpl, (id, err) ->
       if err
         return toastr.error err.message
 
       if id
-        # If new blog post, subscribe to the new post and update URL
+# If new blog post, subscribe to the new post and update URL
         tpl.id.set id
         path = Blog.Router.pathFor 'blogAdminEdit', id: id
         Blog.Router.replaceState path
@@ -264,7 +269,7 @@ Template.blogAdminEdit.events
             Session.set 'blog.featuredImage', theFile.url()
             toastr.success Blog.settings.language.editFeaturedImageSaved
             c.stop()
-    # Local Filestore
+# Local Filestore
     else
       Blog.FilesLocal.insert the_file, (err, fileObj) ->
         Tracker.autorun (c) ->
