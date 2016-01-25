@@ -2,6 +2,12 @@
 # ------------------------------------------------------------------------------
 # METHODS
 
+getBlogTags = (tags) ->
+  if typeof tags is 'string'
+    []
+  else
+    tags
+
 
 # Reads image dimensions and takes a callback callback passes params (width,
 # height, fileName)
@@ -77,7 +83,7 @@ save = (tpl, cb) ->
 
   attrs =
     title: $('[name=title]', $form).val()
-    tags: $('[name=tags]', $form).val()
+    tags: getBlogTags($('[name=tags]', $form).val())
     slug: slug
     description: $('[name=description]', $form).val()
     body: body
