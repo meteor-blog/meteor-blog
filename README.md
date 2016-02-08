@@ -442,6 +442,7 @@ Blog.config({
   language: {
     blogEmpty: 'This blog is looking pretty empty...',
     backToBlogIndex: 'Back to the Blog',
+    loadMore: 'Load More',
     tags: 'Tags',
     slug: 'Slug',
     metaDescription: 'Meta Description',

@@ -55,7 +55,8 @@ Template.registerHelper "blogJoinTags", (list) ->
 
 Template.registerHelper "blogPager", ->
   if Blog.Post.count() is Session.get 'blog.postLimit'
-    return new Spacebars.SafeString '<a class="blog-load-more btn" href="#">Load More</a>'
+    loadMore = Blog.settings.language.loadMore
+    return new Spacebars.SafeString '<a class="blog-load-more btn" href="#">' + loadMore + '</a>'
 
 Template.registerHelper 'blogPathFor', (name, options) ->
   return Blog.Router.pathFor name, @, options
