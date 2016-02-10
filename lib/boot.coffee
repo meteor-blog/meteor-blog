@@ -50,6 +50,7 @@ if Meteor.isClient
     syntaxHighlighting: false
     syntaxHighlightingTheme: 'github'
     cdnFontAwesome: true
+    dateFormat: 'MMM Do, YYYY'
     comments:
       allowAnonymous: false
       useSideComments: false
