@@ -36,7 +36,7 @@ Template.registerHelper 'BlogLanguage', () ->
   return Blog.settings.language
 
 Template.registerHelper "blogFormatDate", (date) ->
-  moment(new Date(date)).format "MMM Do, YYYY"
+  moment(new Date(date)).format Blog.settings.dateFormat
 
 Template.registerHelper "blogFormatTags", (tags) ->
   return if !tags?
