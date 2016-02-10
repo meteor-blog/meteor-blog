@@ -483,6 +483,13 @@ Blog.config({
 });
 ```
 
+You can change the format of dates the blog uses in the Blog.config. Any acceptable display format supported by Moment.js can be selected (e.g., 'D MMM YYYY' or 'YYYY-MM-DD'). The default date format is:
+
+```javascript
+Blog.config({
+  dateFormat: 'MMM Do, YYYY'
+```
+
 ## License
 
 MIT
