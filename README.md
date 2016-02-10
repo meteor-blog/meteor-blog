@@ -488,6 +488,7 @@ You can change the format of dates the blog uses in the Blog.config. Any accepta
 ```javascript
 Blog.config({
   dateFormat: 'MMM Do, YYYY'
+});
 ```
 
 ## License
