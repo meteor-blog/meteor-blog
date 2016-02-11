@@ -442,6 +442,7 @@ Blog.config({
   language: {
     blogEmpty: 'This blog is looking pretty empty...',
     backToBlogIndex: 'Back to the Blog',
+    loadMore: 'Load More',
     tags: 'Tags',
     slug: 'Slug',
     metaDescription: 'Meta Description',
@@ -479,6 +480,14 @@ Blog.config({
     editErrorSlugExists: 'Blog with this slug already exists',
     editErrorBodyRequired: 'Blog body is required'
   }
+});
+```
+
+You can change the format of dates the blog uses in the Blog.config. Any acceptable display format supported by Moment.js can be selected (e.g., 'D MMM YYYY' or 'YYYY-MM-DD'). The default date format is:
+
+```javascript
+Blog.config({
+  dateFormat: 'MMM Do, YYYY'
 });
 ```
 

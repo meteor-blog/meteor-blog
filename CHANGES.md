@@ -1,5 +1,10 @@
 ## Changelog
 
+### v0.8.5
+
+* Add setting for custom date formats
+* Add language setting for Load More button
+
 ### v0.8.4
 
 * Add setting for custom Recent Posts widget template
