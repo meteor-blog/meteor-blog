@@ -83,7 +83,7 @@ save = (tpl, cb) ->
 
   attrs =
     title: $('[name=title]', $form).val()
-    tags: getBlogTags($('[name=tags]', $form).val())
+    tags: getBlogTags($('[name=tags]', $form).val().split(','))
     slug: slug
     description: $('[name=description]', $form).val()
     body: body
