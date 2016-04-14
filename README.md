@@ -471,6 +471,7 @@ Blog.config({
     addPost: 'Add Blog Post',
     allPosts: 'All Posts',
     myPosts: 'My Posts',
+    addPost: 'Add Post',
     editPost: 'Edit Post',
     title: 'Title',
     author: 'Author',
