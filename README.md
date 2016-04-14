@@ -6,9 +6,6 @@ ever).
 This blog is very much a work in progress. To help decide what gets added next,
 vote with your [Github issues](https://github.com/meteor-blog/meteor-blog/issues)!
 
-**NEW REPO**: We have moved `meteor-blog` to a Github org. Please update your
-remotes with `git remote set-url origin https://github.com/meteor-blog/meteor-blog.git`.
-
 [![Meteor Icon](http://icon.meteor.com/package/ryw:blog)](https://atmospherejs.com/ryw/blog)
 
 ## Table of Contents
@@ -53,8 +50,11 @@ running another app.
 
 ### Example App
 
-You can view an example application (without customization) at
-http://blog-example.meteor.com ([repo](https://github.com/meteor-blog/example-blog-app)).
+<s>You can view an example application (without customization) at
+http://blog-example.meteor.com </s>.
+
+Meteor no longer offers [free hosting](https://forums.meteor.com/t/meteor-com-free-hosting-ends-march-25-2016/19308?u=hellogerard).
+There is an [example app ](https://github.com/meteor-blog/example-blog-app) that you can run yourself.
 
 ### Installation
 
