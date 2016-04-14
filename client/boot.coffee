@@ -8,6 +8,8 @@ Blog.subs = new SubsManager
   expireIn: 5 # Any subscription will be expire after 5 minute, if it's not subscribed again
 
 Meteor.startup ->
+  ShareIt.init Blog.settings.shareit
+
   if Blog.settings.syntaxHighlightingTheme
     # Syntax Highlighting
     $('<link>',

@@ -377,8 +377,18 @@ Blog.config({
 ### Social Sharing
 
 This package depends on the [`liberation:shareit` package](https://atmospherejs.com/liberation/shareit)
-for powering social sharing.  If you use your own `blogShowTemplate` template,
-include `{{> shareit}}` to display share buttons.
+for powering social sharing. By default, Facebook and Twitter buttons are
+displayed. You can pass a configuration directly to `shareit`.  If you use your
+own `blogShowTemplate` template, include `{{> shareit}}` to display share
+buttons.
+
+```javascript
+Blog.config({
+  shareit: {
+    siteOrder: ['twitter', 'facebook', 'pinterest'] // add Pinterest button
+  }
+});
+```
 
 ### Recent Posts Widget
 

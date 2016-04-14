@@ -1,13 +1,14 @@
 @Blog = {}
 
 Blog.settings =
+  shareit: {}
   comments: {}
   rss: {}
   language: {}
 
 Blog.config = (appConfig) ->
   # No deep extend in underscore :-(
-  for key in ['comments', 'rss', 'language']
+  for key in ['shareit', 'comments', 'rss', 'language']
     if appConfig[key]
       @settings[key] = _.extend(@settings[key], appConfig[key])
       delete appConfig[key]
@@ -51,6 +52,8 @@ if Meteor.isClient
     syntaxHighlightingTheme: 'github'
     cdnFontAwesome: true
     dateFormat: 'MMM Do, YYYY'
+    shareit:
+      siteOrder: ['facebook', 'twitter']
     comments:
       allowAnonymous: false
       useSideComments: false
