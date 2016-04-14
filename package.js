@@ -65,6 +65,7 @@ Package.onUse(function(api) {
     'client/compatibility/bower_components/medium-editor/dist/css/themes/bootstrap.css',
     'client/compatibility/bower_components/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.css',
     'client/stylesheets/lib/bootstrap-tagsinput.css',
+    'client/stylesheets/lib/medium-editor-insert-plugin.css',
 
     // JAVASCRIPT LIBS
     'client/compatibility/side-comments.js',
