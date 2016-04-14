@@ -141,6 +141,9 @@ Blog.Router =
       throw new Meteor.Error 500, 'Blog requires either iron:router or kadira:flow-router'
  
  
+if Package['kadira:flow-router']
+  Package['kadira:flow-router'].FlowRouter.wait()
+
 Meteor.startup ->
 
   routes = []
@@ -218,3 +221,6 @@ Meteor.startup ->
 
 
   Blog.Router.routeAll routes
+
+  if Package['kadira:flow-router']
+    FlowRouter.initialize()
