@@ -1,5 +1,14 @@
 ## Changelog
 
+### v0.8.6
+
+* Fix bug with Flow Router where pages did not load unless hard-loaded (#228)
+* Fix bug where tags were not saved (#252)
+* Fix missing sharing buttons (#254)
+* Fix bug with `medium-editor-insert-plugin` where progress overlay overlapped
+  large images (#247)
+* Update README with note about Meteor's shutdown free hosting.
+
 ### v0.8.5
 
 * Add setting for custom date formats (#244)
