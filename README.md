@@ -62,6 +62,18 @@ There is an [example app ](https://github.com/meteor-blog/example-blog-app) that
 $ meteor add ryw:blog
 ```
 
+And then either:
+
+```bash
+$ meteor add iron:router
+```
+
+_or_
+
+```bash
+$ meteor add kadira:flow-router kadira:blaze-layout
+```
+
 You will by default get routes for:
 
 ```
@@ -108,9 +120,7 @@ configure your blog, create a file shared on client/server, probably in
 ### Routing
 
 Meteor blog works with both Iron Router and Flow Router. If your app and the
-blog have conflicting routes, your app will get priority.
-
-If you use Flow Router, you must add `kadira:blaze-layout` to your app, as that is how Meteor blog renders its templates in a Flow Router route.
+blog have conflicting routes, your app will get priority. If you use Flow Router, you must add `kadira:blaze-layout` to your app, as that is how Meteor blog renders its templates in a Flow Router route.
 
 ##### Custom Base Paths
 
