@@ -222,5 +222,5 @@ Meteor.startup ->
 
   Blog.Router.routeAll routes
 
-  if Package['kadira:flow-router']
+  if Package['kadira:flow-router'] and not FlowRouter._initialized
     FlowRouter.initialize()
