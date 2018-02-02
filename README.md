@@ -54,7 +54,8 @@ running another app.
 http://blog-example.meteor.com </s>.
 
 Meteor no longer offers [free hosting](https://forums.meteor.com/t/meteor-com-free-hosting-ends-march-25-2016/19308?u=hellogerard).
-There is an [example app ](https://github.com/meteor-blog/example-blog-app) that you can run yourself.
+<s>There is an [example app ](https://github.com/meteor-blog/example-blog-app) that you can run yourself.</s>
+There is no longer a working example project to reference, and codebase has not been touched in years.  Good luck, and sorry for wasting your time.
 
 ### Installation
 
